@@ -2,7 +2,7 @@ CREATE TABLE `templates` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(150) NULL,
-  `application_id` INT NULL,
+  `product_id` INT NULL,
   `type_id` INT NULL,
   `master_id` INT NULL,
   `path` VARCHAR(120) NULL,
@@ -15,8 +15,8 @@ CREATE TABLE `templates` (
     REFERENCES `template_types` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `application_id`
-    FOREIGN KEY (`application_id`)
-    REFERENCES `applications` (`id`)
+  CONSTRAINT `product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `products` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

@@ -1,4 +1,4 @@
-CREATE TABLE `applications` (
+CREATE TABLE `products` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `path` VARCHAR(120) NULL,

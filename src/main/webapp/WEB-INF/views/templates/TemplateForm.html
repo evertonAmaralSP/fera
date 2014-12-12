@@ -10,31 +10,31 @@
 			<h1>Novo/Edição Marca</h1>
 			<form method="post" th:object="${template}"
 				th:action="@{/templates/save}" role="form">
-				<input type="hidden" name="id" th:value="*{id}" /> 
+				<input type="hidden" name="id" th:value="*{id}" />
 				<div class="form-group">
 					<label for="name">Marca</label>
-					<select class="form-control" th:field="*{application.id}">	
+					<select class="form-control" th:field="*{product.id}">
 						<option value="" label="--- Select ---"></option>
-						<option th:each="application : ${listApplication}" th:value="${application.id}" th:text="${application.name}"></option>
+						<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="name">Tipo</label>
-					<select class="form-control" th:field="*{type.id}">	
+					<select class="form-control" th:field="*{type.id}">
 						<option value="" label="--- Select ---"></option>
 						<option th:each="type : ${listType}" th:value="${type.id}" th:text="${type.name}"></option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="name">Nome</label> 
+					<label for="name">Nome</label>
 					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
 				</div>
 				<div class="form-group">
-					<label for="name">Descrição</label> 
+					<label for="name">Descrição</label>
 					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
 				</div>
 				<div class="form-group">
-					<label for="name">Path</label> 
+					<label for="name">Path</label>
 					<input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="path" />
 				</div>
 				<div class="form-group">

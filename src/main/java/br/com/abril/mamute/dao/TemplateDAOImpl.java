@@ -31,7 +31,7 @@ public class TemplateDAOImpl implements TemplateDAO {
 	public List<Template> list() {
 		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Template.class);
-		criteria.setFetchMode("application", FetchMode.JOIN);
+		criteria.setFetchMode("product", FetchMode.JOIN);
 		@SuppressWarnings("unchecked")
 		List<Template> listTemplate = (List<Template>) criteria.setResultTransformer(distinctRootEntity).list();
 
@@ -57,7 +57,7 @@ public class TemplateDAOImpl implements TemplateDAO {
 	public Template get(int id) {
 		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Template.class);
-		criteria.setFetchMode("application", FetchMode.JOIN);
+		criteria.setFetchMode("product", FetchMode.JOIN);
 		criteria.setFetchMode("type", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("id",id));
 		Template template = (Template) criteria.setResultTransformer(distinctRootEntity).uniqueResult();

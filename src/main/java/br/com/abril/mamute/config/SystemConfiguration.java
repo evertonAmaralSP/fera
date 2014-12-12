@@ -23,6 +23,11 @@ public class SystemConfiguration {
 
 	public static final String HTTP_CLIENT_CONFIG_TIMEOUT = "http.client.config.timeout";
 	public static final String EDTORIAL_BASE_URI = "edtorial.base.uri";
+	
+	public static final String DATASOURCE_DRIVE = "dataSource.driver";
+	public static final String DATASOURCE_URL = "dataSource.url";
+	public static final String DATASOURCE_USERNAME = "dataSource.username";
+	public static final String DATASOURCE_PASSWORD = "dataSource.password";
 
 	private static SystemConfiguration instance;
 

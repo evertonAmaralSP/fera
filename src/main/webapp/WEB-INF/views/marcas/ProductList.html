@@ -9,18 +9,18 @@
 		<div class="starter-template">
 			<h1>Lista Marcas</h1>
 			<p><a href="new" class="btn btn-primary" >Nova marca</a></p>
-			
+
 			<table class="table">
 				<th>Name</th>
 				<th>Lista Arquivos Gerados</th>
 				<th>Lista Upload</th>
 				<th>Gerenciamento</th>
-				<tr th:each="app : ${listApplications}">
+				<tr th:each="app : ${listProducts}">
 					<td th:text="${app.name}"></td>
 					<td><a th:href="@{/marcas/listExports/__${app.id}__}">Lista</a></td>
 					<td><a th:href="@{/marcas/upload/__${app.id}__ }">upload</a></td>
 					<td>
-					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/edit(id=${app.id})}">Editar</a>&nbsp; 
+					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/edit(id=${app.id})}">Editar</a>&nbsp;
 					  <a class="btn btn-danger btn-xs" th:href="@{/marcas/delete(id=${app.id})}">Deletar</a>
 					</td>
 				</tr>

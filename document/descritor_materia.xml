@@ -2,18 +2,18 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:materias="http://editorial.api.abril.com.br/materias/busca">
   <ShortName>Buscar matérias</ShortName>
   <Description>Busca de matérias no domínio editorial - Editora Abril</Description>
-  <Url type="application/json" template="http://editorial.api.abril.com.br/materias/busca?q={searchTerms?}&amp;per_page={materias:per_page_results?}&amp;order={materias:order?}&amp;fonte={materias:fonte?}&amp;idioma={materias:idioma?}&amp;tags={materias:tags?}&amp;categorias={materias:categorias?}&amp;data_ultima_atualizacao={materias:data_ultima_atualizacao?}&amp;data_disponibilizacao={materias:data_disponibilizacao?}&amp;data_criacao={materias:data_criacao?}&amp;data_edicao_impressa={materias:data_edicao_impressa}&amp;marca={materias:marca?}&amp;customizada={materias:customizada?}&amp;slug={materias:slug?}&amp;rotulos_controlados={materias:rotulos_controlados?}&amp;editoria_padrao={materias:editoria_padrao?}&amp;editorias={materias:editorias?}&amp;status={materias:status?}&amp;pw={startPage?}&amp;impresso.edicao={materias:edicao_impresso?}&amp;impresso.pagina_inicial={materias:pagina_inicial_impresso?}&amp;impresso.pagina_final={materias:pagina_final_impresso?}&amp;impresso.data_de_edicao={materias:data_de_edicao_impresso?}&amp;impresso.capa={materias:capa_impresso?}&amp;detalhado={materias:detalhado?}" pageOffset="1" indexOffset="1" />
+  <Url type="product/json" template="http://editorial.api.abril.com.br/materias/busca?q={searchTerms?}&amp;per_page={materias:per_page_results?}&amp;order={materias:order?}&amp;fonte={materias:fonte?}&amp;idioma={materias:idioma?}&amp;tags={materias:tags?}&amp;categorias={materias:categorias?}&amp;data_ultima_atualizacao={materias:data_ultima_atualizacao?}&amp;data_disponibilizacao={materias:data_disponibilizacao?}&amp;data_criacao={materias:data_criacao?}&amp;data_edicao_impressa={materias:data_edicao_impressa}&amp;marca={materias:marca?}&amp;customizada={materias:customizada?}&amp;slug={materias:slug?}&amp;rotulos_controlados={materias:rotulos_controlados?}&amp;editoria_padrao={materias:editoria_padrao?}&amp;editorias={materias:editorias?}&amp;status={materias:status?}&amp;pw={startPage?}&amp;impresso.edicao={materias:edicao_impresso?}&amp;impresso.pagina_inicial={materias:pagina_inicial_impresso?}&amp;impresso.pagina_final={materias:pagina_final_impresso?}&amp;impresso.data_de_edicao={materias:data_de_edicao_impresso?}&amp;impresso.capa={materias:capa_impresso?}&amp;detalhado={materias:detalhado?}" pageOffset="1" indexOffset="1" />
 
   <Query role="example" title="Exemplo de formato esperado dos parâmetros" materias:per_page_results="15" materias:order="data_ultima_atualizacao" materias:fonte="Info Online (Redação)" materias:idioma="pt" materias:tags="inovação,robôs" materias:categorias="Tecnologia" materias:customizada="false" materias:slug="minha-slug" materias:marca="BRAVO" materias:rotulos_controlados="galeria,materia-multimidia" materias:editoria_padrao="Editoria 1" materias:editorias="Editoria 1,Editoria 2" materias:status="disponivel" materias:edicao_impresso="10A" materias:pagina_inicial_impresso="1" materias:pagina_final_impresso="100" materias:data_de_edicao_impresso="01/04/2011" materias:capa_impresso="true" materias:detalhado="true" materias:data_ultima_atualizacao="01/02/1988" materias:data_disponibilizacao="01/02/1988" materias:data_criacao="01/02/1988" materias:data_edicao_impressa="01/02/1988" />
-  
+
   <Query role="consulta tipo E de marcacoes alexandria" title="Exemplo de formato esperado dos parâmetros" materias:categorias="Tecnologia,Categoria 2" materias:tags="Tag1,Tag2" materias:editorias="Editoria 1,Editoria 2" materias:rotulos_controlados="Rotulo 1,Rotulo 2" />
-  
+
   <Query role="consulta tipo OU de marcacoes alexandria" title="Exemplo de formato esperado dos parâmetros" materias:quaisquer_categorias="Tecnologia,Categoria 2" materias:quaisquer_tags="Tag1,Tag2" materias:quaisquer_editorias="Editoria 1,Editoria 2" materias:quaisquer_rotulos_controlados="Rotulo 1,Rotulo 2" />
-  
+
   <Query role="consulta por intervalo de datas" title="Exemplo de formato esperado dos parâmetros" materias:data_ultima_atualizacao_inicio="01/02/1988" materias:data_ultima_atualizacao_fim="01/02/2012" />
-  
+
   <Query role="consulta por intervalo de datas 2" title="Exemplo de formato esperado dos parâmetros" materias:data_disponibilizacao_inicio="01/02/1988" materias:data_disponibilizacao_fim="01/02/2012" />
-  
+
   <Query role="consulta por intervalo de datas 3" title="Exemplo de formato esperado dos parâmetros" materias:data_criacao_inicio="01/02/1988" materias:data_criacao_fim="01/02/2012" />
 
   <Query role="consulta por intervalo de datas 3" title="Exemplo de formato esperado dos parâmetros" materias:data_edicao_impressa_inicio="01/02/1988" materias:data_edicao_impressa_fim="01/02/2012" />

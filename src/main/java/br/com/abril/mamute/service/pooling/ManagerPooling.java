@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 
 import br.com.abril.mamute.config.SystemConfiguration;
 import br.com.abril.mamute.dao.SourceDAO;
-import br.com.abril.mamute.model.Application;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
@@ -77,16 +77,16 @@ public class ManagerPooling {
 
 	private String getPathTemplateSource(Source source) {
 	  Template template = source.getTemplate();
-	  Application application = template.getApplication();
+	  Product product = template.getProduct();
 	  if(template==null || StringUtils.isEmpty(template.getPath())) {
 	  	logger.error("O template para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
 			throw new IllegalArgumentException();
 	  }
-	  if(application==null || StringUtils.isEmpty(application.getPath())) {
+	  if(product==null || StringUtils.isEmpty(product.getPath())) {
 	  	logger.error("O applicacao para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
 	  	throw new IllegalArgumentException();
 	  }
-	  String path = DIR_TMP + "/" + application.getPath() + "/" + template.getPath();
+	  String path = DIR_TMP + "/" + product.getPath() + "/" + template.getPath();
 		return path;
   }
 

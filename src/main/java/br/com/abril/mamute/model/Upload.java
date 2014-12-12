@@ -21,8 +21,8 @@ public class Upload {
 	private String name;
 	private String type;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "applicationId")
-	private Application application;
+	@JoinColumn(name = "productId")
+	private Product product;
 	private String path;
 	private Date created;
 	private Date updated;
@@ -44,11 +44,11 @@ public class Upload {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Application getApplication() {
-		return application;
+	public Product getProduct() {
+		return product;
 	}
-	public void setApplication(Application application) {
-		this.application = application;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public String getPath() {
 		return path;

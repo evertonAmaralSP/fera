@@ -1,1 +1,1 @@
-INSERT INTO `applications` VALUES (1,'viajeaqui','viajeaqui','2014-12-04 16:19:40',NULL),(2,'vejasp','vejasp','2014-12-04 16:19:40',NULL);
+INSERT INTO `products` VALUES (1,'viajeaqui','viajeaqui','2014-12-04 16:19:40',NULL),(2,'vejasp','vejasp','2014-12-04 16:19:40',NULL);

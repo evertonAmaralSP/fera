@@ -33,8 +33,8 @@ public class Source {
 	@JoinColumn(name = "templateId")
 	private Template template;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "applicationId")
-	private Application application;
+	@JoinColumn(name = "productId")
+	private Product product;
 
 
 	public Integer getId() {
@@ -67,11 +67,11 @@ public class Source {
 	public void setTemplate(Template template) {
 		this.template = template;
 	}
-	public Application getApplication() {
-		return application;
+	public Product getProduct() {
+		return product;
 	}
-	public void setApplication(Application application) {
-		this.application = application;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public Date getCreated() {
 		return created;

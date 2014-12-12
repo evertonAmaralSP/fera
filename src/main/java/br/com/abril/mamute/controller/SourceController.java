@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.abril.mamute.dao.ApplicationDAO;
+import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.model.Source;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the product home page.
  */
 @Controller
 @RequestMapping("/sources")
@@ -26,7 +26,7 @@ public class SourceController {
 	@Autowired
 	private SourceDAO sourceDao;
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ProductDAO productDao;
 	@Autowired
 	private TemplateDAO templateDao;
 
@@ -42,7 +42,7 @@ public class SourceController {
 	public ModelAndView newSource() {
 		ModelAndView model = new ModelAndView("sources/SourceForm");
 		model.addObject("source", new Source());
-		model.addObject("listApplication", applicationDao.list());
+		model.addObject("listProduct", productDao.list());
 		return model;
 	}
 
@@ -52,7 +52,7 @@ public class SourceController {
 		Source source = sourceDao.get(sourceId);
 		ModelAndView model = new ModelAndView("sources/SourceForm");
 		model.addObject("source", source);
-		model.addObject("listApplication", applicationDao.list());
+		model.addObject("listProduct", productDao.list());
 		model.addObject("listTemplate", templateDao.list());
 		return model;
 	}

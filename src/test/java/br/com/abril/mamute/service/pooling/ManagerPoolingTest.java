@@ -18,7 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 
 import br.com.abril.mamute.dao.SourceDAO;
-import br.com.abril.mamute.model.Application;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
@@ -134,7 +134,7 @@ public class ManagerPoolingTest {
 
 	private Template createTemplate() {
 		Template template = new Template();
-		template.setApplication(createApplication());
+		template.setProduct(createProduct());
 		template.setId(1);
 		template.setName("template");
 		template.setDocument(documentTest);
@@ -143,12 +143,12 @@ public class ManagerPoolingTest {
 	  return template;
   }
 
-	private Application createApplication() {
-	  Application application = new Application();
-	  application.setId(1);
-	  application.setName("applicacao-teste");
-	  application.setPath("application-teste");
-	  return application;
+	private Product createProduct() {
+	  Product product = new Product();
+	  product.setId(1);
+	  product.setName("applicacao-teste");
+	  product.setPath("product-teste");
+	  return product;
   }
 
 	private Map<String, Object> getConteudoTest(Object obj) {

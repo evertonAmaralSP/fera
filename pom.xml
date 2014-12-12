@@ -178,6 +178,17 @@
 			<artifactId>thymeleaf-spring4</artifactId>
 			<version>${org.thymeleaf-version}</version>
 		</dependency>
+		<!-- javax.validation (JSR-303) -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.1.Final</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -280,10 +291,10 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>compile</phase>
+						<!-- <phase>compile</phase>
 						<goals>
 							<goal>check</goal>
-						</goals>
+						</goals> -->
 					</execution>
 				</executions>
 			</plugin>

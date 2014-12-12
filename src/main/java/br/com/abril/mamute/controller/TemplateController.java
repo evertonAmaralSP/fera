@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.abril.mamute.dao.ApplicationDAO;
+import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.dao.TemplateTypeDAO;
 import br.com.abril.mamute.model.Template;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the product home page.
  */
 @Controller
 @RequestMapping("/templates")
@@ -26,7 +26,7 @@ public class TemplateController {
 	@Autowired
 	private TemplateDAO templateDao;
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ProductDAO productDao;
 	@Autowired
 	private TemplateTypeDAO templateTypeDao;
 
@@ -42,7 +42,7 @@ public class TemplateController {
 	public ModelAndView newTemplate() {
 		ModelAndView model = new ModelAndView("templates/TemplateForm");
 		model.addObject("template", new Template());
-		model.addObject("listApplication", applicationDao.list());
+		model.addObject("listProduct", productDao.list());
 		model.addObject("listType", templateTypeDao.list());
 		return model;
 	}
@@ -53,7 +53,7 @@ public class TemplateController {
 		Template template = templateDao.get(templateId);
 		ModelAndView model = new ModelAndView("templates/TemplateForm");
 		model.addObject("template", template);
-		model.addObject("listApplication", applicationDao.list());
+		model.addObject("listProduct", productDao.list());
 		model.addObject("listType", templateTypeDao.list());
 		return model;
 	}

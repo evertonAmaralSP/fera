@@ -14,5 +14,8 @@ Pendencias:
  * Schedule - done
  * Motor de Publicacoes - done
  * Plugins de Qualidade - done
- * Layout boottrap - done
+ * Layout getbootstrap - done
  * Validate - WIP
+ * I18N - WIP 
+ 
+ 

@@ -13,20 +13,33 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
-@Table(name = "APPLICATIONS")
-public class Application {
+@Table(name = "PRODUCTS")
+public class Product {
+
+	private static final String NOT_BLANK_MESSAGE = "{validacao.campo_obrigatorio}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{product.fail.length_name_exceeded}";
+	private static final String TAMANHO_PATH_EXCEDIDO = "{product.fail.length_path_exceeded}";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+
+	@NotBlank(message = Product.NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = Product.TAMANHO_NOME_EXCEDIDO)
 	private String name;
+
+	@NotBlank(message = Product.NOT_BLANK_MESSAGE)
+	@Length(max = 120, message = Product.TAMANHO_PATH_EXCEDIDO)
 	private String path;
 	private Date createdAt;
 	private Date updatedAt;
-	@OneToMany(targetEntity=Template.class, fetch = FetchType.LAZY, mappedBy = "application")
+	@OneToMany(targetEntity=Template.class, fetch = FetchType.LAZY, mappedBy = "product")
 	private List<Template> templates;
-	@OneToMany(targetEntity=Source.class, fetch = FetchType.LAZY, mappedBy = "application")
+	@OneToMany(targetEntity=Source.class, fetch = FetchType.LAZY, mappedBy = "product")
 	private List<Source> sources;
 
 	public Integer getId() {
@@ -97,7 +110,7 @@ public class Application {
 
 	@Override
   public String toString() {
-	  return "Application [id=" + id + ", name=" + name + "]";
+	  return "Product [id=" + id + ", name=" + name + "]";
   }
 
 

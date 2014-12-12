@@ -24,8 +24,8 @@ public class Template {
 	private String description;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "application_id")
-	private Application application;
+	@JoinColumn(name = "product_id")
+	private Product product;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
 	private TemplateType type;
@@ -60,12 +60,12 @@ public class Template {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Application getApplication() {
-		return this.application;
+	public Product getProduct() {
+		return this.product;
 	}
 
-	public void setApplication(Application application) {
-		this.application = application;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public TemplateType getType() {
@@ -118,7 +118,7 @@ public class Template {
 
 	@Override
   public String toString() {
-	  return "Template [id=" + id + ", name=" + name + ", description=" + description + ", application=" + application + ", type=" + type + ", master_id=" + master_id + ", path=" + path + ", document=" + document + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	  return "Template [id=" + id + ", name=" + name + ", description=" + description + ", product=" + product + ", type=" + type + ", master_id=" + master_id + ", path=" + path + ", document=" + document + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
   }
 
 	public List<Source> getSources() {

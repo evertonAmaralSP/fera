@@ -23,7 +23,7 @@ import br.com.abril.mamute.service.pooling.ManagerPooling;
 
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the product home page.
  */
 @Controller
 public class HomeController {
@@ -64,7 +64,7 @@ public class HomeController {
 	}
 
 	private String generatePathTemplate(Template template) {
-	  String path = DIR_TMP+template.getApplication().getPath()+"/"+template.getPath();
+	  String path = DIR_TMP + "/" + template.getProduct().getPath() + "/" + template.getPath();
 	  return path;
   }
 

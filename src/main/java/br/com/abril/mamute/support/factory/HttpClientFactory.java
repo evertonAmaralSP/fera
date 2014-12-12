@@ -12,7 +12,7 @@ public class HttpClientFactory {
 
 	private static final int HTTP_CLIENT_CONFIG_TIMEOUT = SystemConfiguration.getPropertyAsInteger(SystemConfiguration.HTTP_CLIENT_CONFIG_TIMEOUT);
 
-	public static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
+	public static final String APPLICATION_JSON_UTF8 = "product/json; charset=utf-8";
 
 	public CloseableHttpClient createHttpClient() {
 		return this.createHttpClient(HTTP_CLIENT_CONFIG_TIMEOUT);

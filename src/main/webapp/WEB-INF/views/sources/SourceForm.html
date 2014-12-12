@@ -14,28 +14,28 @@
 				<input type="hidden" name="lastUpdateDatePooling" th:value="*{lastUpdateDatePooling}" />
 				<div class="form-group">
 					<label for="name">Marca</label>
-					<select class="form-control" th:field="*{application.id}">	
+					<select class="form-control" th:field="*{product.id}">
 						<option value="" label="--- Select ---"></option>
-						<option th:each="application : ${listApplication}" th:value="${application.id}" th:text="${application.name}"></option>
+						<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="name">Template</label>
-					<select class="form-control" th:field="*{template.id}">	
+					<select class="form-control" th:field="*{template.id}">
 						<option value="" label="--- Select ---"></option>
 						<option th:each="template : ${listTemplate}" th:value="${template.id}" th:text="${template.name}"></option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="name">Nome</label> 
+					<label for="name">Nome</label>
 					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
 				</div>
 				<div class="form-group">
-					<label for="name">Descrição</label> 
+					<label for="name">Descrição</label>
 					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
 				</div>
 				<div class="form-group">
-					<label for="name">Source</label> 
+					<label for="name">Source</label>
 					<input type="text" class="form-control" th:value="*{source}" th:field="*{source}" placeholder="http://editorial.api.abril.com.br/..." />
 				</div>
 				<div class="checkbox">
