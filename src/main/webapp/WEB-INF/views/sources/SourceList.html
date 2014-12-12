@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Lista Source</h1>
+			<p><a href="new" class="btn btn-primary" >Nova Source</a></p>
+			
+			<table class="table">
+				<th>Name</th>
+				<th>Gerenciamento</th>
+				<tr th:each="source : ${listSources}">
+					<td th:text="${source.name}"></td>
+					<td>
+					  <a class="btn btn-primary btn-xs" th:href="@{/sources/edit(id=${source.id})}">Editar</a>&nbsp; 
+					  <a class="btn btn-danger btn-xs" th:href="@{/sources/delete(id=${source.id})}">Deletar</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>

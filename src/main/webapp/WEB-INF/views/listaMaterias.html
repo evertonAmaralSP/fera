@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+    <title>CMS Static MVP</title>
+</head>
+    <body>
+    
+<th:block th:replace="fragments/layout:: menu" /> 
+    <div class="container corpo-conteudo" role="main">
+
+      <div class="starter-template">
+            <h1>Materias List</h1>
+        	<table class="table">
+	        	<th>Slug</th>
+	        	<th>Name</th>
+	        	<tr th:each="conteudo : ${list}" >
+					<td th:text="${conteudo.slug}"></td>
+					<td th:text="${conteudo.titulo}"></td>
+	        	</tr>
+        	</table>
+      </div>
+
+    </div><!-- /.container -->
+    
+    </body>
+<th:block th:replace="fragments/layout:: footer-javascript " />    
+</html>

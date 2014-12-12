@@ -1,0 +1,13 @@
+<FindBugsFilter>
+
+  <!-- Ignore EI_EXPOSE_REP -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP"/>
+  </Match>
+  
+  <!-- Ignore EI_EXPOSE_REP2 -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+  </Match>
+
+</FindBugsFilter>

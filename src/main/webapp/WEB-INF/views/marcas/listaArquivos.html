@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Lista arquivos Gerardos</h1>
+			<ul th:each="name : ${listFiles}">
+				<li th:text="${name}"></li>
+			</ul>
+			<p th:if="${listFiles.size() == 0}">LISTA VAZIA</p>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>
+				

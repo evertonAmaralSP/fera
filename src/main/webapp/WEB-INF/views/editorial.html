@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Teste Editorial</h1>
+			<table class="table" th:if="${materia}!=null">
+				<th>chave</th>
+				<th>valor</th>
+				<tr>
+					<th>Titulo</th>
+					<td th:text="${materia.titulo}"></td>
+				</tr>
+				<tr>
+					<th>Subtitulo</th>
+					<td th:text="${materia.subtitulo}"></td>
+				</tr>
+				<tr>
+					<th>Id</th>
+					<td th:text="${materia.id}"></td>
+				</tr>
+				<tr>
+					<th>Slug</th>
+					<td th:text="${materia.slug}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>
+

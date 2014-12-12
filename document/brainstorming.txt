@@ -1,0 +1,16 @@
+aplicacao:
+
+id
+name
+
+
+Template:
+id
+Name
+Description
+ApplicationId
+Type
+MasterId
+Document
+createdAt
+updatedAt

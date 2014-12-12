@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Lista Template</h1>
+			<p><a href="new" class="btn btn-primary" >Nova Template</a></p>
+			
+			<table class="table">
+				<th>Name</th>
+				<th>Marca</th>
+				<th>Gerenciamento</th>
+				<tr th:each="template : ${listTemplates}">
+					<td th:text="${template.name}"></td>
+					<td th:text="${template.application.name}"></td>
+					<td>
+					  <a class="btn btn-primary btn-xs" th:href="@{/templates/edit(id=${template.id})}">Editar</a>&nbsp; 
+					  <a class="btn btn-danger btn-xs" th:href="@{/templates/delete(id=${template.id})}">Deletar</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>

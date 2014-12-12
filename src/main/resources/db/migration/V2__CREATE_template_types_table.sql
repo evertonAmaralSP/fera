@@ -1,0 +1,7 @@
+CREATE TABLE `template_types` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(150) NULL,
+  `createdAt` VARCHAR(45) NULL DEFAULT 'CURRENT_TIMESTAMP',
+  `updatedAt` VARCHAR(45) NULL DEFAULT 'null',
+  PRIMARY KEY (`id`));

@@ -1,0 +1,7 @@
+CREATE TABLE `applications` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `path` VARCHAR(120) NULL,
+  `createdAt` VARCHAR(45) NULL DEFAULT 'CURRENT_TIMESTAMP',
+  `updatedAt` VARCHAR(45) NULL DEFAULT 'null',
+  PRIMARY KEY (`id`));

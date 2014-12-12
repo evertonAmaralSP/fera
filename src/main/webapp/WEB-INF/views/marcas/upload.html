@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1 th:text="${app.name}"></h1>
+			<form method="post" enctype="multipart/form-data"
+				th:action="@{/marcas/upload/__${app.id}__/save}">
+				<p>File to upload: <input type="file" name="file" id="file"/></p> 
+				<input type="submit"  class="btn btn-primary" value="submit"/>
+			</form>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>

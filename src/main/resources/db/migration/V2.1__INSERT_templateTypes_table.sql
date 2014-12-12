@@ -1,0 +1,1 @@
+INSERT INTO `template_types` VALUES (1,'Master','Template Geral','2014-12-04 16:19:40',NULL),(2,'Header','Cabecaalho da Pagina','2014-12-04 16:19:40',NULL),(3,'Footer','Rodape da pagina','2014-12-04 16:19:40',NULL),(4,'Conteudo','Templaste com o miolo da pagina','2014-12-04 16:19:40',NULL);

@@ -1,0 +1,1 @@
+echo "create database mamute" | mysql -uroot -p -hlocalhost

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>MVP - ViajeAqui</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Novo/Edição Marca</h1>
+			<form method="post" th:object="${template}"
+				th:action="@{/templates/save}" role="form">
+				<input type="hidden" name="id" th:value="*{id}" /> 
+				<div class="form-group">
+					<label for="name">Marca</label>
+					<select class="form-control" th:field="*{application.id}">	
+						<option value="" label="--- Select ---"></option>
+						<option th:each="application : ${listApplication}" th:value="${application.id}" th:text="${application.name}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="name">Tipo</label>
+					<select class="form-control" th:field="*{type.id}">	
+						<option value="" label="--- Select ---"></option>
+						<option th:each="type : ${listType}" th:value="${type.id}" th:text="${type.name}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="name">Nome</label> 
+					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
+				</div>
+				<div class="form-group">
+					<label for="name">Descrição</label> 
+					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
+				</div>
+				<div class="form-group">
+					<label for="name">Path</label> 
+					<input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="path" />
+				</div>
+				<div class="form-group">
+					<label for="name">Template</label>
+					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="7" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>
