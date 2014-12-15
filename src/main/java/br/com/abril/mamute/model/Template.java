@@ -12,25 +12,44 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "TEMPLATES")
 public class Template {
 
+	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
+	private static final String TAMANHO_PATH_EXCEDIDO = "{validate.path.fail.length_exceeded}";
+	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
+	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
+	private static final String NOT_BLANCK_TEMPLATE_TYPE = "{validate.templatetype.fail.mandatory_field}";
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
+	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
 
+	@NotNull(message = NOT_BLANCK_PRODUCT)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
+	@NotNull(message = NOT_BLANCK_TEMPLATE_TYPE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
 	private TemplateType type;
 	private Integer master_id;
+
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 120, message = TAMANHO_PATH_EXCEDIDO)
 	private String path;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String document;
 	private Date createdAt;
 	private Date updatedAt;

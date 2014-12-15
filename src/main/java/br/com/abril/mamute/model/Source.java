@@ -12,26 +12,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
 @Table(name = "SOURCES")
 public class Source {
 
+	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
+	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
+	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
+	private static final String NOT_BLANCK_TEMPLATE = "{validate.template.fail.mandatory_field}";
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
+	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 120, message = TAMANHO_NOME_EXCEDIDO)
 	private String source;
 	private Date lastUpdateDatePooling;
 	private String lastUpdateIdPooling;
 	private Boolean active;
 	private Date created;
 	private Date updated;
+	@NotNull(message = NOT_BLANCK_TEMPLATE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "templateId")
 	private Template template;
+	@NotNull(message = NOT_BLANCK_PRODUCT)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")
 	private Product product;

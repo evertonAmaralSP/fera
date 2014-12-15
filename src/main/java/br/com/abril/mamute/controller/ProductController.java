@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,7 +72,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String editProduct(HttpServletRequest request,ModelMap model) {
+	public String editProduct(ModelMap model, HttpServletRequest request) {
 		int productId = Integer.parseInt(request.getParameter("id"));
 		Product product = productDao.get(productId);
 		model.addAttribute("product", product);
@@ -89,9 +88,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveProduct(Model model, @Valid @ModelAttribute Product product, Errors bindingResult) {
+	public String saveProduct(Model model, @Valid @ModelAttribute Product product, Errors errors) {
 
-		if (bindingResult.hasErrors()) {
+		if (errors.hasErrors()) {
 			return PRODUCT_FORM;
 		}
 

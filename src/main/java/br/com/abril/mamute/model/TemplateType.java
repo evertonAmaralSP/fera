@@ -12,15 +12,26 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 
 @Entity
 @Table(name = "TEMPLATE_TYPES")
 public class TemplateType {
 
+
+	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
+	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
+	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
 	private Date createdAt;
 	private Date updatedAt;

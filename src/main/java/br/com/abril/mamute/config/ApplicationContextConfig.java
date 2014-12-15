@@ -21,6 +21,8 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -81,7 +83,7 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 		templateResolver.setCharacterEncoding("UTF-8");
 		return templateResolver;
 	}
-
+	
 	@Bean
 	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -144,6 +146,13 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 		dataSource.setPassword("");
 
 		return dataSource;
+	}
+	
+	@Override
+	public Validator getValidator() {
+		LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+		validator.setValidationMessageSource(messageSource());
+		return validator;
 	}
 
 	private Properties getHibernateProperties() {

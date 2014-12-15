@@ -17,6 +17,7 @@
 						<option value="" label="--- Select ---"></option>
 						<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
 					</select>
+					<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
 				</div>
 				<div class="form-group">
 					<label for="name">Tipo</label>
@@ -24,22 +25,27 @@
 						<option value="" label="--- Select ---"></option>
 						<option th:each="type : ${listType}" th:value="${type.id}" th:text="${type.name}"></option>
 					</select>
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
 				</div>
 				<div class="form-group">
 					<label for="name">Nome</label>
 					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 				</div>
 				<div class="form-group">
 					<label for="name">Descrição</label>
 					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
 				</div>
 				<div class="form-group">
 					<label for="name">Path</label>
 					<input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="path" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('path')}" th:errors="*{path}"></div>
 				</div>
 				<div class="form-group">
 					<label for="name">Template</label>
 					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="7" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('document')}" th:errors="*{document}"></div>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">Save</button>

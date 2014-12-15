@@ -22,20 +22,20 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Product  implements Serializable {
 
   private static final long serialVersionUID = 5745534997501685556L;
-	private static final String NOT_BLANK_MESSAGE = "{validacao.campo_obrigatorio}";
-	private static final String TAMANHO_NOME_EXCEDIDO = "{produto.falha.tamalho_nome_excedido}";
-	private static final String TAMANHO_PATH_EXCEDIDO = "{produto.falha.tamalho_path_excedido}";
+	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
+	private static final String TAMANHO_PATH_EXCEDIDO = "{validate.path.fail.length_exceeded}";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@NotBlank(message = Product.NOT_BLANK_MESSAGE)
-	@Length(max = 45, message = Product.TAMANHO_NOME_EXCEDIDO)
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
 
-	@NotBlank(message = Product.NOT_BLANK_MESSAGE)
-	@Length(max = 120, message = Product.TAMANHO_PATH_EXCEDIDO)
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 120, message = TAMANHO_PATH_EXCEDIDO)
 	private String path;
 	private Date createdAt;
 	private Date updatedAt;
