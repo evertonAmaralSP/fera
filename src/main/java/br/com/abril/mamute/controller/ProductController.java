@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,19 +67,17 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public ModelAndView newProduct() {
-		ModelAndView model = new ModelAndView(PRODUCT_FORM);
-		model.addObject("app", new Product());
-		return model;
+	public String newProduct(ModelMap model) {
+		model.addAttribute("product", new Product());
+		return PRODUCT_FORM;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView editProduct(HttpServletRequest request) {
+	public String editProduct(HttpServletRequest request,ModelMap model) {
 		int productId = Integer.parseInt(request.getParameter("id"));
-		Product app = productDao.get(productId);
-		ModelAndView model = new ModelAndView(PRODUCT_FORM);
-		model.addObject("app", app);
-		return model;
+		Product product = productDao.get(productId);
+		model.addAttribute("product", product);
+		return PRODUCT_FORM;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -88,17 +89,15 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView saveProduct(@Valid @ModelAttribute Product app, Errors errors) {
+	public String saveProduct(Model model, @Valid @ModelAttribute Product product, Errors bindingResult) {
 
-		if (errors.hasErrors()) {
-			ModelAndView model = new ModelAndView(PRODUCT_FORM);
-			model.addObject("app", app);
-			return model;
+		if (bindingResult.hasErrors()) {
+			return PRODUCT_FORM;
 		}
 
-		productDao.saveOrUpdate(app);
+		productDao.saveOrUpdate(product);
 
-		return new ModelAndView("redirect:/marcas/");
+		return "redirect:/marcas/";
 	}
 
 	/**
@@ -111,9 +110,9 @@ public class ProductController {
 	 */
 	@RequestMapping(value = "/listExports/{id}", method = RequestMethod.GET)
 	public ModelAndView listFile(HttpServletRequest request,@PathVariable String id) throws Exception {
-		Product app = productDao.get(Integer.parseInt(id));
+		Product product = productDao.get(Integer.parseInt(id));
 
-		List<String> listFiles = getFilesInProduct(app);
+		List<String> listFiles = getFilesInProduct(product);
 		ModelAndView model = new ModelAndView("marcas/listaArquivos");
 		model.addObject("listFiles", listFiles);
 
@@ -123,10 +122,10 @@ public class ProductController {
 	@RequestMapping(value = "/upload/{id}")
 	public ModelAndView singleUpload(HttpServletRequest request,@PathVariable String id) {
 		int productId = Integer.parseInt(id);
-		Product app = productDao.get(productId);
+		Product product = productDao.get(productId);
 
 		ModelAndView model = new ModelAndView("marcas/upload");
-		model.addObject("app", app);
+		model.addObject("product", product);
 		return model;
 	}
 

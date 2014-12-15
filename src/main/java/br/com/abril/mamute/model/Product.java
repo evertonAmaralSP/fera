@@ -1,5 +1,6 @@
 package br.com.abril.mamute.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,11 +19,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
+public class Product  implements Serializable {
 
+  private static final long serialVersionUID = 5745534997501685556L;
 	private static final String NOT_BLANK_MESSAGE = "{validacao.campo_obrigatorio}";
-	private static final String TAMANHO_NOME_EXCEDIDO = "{product.fail.length_name_exceeded}";
-	private static final String TAMANHO_PATH_EXCEDIDO = "{product.fail.length_path_exceeded}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{produto.falha.tamalho_nome_excedido}";
+	private static final String TAMANHO_PATH_EXCEDIDO = "{produto.falha.tamalho_path_excedido}";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

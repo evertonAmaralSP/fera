@@ -7,8 +7,8 @@
 	<th:block th:replace="fragments/layout:: menu" />
 	<div class="container corpo-conteudo" role="main">
 		<div class="starter-template">
-			<h1>Novo/Edição Marca</h1>
-			<form method="post" th:object="${app}" th:action="@{/marcas/save}" role="form">
+			<h1>Novo/Edição Marca </h1>
+			<form method="post" th:object="${product}" th:action="@{/marcas/save}" role="form">
 			<input type="hidden" name="id" th:value="*{id}"/>
 				<div class="form-group">
 					<label for="name">Nome</label> 
@@ -18,6 +18,7 @@
 				<div class="form-group">
 					<label for="name">Path</label> 
 					<input type="text" class="form-control" th:value="*{path}"  th:field="*{path}" placeholder="path" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('path')}" th:errors="*{path}"></div>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">Save</button>
