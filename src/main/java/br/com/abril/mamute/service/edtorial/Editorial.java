@@ -2,6 +2,8 @@ package br.com.abril.mamute.service.edtorial;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
@@ -13,18 +15,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import br.com.abril.mamute.exception.editorial.InternalServerErrorException;
+import br.com.abril.mamute.exception.editorial.ServiceUnavailableException;
+import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
+import br.com.abril.mamute.model.Conteudo;
+import br.com.abril.mamute.model.GaleriasMultimidia;
+import br.com.abril.mamute.model.Imagem;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.support.factory.HttpClientFactory;
 import br.com.abril.mamute.support.factory.ModelFactory;
 import br.com.abril.mamute.support.json.JsonUtil;
+import br.com.abril.mamute.support.tipos.TipoRecursoEnum;
 
 @Component
 public class Editorial {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private HttpClientFactory httpClientFactory;
 	@Autowired
@@ -32,110 +42,93 @@ public class Editorial {
 	@Autowired
 	private ModelFactory modelFactory;
 
-	public Materia getMateria(String id){
+	public Materia getMateriaIdHash(String idHash) throws ComunicacaoComEditorialException {
+		if (StringUtils.isEmpty(idHash))
+			throw new IllegalArgumentException("Atributo idHash não pode ser vazio.");
+		String url = EdtorialUrls.MATERIA_ID + "/" + idHash;
+		return getMateriaId(url);
+	}
+	public Materia getMateriaId(String url) throws ComunicacaoComEditorialException {
+		if (StringUtils.isEmpty(url))
+			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
+		String jsonString = buscaUrlRest(url);
+		Materia materia = parseMateria(jsonString);
+		return materia;
+	}
+	
+	
 
+	public ResultadoBuscaMateria getListaUltimasNoticias(String marca) throws ComunicacaoComEditorialException {
+		if (StringUtils.isEmpty(marca))
+			throw new IllegalArgumentException("Atributo marca não pode ser vazio.");
+
+		String url = EdtorialUrls.filter(EdtorialUrls.BUSCA_ULTIMAS_MATEIAS + "?" + marca, EdtorialUrls.DATA_DISPONIBILIZACAO);
+		String jsonString = buscaUrlRest(url);
+		final ResultadoBuscaMateria listaConteudos = modelFactory.listaConteudos(jsonUtil.fromString(jsonString));
+		return listaConteudos;
+	}
+
+	public ResultadoBuscaMateria getListaInSource(String urlSearch) throws ComunicacaoComEditorialException {
+		String jsonString = buscaUrlRest(urlSearch);
+		final ResultadoBuscaMateria listaConteudos = modelFactory.listaConteudos(jsonUtil.fromString(jsonString));
+		return listaConteudos;
+	}
+
+	public String buscaUrlRest(String url) throws ComunicacaoComEditorialException {
 		CloseableHttpClient httpClient = httpClientFactory.createHttpClient();
-		String jsonString=null;
 		try {
-			HttpGet get = new HttpGet(EdtorialUrls.MATERIA_ID + "/" + id);
+			HttpGet get = new HttpGet(url);
 			get.setHeader(HTTP.CONTENT_TYPE, HttpClientFactory.APPLICATION_JSON_UTF8);
 			CloseableHttpResponse response = httpClient.execute(get);
 			int statusCode = response.getStatusLine().getStatusCode();
-
 			switch (statusCode) {
 			case HttpStatus.SC_OK:
-				logger.debug("[buscaMateriaId] Request : {} e Response: {} ", new Object[]{ EdtorialUrls.MATERIA_ID + "/" + id,response.getEntity().getContent() });
-				 jsonString = IOUtils.toString(response.getEntity().getContent(), Charset.forName("UTF-8"));
-				 return modelFactory.materia(jsonUtil.fromString(jsonString));
+				logger.debug("[buscaMateriaId] Request : {} e Response: {} ", new Object[] { url, response.getEntity().getContent() });
+				return IOUtils.toString(response.getEntity().getContent(), Charset.forName("UTF-8"));
 			case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-				logger.error("[buscaMateriaId] erro interno na busca de materia (500) (id={} )",new Object[]{ id });
+				logger.error("[buscaMateriaId] erro interno na busca de materia (500) (id={} )", new Object[] { url });
+				throw new InternalServerErrorException();
 			case HttpStatus.SC_SERVICE_UNAVAILABLE:
 				logger.error("[buscaMateriaId] servidor Editoria API indisponivel (503)");
+				throw new ServiceUnavailableException();
 			default:
-				logger.error("[buscaMateriaId] erro nao identificado. HTTP Status code:{}",new Object[]{ statusCode });
+				logger.error("[buscaMateriaId] erro nao identificado. HTTP Status code:{}", new Object[] { statusCode });
+				throw new ComunicacaoComEditorialException();
 			}
-
 		} catch (IOException e) {
-			logger.error("[buscaMateriaId] erro nao identificado: {}",new Object[]{ e.getMessage() });
+			logger.error("[buscaMateriaId] erro nao identificado: {}", new Object[] { e.getMessage() });
+			throw new ComunicacaoComEditorialException();
 		} finally {
 			try {
 				httpClient.close();
 			} catch (IOException e) {
-				logger.error("[buscaMateriaId] erro ao fechar conexao HTTP: {}",new Object[]{ e.getMessage() });
+				logger.error("[buscaMateriaId] erro ao fechar conexao HTTP: {}", new Object[] { e.getMessage() });
 			}
 		}
-		return null;
 	}
 
-	public ResultadoBuscaMateria getListaUltimasNoticias(String marca) {
-		CloseableHttpClient httpClient = httpClientFactory.createHttpClient();
-		String jsonString=null;
-		try {
-			String urlSearch = EdtorialUrls.filter(EdtorialUrls.BUSCA_ULTIMAS_MATEIAS + "?" + marca,EdtorialUrls.DATA_DISPONIBILIZACAO);
-			HttpGet get = new HttpGet(urlSearch);
-			get.setHeader(HTTP.CONTENT_TYPE, HttpClientFactory.APPLICATION_JSON_UTF8);
-			CloseableHttpResponse response = httpClient.execute(get);
-			int statusCode = response.getStatusLine().getStatusCode();
-
-			switch (statusCode) {
-			case HttpStatus.SC_OK:
-				logger.debug("[buscaUltimasMateria] Request : {} e Response: {} ", new Object[]{ urlSearch, response.getEntity().getContent() });
-				 jsonString = IOUtils.toString(response.getEntity().getContent(), Charset.forName("UTF-8"));
-				 return modelFactory.listaConteudos(jsonUtil.fromString(jsonString));
-			case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-				logger.error("[buscaUltimasMateria] erro interno na busca ultimas materia (500) (marca={} )",new Object[]{ marca });
-			case HttpStatus.SC_SERVICE_UNAVAILABLE:
-				logger.error("[buscaUltimasMateria] servidor Editoria API indisponivel (503)");
-			default:
-				logger.error("[buscaUltimasMateria] erro nao identificado. HTTP Status code:{}",new Object[]{ statusCode });
+	private Materia parseMateria(String jsonString) throws ComunicacaoComEditorialException {
+		Materia materia = modelFactory.materia(jsonUtil.fromString(jsonString));
+		List<Conteudo> listaMateriasRelacionadas = new ArrayList<Conteudo>();
+		List<Conteudo> conteudos = materia.getConteudos();
+		if (!CollectionUtils.isEmpty(conteudos)) {
+			for (Conteudo conteudo : conteudos) {
+				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.MATERIA.toString())) {
+					listaMateriasRelacionadas.add(conteudo);
+				}
+				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.IMAGEM.toString())) {
+					String json = buscaUrlRest(conteudo.getId());
+					Imagem imagem = modelFactory.imagem(jsonUtil.fromString(json));
+					materia.setImagem(imagem);
+				}
+				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.GALERIA_MULTIMIDIA.toString())) {
+					String json = buscaUrlRest(conteudo.getId());
+					GaleriasMultimidia galeriasMultimidia = modelFactory.galeriasMultimidia(jsonUtil.fromString(json));
+					materia.setGaleriasMultimidia(galeriasMultimidia);
+				}
 			}
-		} catch (IOException e) {
-			logger.error("[buscaUltimasMateria] erro nao identificado: {}",new Object[]{ e.getMessage() });
-		} finally {
-			try {
-				httpClient.close();
-			} catch (IOException e) {
-				logger.error("[buscaUltimasMateria] erro ao fechar conexao HTTP: {}",new Object[]{ e.getMessage() });
-			}
-
 		}
-		return null;
-
-  }
-
-
-	public ResultadoBuscaMateria getListaInSource(String urlSearch) {
-		CloseableHttpClient httpClient = httpClientFactory.createHttpClient();
-		String jsonString=null;
-		try {
-			HttpGet get = new HttpGet(urlSearch);
-			get.setHeader(HTTP.CONTENT_TYPE, HttpClientFactory.APPLICATION_JSON_UTF8);
-			CloseableHttpResponse response = httpClient.execute(get);
-			int statusCode = response.getStatusLine().getStatusCode();
-
-			switch (statusCode) {
-			case HttpStatus.SC_OK:
-				logger.debug("[buscaUltimasMateria] Request : {} e Response: {} ", new Object[]{ urlSearch, response.getEntity().getContent() });
-				 jsonString = IOUtils.toString(response.getEntity().getContent(), Charset.forName("UTF-8"));
-				 return modelFactory.listaConteudos(jsonUtil.fromString(jsonString));
-			case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-				logger.error("[buscaUltimasMateria] erro interno na busca url: {} (500)",new Object[]{ urlSearch });
-			case HttpStatus.SC_SERVICE_UNAVAILABLE:
-				logger.error("[buscaUltimasMateria] servidor Editoria API indisponivel (503)");
-			default:
-				logger.error("[buscaUltimasMateria] erro nao identificado. HTTP Status code:{}",new Object[]{ statusCode });
-			}
-		} catch (IOException e) {
-			logger.error("[buscaUltimasMateria] erro nao identificado: {}",new Object[]{ e.getMessage() });
-		} finally {
-			try {
-				httpClient.close();
-			} catch (IOException e) {
-				logger.error("[buscaUltimasMateria] erro ao fechar conexao HTTP: {}",new Object[]{ e.getMessage() });
-			}
-
-		}
-		return null;
+		materia.setMateriasRelacionadas(listaMateriasRelacionadas);
+		return materia;
 	}
-
 }

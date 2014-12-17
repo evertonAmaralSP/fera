@@ -71,7 +71,7 @@ public class HomeController {
 	@RequestMapping("/editorial")
 	public ModelAndView testeEditorial() throws Exception {
 
-		Materia materia = editorial.getMateria("547e50316b6c1236ad0001d0");
+		Materia materia = editorial.getMateriaIdHash("547e50316b6c1236ad0001d0");
 		ModelAndView model = new ModelAndView("editorial");
 		model.addObject("materia", materia);
 		return model;
@@ -81,7 +81,7 @@ public class HomeController {
 	@RequestMapping(value = "/editorial/{id}", method = RequestMethod.GET)
 	public ModelAndView testeEditorialId(HttpServletRequest request,@PathVariable String id) throws Exception {
 
-		Materia materia = editorial.getMateria(id);
+		Materia materia = editorial.getMateriaIdHash(id);
 		ModelAndView model = new ModelAndView("editorial");
 		model.addObject("materia", materia);
 		return model;
@@ -89,11 +89,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/generateMateria/{id}", method = RequestMethod.GET)
 	public ModelAndView generateMateriaId(HttpServletRequest request,@PathVariable String id) throws Exception {
-		Template template = templateDao.get(2);
+		Template template = templateDao.get(3);
 		String modelo = template.getDocument();
 		String path = generatePathTemplate(template);
 
-		Materia materia = editorial.getMateria(id);
+		Materia materia = editorial.getMateriaIdHash(id);
 		Map<String, Object> conteudo = getConteudo(materia);
 		staticEngine.process(modelo, conteudo, path );
 
@@ -117,6 +117,7 @@ public class HomeController {
 		ResultadoBuscaMateria resultadoBuscaConteudo = editorial.getListaUltimasNoticias(marca);
 		ModelAndView model = new ModelAndView("listaMaterias");
 		model.addObject("list", resultadoBuscaConteudo.getResultado());
+		model.addObject("marca", marca);
 		return model;
 	}
 

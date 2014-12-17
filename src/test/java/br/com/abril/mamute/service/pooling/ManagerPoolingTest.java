@@ -1,6 +1,7 @@
 package br.com.abril.mamute.service.pooling;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,8 +19,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 
 import br.com.abril.mamute.dao.SourceDAO;
-import br.com.abril.mamute.model.Product;
+import br.com.abril.mamute.model.DataEditoria;
 import br.com.abril.mamute.model.Materia;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
@@ -41,7 +43,7 @@ public class ManagerPoolingTest {
 
 
 	@Test
-	public void testProcessPoolingComDataUltimaAtualizacaoNull() {
+	public void testProcessPoolingComDataUltimaAtualizacaoNull() throws Exception {
 
 		ArrayList<Source> listSource = new ArrayList<Source>();
 		Source source = createSource();
@@ -49,6 +51,8 @@ public class ManagerPoolingTest {
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
 		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1)).thenReturn(createMateria(HASH_ID1,10,12));
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
 //		Mockito.when(staticEngine.process(documentTest,map ,pathTest)).thenReturn(true);
 		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
@@ -59,7 +63,7 @@ public class ManagerPoolingTest {
 	}
 
 	@Test
-	public void testProcessPoolingComDataUltimaAtualizacaoMenor() {
+	public void testProcessPoolingComDataUltimaAtualizacaoMenor() throws Exception {
 
 		int day = 10;
 		ArrayList<Source> listSource = new ArrayList<Source>();
@@ -68,9 +72,11 @@ public class ManagerPoolingTest {
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
 		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1)).thenReturn(createMateria(HASH_ID1,10,12));
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
 //	Mockito.when(staticEngine.process(documentTest,map ,pathTest)).thenReturn(true);
-	Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
+		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
 
 		managerPooling.processPoolings();
 
@@ -78,7 +84,7 @@ public class ManagerPoolingTest {
 	}
 
 	@Test
-	public void testProcessPoolingComDataUltimaAtualizacaoMaior() {
+	public void testProcessPoolingComDataUltimaAtualizacaoMaior() throws Exception {
 
 		int day = 12;
 		ArrayList<Source> listSource = new ArrayList<Source>();
@@ -87,6 +93,8 @@ public class ManagerPoolingTest {
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
 		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1)).thenReturn(createMateria(HASH_ID1,10,12));
+		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
 //	Mockito.when(staticEngine.process(documentTest,map ,pathTest)).thenReturn(true);
 	Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
@@ -98,7 +106,7 @@ public class ManagerPoolingTest {
 
 	private ResultadoBuscaMateria createResultadoBuscaMateria() {
 	  ResultadoBuscaMateria buscaMateria = new ResultadoBuscaMateria();
-	  Materia[] materias = new Materia[] {createMateria("acb",10,12),createMateria("def",11,0)};
+	  Materia[] materias = new Materia[] {createMateria(HASH_ID1,10,12),createMateria(HASH_ID2,11,0)};
 	  buscaMateria.setResultado(materias);
 	  return buscaMateria;
   }
@@ -108,7 +116,14 @@ public class ManagerPoolingTest {
 	  materia.setId("http://teste.api/materia/id/" + hashId);
 	  materia.setCorpo("essa materia foi escrita para teste");
 		materia.setDataDisponibilizacao(createDate(day, hour));
+		materia.setDisponibilizacao(createDisponibilizacao(day, hour));
 		return materia;
+  }
+
+	private DataEditoria createDisponibilizacao(int day, int hour) {
+	  DataEditoria disponibilizacao = new DataEditoria() ;
+		disponibilizacao.setData(createDate(day, hour));
+	  return disponibilizacao;
   }
 
 	private Date createDate(int day, int hour) {
@@ -162,4 +177,8 @@ public class ManagerPoolingTest {
 	private String pathTest = "/tmp/applicacao-teste/template";
 
   private Date primeiraDataTest = createDate(11, 0);
+
+	private static final String HASH_ID2 = "def";
+	private static final String HASH_ID1 = "acb";
+	
 }

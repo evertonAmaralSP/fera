@@ -3,6 +3,9 @@ package br.com.abril.mamute.model;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Materia extends RestModel {
@@ -41,6 +44,72 @@ public class Materia extends RestModel {
 	@SerializedName("rotulos_controlados")
 	private List<String> rotulosControlados;
 	private List<String> tags;
+	@SerializedName("conteudos_relacionados")
+	private List<Conteudo> conteudos;
+	private List<Conteudo> materiasRelacionadas;
+	private Imagem imagem;
+	private GaleriasMultimidia galeriasMultimidia;
+	
+	public String descricaoTrunc(){
+		final String substring = corpo.substring(0,290).replaceAll("\\<.*?>","") + "...";
+		
+		return substring;
+	}
+	
+	public String getImagemId(){
+		if(imagem != null) {
+			return imagem.getId();
+		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+			final Midia midia = galeriasMultimidia.getMidias().get(0);
+			return midia.getId();
+		}
+		return "";
+	}
+	
+	public String thumbnail60x60(){
+		if(imagem != null) {
+			return imagem.getTransformacoes().getThumbnail60x60().linkExtreno(marca);
+		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+			final Midia midia = galeriasMultimidia.getMidias().get(0);
+			return midia.thumbnail60x60(marca);
+		}
+		return "";
+	}
+	public String thumbnail240x240(){
+		if(imagem != null) {
+			return imagem.getTransformacoes().getThumbnail240x240().linkExtreno(marca);
+		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+			final Midia midia = galeriasMultimidia.getMidias().get(0);
+			return midia.thumbnail240x240(marca);
+		}
+		return "";
+	}
+	public String categoriasInLine(){
+		return converterListInLine(categorias);
+	}
+	public String rotulosControladosInLine(){
+		return converterListInLine(rotulosControlados);
+	}
+	public String editoriasInLine(){
+		return converterListInLine(editorias);
+	}
+	public String tagsInLine(){
+		return converterListInLine(tags);
+	}
+
+	private String converterListInLine(List<String> collection) {
+	  if (CollectionUtils.isEmpty(collection)) return "";
+		StringBuilder collectionInLine = new StringBuilder();
+		for (String item : collection) {
+			if(StringUtils.isEmpty(collectionInLine)) {
+				collectionInLine.append(item); 
+			} else { 
+				collectionInLine.append(", ").append(item);
+			}
+    }
+	  return collectionInLine.toString();
+  }
+	
 	public String getSubtitulo() {
 		return subtitulo;
 	}
@@ -220,6 +289,30 @@ public class Materia extends RestModel {
 		  return false;
 	  return true;
   }
+	public List<Conteudo> getConteudos() {
+		return conteudos;
+	}
+	public void setConteudos(List<Conteudo> conteudos) {
+		this.conteudos = conteudos;
+	}
+	public List<Conteudo> getMateriasRelacionadas() {
+		return materiasRelacionadas;
+	}
+	public void setMateriasRelacionadas(List<Conteudo> materiasRelacionadas) {
+		this.materiasRelacionadas = materiasRelacionadas;
+	}
+	public Imagem getImagem() {
+		return imagem;
+	}
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
+	}
+	public GaleriasMultimidia getGaleriasMultimidia() {
+		return galeriasMultimidia;
+	}
+	public void setGaleriasMultimidia(GaleriasMultimidia galeriasMultimidia) {
+		this.galeriasMultimidia = galeriasMultimidia;
+	}
 
 
 

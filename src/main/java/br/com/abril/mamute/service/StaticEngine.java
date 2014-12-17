@@ -38,7 +38,7 @@ public class StaticEngine {
 			String slug = ((Materia)conteudo.get("materia")).getSlug();
 
 			File file = new File(path + "/" + slug + FILE_EXTENSION);
-			Writer writer =  new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+			Writer writer =  new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF8"));
       template.process(conteudo, writer);
       writer.flush();
       writer.close();

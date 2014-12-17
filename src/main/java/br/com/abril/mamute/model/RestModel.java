@@ -10,8 +10,15 @@ public abstract class RestModel {
 	public Link[] getLinks() {
 		return links;
 	}
+	public Link[] getLink() {
+		return links;
+	}
 
 	public void setLinks(Link[] newLinks) {
+		this.links = (newLinks != null ? Arrays.copyOf(newLinks, newLinks.length) : null);
+	}
+
+	public void setLink(Link[] newLinks) {
 		this.links = (newLinks != null ? Arrays.copyOf(newLinks, newLinks.length) : null);
 	}
 

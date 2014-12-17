@@ -6,8 +6,38 @@
 <body role="document">
 <th:block th:include="fragments/layout:: menu"/>  
         <div class="container corpo-conteudo" role="main">
-	        <h1>Navegue pelos sitema - MVP</h1>
-	        
+	        <h1>Home - MVP viajeaqui</h1>
+			    <div class="panel panel-primary" style="width: 680px;">
+			    	<div class="panel-heading">
+					    POC - Testes e validaçãoes do Sistema
+					  </div>
+					  <div class="panel-body">
+					    <table class="table table-striped">
+					    	<th>Link</th>
+							  <th>Descrição Atividade</th>
+								<tr>
+									<td><a href="/generate">Gerar Templete</a></td>
+									<td>Cria um arquivo provido de um template no diretorio tmp/ do projeto + path/ da aplicação + path/ template</td>
+								</tr>
+								<tr>
+									<td><a href="/editorial">Teste Editorial</a></td>
+									<td>Faz um consulta REST a um recurso do editorial</td>
+								</tr>
+								<tr>
+									<td><a href="/gerarLista" >Teste Robo</a></td>
+									<td> Recupera as 10 ultimas noticias do ViajeAqui e se a data for mais que da ultima importada são gerados os arquivos com o conteudo recuperado</td>
+								</tr>
+								<tr>
+									<td><a href="/generateMateria/547e50316b6c1236ad0001d0">Editorial+Templ</a></td>
+									<td>Teste de template + materias com o hash 547e50316b6c1236ad0001d0</td>
+								</tr>
+								<tr>
+									<td><a href="/ultimasNoticias/viajeaqui" >Ultimas Noticias ViajeAqui</a></td>
+									<td>Lista ultimas Noticias do viajeaqui</td>
+								</tr>
+							</table>
+					  </div>
+					</div>
         </div>
     </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />  

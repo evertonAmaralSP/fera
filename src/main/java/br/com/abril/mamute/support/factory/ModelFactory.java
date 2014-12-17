@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.abril.mamute.model.GaleriasMultimidia;
+import br.com.abril.mamute.model.Imagem;
 import br.com.abril.mamute.model.Link;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
@@ -45,6 +47,28 @@ public class ModelFactory {
 
 		return materia;
 	}
+	
+	public Imagem imagem(JsonObject jsonObject) {
+		if (!jsonObject.has("tipo_recurso")) {
+			logger.error("O JSON de midia nao possui a chave 'tipo_recurso'");
+			throw new IllegalStateException("O JSON de midia nao possui a chave 'imagem'");
+		}
+
+		if (!jsonObject.has("link")) {
+			logger.error("O JSON de midia nao possui a chave 'link'");
+			throw new IllegalStateException("O JSON de midia nao possui a chave 'link'");
+		}
+
+		JsonElement imagemElement = jsonObject.getAsJsonObject();
+		JsonElement linkElement = jsonObject.get("link");
+
+		final Gson jsonHandler = jsonUtil.getJsonHandler();
+
+		Imagem imagem = jsonHandler.fromJson(imagemElement, Imagem.class);
+		imagem.setLink(jsonHandler.fromJson(linkElement, Link[].class));
+
+		return imagem;
+	}
 
 	public ResultadoBuscaMateria listaConteudos(JsonObject jsonObject) {
 
@@ -62,6 +86,27 @@ public class ModelFactory {
 
 		return resultadoBuscaConteudo;
 	}
+
+	public GaleriasMultimidia galeriasMultimidia(JsonObject jsonObject) {
+		if (!jsonObject.has("tipo_recurso")) {
+			logger.error("O JSON de midia nao possui a chave 'tipo_recurso'");
+			throw new IllegalStateException("O JSON de midia nao possui a chave 'imagem'");
+		}
+
+		if (!jsonObject.has("link")) {
+			logger.error("O JSON de midia nao possui a chave 'link'");
+			throw new IllegalStateException("O JSON de midia nao possui a chave 'link'");
+		}
+
+		JsonElement imagemElement = jsonObject.getAsJsonObject();
+		JsonElement linkElement = jsonObject.get("link");
+
+		final Gson jsonHandler = jsonUtil.getJsonHandler();
+
+		GaleriasMultimidia galeriasMultimidia = jsonHandler.fromJson(imagemElement, GaleriasMultimidia.class);
+		galeriasMultimidia.setLink(jsonHandler.fromJson(linkElement, Link[].class));
+		return galeriasMultimidia;
+  }
 
 
 }

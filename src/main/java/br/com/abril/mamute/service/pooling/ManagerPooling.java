@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import br.com.abril.mamute.config.SystemConfiguration;
 import br.com.abril.mamute.dao.SourceDAO;
+import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
@@ -39,29 +40,34 @@ public class ManagerPooling {
 		List<Source> list = sourceDAO.listSourceActives();
 
 		for (Source source : list) {
-			ResultadoBuscaMateria buscaMateria = editorial.getListaInSource(source.getSource());
-			Date ultimaAtualizacao = source.getLastUpdateDatePooling();
-			String materiaId = source.getLastUpdateIdPooling();
-			Materia[] listaMateria = buscaMateria.getResultado();
-			for (Materia materia : listaMateria) {
-	      if(source.getLastUpdateDatePooling()==null || source.getLastUpdateDatePooling().before(materia.getDataDisponibilizacao())) {
-
-
-	      	String path = getPathTemplateSource(source);
-	      	String modelo = getTemplateDocument(source);
-	      	Map<String, Object> conteudo = getConteudo(materia);
-
-	      	staticEngine.process(modelo, conteudo, path);
-
-	      	if (ultimaAtualizacao ==null || ultimaAtualizacao.before(materia.getDataDisponibilizacao())) {
-	      		ultimaAtualizacao = materia.getDataDisponibilizacao();
-	      		materiaId = materia.getId();
-	      	}
-	      }
-	    }
-			source.setLastUpdateDatePooling(ultimaAtualizacao);
-			source.setLastUpdateIdPooling(materiaId);
-			sourceDAO.saveOrUpdate(source);
+			ResultadoBuscaMateria buscaMateria;
+      try {
+	      buscaMateria = editorial.getListaInSource(source.getSource());
+	      Date ultimaAtualizacao = source.getLastUpdateDatePooling();
+	      Materia[] listaMateria = buscaMateria.getResultado();
+      
+					for (Materia materia : listaMateria) {
+						
+				    if(source.getLastUpdateDatePooling()==null || source.getLastUpdateDatePooling().before(materia.getDataDisponibilizacao())) {
+				    	materia = editorial.getMateriaId(materia.getId());
+				
+				    	String path = getPathTemplateSource(source);
+				    	String modelo = getTemplateDocument(source);
+				    	Map<String, Object> conteudo = getConteudo(materia);
+				
+				    	staticEngine.process(modelo, conteudo, path);
+				
+				    	if (ultimaAtualizacao ==null || ultimaAtualizacao.before(materia.getDisponibilizacao().getData())) {
+				    		ultimaAtualizacao = materia.getDataDisponibilizacao();
+				    	}
+				    }
+					}
+				source.setLastUpdateDatePooling(ultimaAtualizacao);
+				sourceDAO.saveOrUpdate(source);
+      } catch (ComunicacaoComEditorialException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+      }
     }
 	}
 

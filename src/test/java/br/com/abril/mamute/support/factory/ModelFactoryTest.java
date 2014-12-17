@@ -59,7 +59,7 @@ public class ModelFactoryTest {
 
 		Mockito.when(jsonUtil.getJsonHandler()).thenReturn(new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create());
 
-		 ResultadoBuscaMateria resultadoBuscaMateria = modelFactory.listaConteudos(resultadoBuscaUsuarioAsJson);
+		ResultadoBuscaMateria resultadoBuscaMateria = modelFactory.listaConteudos(resultadoBuscaUsuarioAsJson);
 
 		Assert.assertNotNull(resultadoBuscaMateria);
 		Assert.assertEquals(1, resultadoBuscaMateria.getResultado().length);

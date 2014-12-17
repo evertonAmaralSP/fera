@@ -10,7 +10,7 @@ Gerenciador de publicações estáticas. Mamute busca um fonte de dados externa 
 Requirements
 -------------------
 
- * Java =< 7.0
+ * Java => 7.0
  * Maven3
  * Mysql
 
