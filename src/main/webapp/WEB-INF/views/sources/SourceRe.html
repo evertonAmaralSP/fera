@@ -11,29 +11,68 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading"><h3>Source:</h3></div>
 			  <div class="panel-body">
-			  	<div class="form-horizontal">
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Marca</label>
-					    <div class="col-sm-10" th:text="${source.product.name}"></div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Name</label>
-					    <div class="col-sm-10" th:text="${source.name}"></div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Descricao</label>
-					    <div class="col-sm-10" th:text="${source.description}"></div>
-					  </div>
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label">Url Source</label>
-					    <div class="col-sm-10" th:text="${source.source}"></div>
-					  </div>
-					</div>
+				  <dl class="dl-horizontal">
+					  <dt>Marca</dt>
+					  <dd th:text="${source.product.name}">...</dd>
+					</dl>
+				  <dl class="dl-horizontal">
+					  <dt>Nome</dt>
+					  <dd th:text="${source.name}">...</dd>
+					</dl>
+				  <dl class="dl-horizontal">
+					  <dt>Descrição</dt>
+					  <dd th:text="${source.description}">...</dd>
+					</dl>
+				  <dl class="dl-horizontal">
+					  <dt>Url Source</dt>
+					  <dd th:text="${source.source}">...</dd>
+					</dl>
 			  </div>
 			</div>
-			
+			<div class="starter-template">
+				<form method="post" th:action="@{/sources/__${source.id}__/re}">
+					<dl class="dl-horizontal">
+					  <dt><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Re-Processar</button></dt>
+					  <dd>
+						  <div class="well">
+							  <div class="input-group date" id="dataPick" >
+		  						<input type="text" class="form-control" name="dataRetroativa"/>
+		  							<span class="input-group-addon">
+		  								<span class="glyphicon glyphicon-th"></span>
+		  							</span>
+								</div>
+					    </div>
+					  </dd>
+					</dl>
+				</form>
+			</div>
+			<div class="starter-template" th:if="${resultado!=null}">
+					
+					
+					<p>Total de Registros: <b  th:text="${resultado.totalResultados}"></b></p>
+					<p>Tempo: <b  th:text="${temp}"></b> milesegundos</p>
+          <table class="table">
+	        	<th>Slug</th>
+	        	<th>Name</th>
+	        	<tr th:each="conteudo : ${lista}" >
+					<td th:text="${conteudo.slug}"></td>
+					<td th:text="${conteudo.titulo}"></td>
+	        	</tr>
+        	</table>
+      </div>
 		</div>
 	</div>
 </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#dataPick').datepicker({
+		format: "dd/mm/yyyy",
+    autoclose: true,
+    language: "pt-BR",
+    todayHighlight: true
+	});
+});
+</script>
 </html>

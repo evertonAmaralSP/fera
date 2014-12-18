@@ -22,7 +22,8 @@ public class SystemConfiguration {
 	public static final String DIR_TMP = "dir.tmp";
 
 	public static final String HTTP_CLIENT_CONFIG_TIMEOUT = "http.client.config.timeout";
-	public static final String EDTORIAL_BASE_URI = "edtorial.base.uri";
+	public static final String EDITORIAL_BASE_URI = "editorial.base.uri";
+	public static final String EDITORIAL_NUMERO_ITEM_POR_PAGINA = "editorial.numero.item.por.pagina";
 	
 	public static final String DATASOURCE_DRIVE = "dataSource.driver";
 	public static final String DATASOURCE_URL = "dataSource.url";

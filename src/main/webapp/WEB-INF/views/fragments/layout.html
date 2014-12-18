@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MVP - ViajeAqui</title>
+    <title>MVP - Mamute</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,7 +10,8 @@
     <link href="../../../resources/css/basic.css" rel="stylesheet" media="screen" th:href="@{/resources/css/basic.css}"/>
     <!-- Bootstrap -->
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-
+    <link href="../../../resources/css/datepicker3.css" rel="stylesheet" media="screen" th:href="@{/resources/css/datepicker3.css}"/>
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -30,7 +31,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" th:href="@{~/}" th:text="#{view.index.title}"></a>
+          <img th:alt="#{view.index.title}" class="navbar-brand" th:src="@{/resources/images/mamute.png}" style="padding: 5px;"><a class="navbar-brand" th:href="@{~/}" th:text="#{view.index.title}"></a></img>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -56,9 +57,9 @@
     </div><!-- /.container -->
 </body>
 <th:block th:fragment="footer-javascript">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../../../resources/js/jquery-2.1.1.min.js" th:href="@{/resources/js/jquery-2.1.1.min.js}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../../resources/js/jquery.min.js" th:href="@{/resources/js/jquery.min.js}"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:href="@{/resources/js/bootstrap.min.js}"></script>
+    <script src="../../../resources/js/bootstrap-datetipicker.js" th:href="@{/resources/js/bootstrap-datetipicker.js}"></script>
+    <script src="../../../resources/js/bootstrap-datetipicker.pt-BR.js" th:href="@{/resources/js/bootstrap-datetipicker.pt-BR.js}"></script>
 </th:block>
 </html>
