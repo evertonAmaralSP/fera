@@ -9,8 +9,10 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
@@ -91,7 +93,19 @@ public class Editorial {
 		  url = EdtorialUrls.filterOrder(url, EdtorialUrls.DATA_DISPONIBILIZACAO);
 		  return getResultadoBuscaMateria(url);
     } catch (URISyntaxException e) {
-	    logger.error("[getListaUltimasNoticias] erro Uri Syntax: {}", new Object[] {e.getMessage() });
+	    logger.error("[getListaRetroativaPorData] erro Uri Syntax: {}", new Object[] {e.getMessage() });
+    }
+		return null;
+	}
+	public ResultadoBuscaMateria getListaConsultaSlug(String url,String slug) throws ComunicacaoComEditorialException {
+		if (StringUtils.isEmpty(url))
+			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
+
+		try {
+		  url = EdtorialUrls.filterParam(url,EdtorialUrls.SLUG , slug);
+		  return getResultadoBuscaMateria(url);
+    } catch (URISyntaxException e) {
+	    logger.error("[getListaConsultaSlug] erro Uri Syntax: {}", new Object[] {e.getMessage() });
     }
 		return null;
 	}
@@ -139,6 +153,64 @@ public class Editorial {
 			}
 		}
 	}
+	public List<Materia> listaMaterias(ResultadoBuscaMateria resultadoBuscaConteudo) throws ComunicacaoComEditorialException {
+		List<Materia> l = new ArrayList<Materia>();
+	  
+		if(temPaginacaoNoResultado(resultadoBuscaConteudo) ){
+			String linkUltimaPagina = recuperarLinkUltimaPagina(resultadoBuscaConteudo);
+			int ultimaPagina = recuperarNumeroUltimaPagina(linkUltimaPagina);
+			for (int index = ultimaPagina; index >= 2 ; index--) {
+				String url = generateUrlPaginada(resultadoBuscaConteudo.getQuery(), index);
+		    
+				ResultadoBuscaMateria resultado = getResultadoBuscaMateria(url);
+		    addListaMateria(l, resultado.getResultado());
+	    } 
+		}
+	  addListaMateria(l, resultadoBuscaConteudo.getResultado());
+	  return l;
+  }
+	private void addListaMateria(List<Materia> l, Materia[] materias) {
+	  for (Materia m : materias) {
+	    l.add(m);
+	  }
+  }
+	private String generateUrlPaginada(String query, int index) throws ComunicacaoComEditorialException {
+	  String url = EdtorialUrls.BUSCA_ULTIMAS_MATEIAS;
+	  try {
+	    url = EdtorialUrls.paramQuery(url, query);
+	    url = EdtorialUrls.filterParam(url, "pw", index+"");
+	  } catch (URISyntaxException e) {
+	    logger.error("[listaMaterias] erro ao recuperar query compor query uri: {}", new Object[] { e.getMessage() });
+	    throw new ComunicacaoComEditorialException();
+    }
+	  return url;
+  }
+	private boolean temPaginacaoNoResultado(ResultadoBuscaMateria resultadoBuscaConteudo) {
+	  return resultadoBuscaConteudo.getTotalResultados().intValue() > resultadoBuscaConteudo.getItensPorPagina().intValue();
+  }
+	private String recuperarLinkUltimaPagina(ResultadoBuscaMateria resultadoBuscaConteudo) {
+		if (resultadoBuscaConteudo.getLinkByRel("ultima")!=null)
+	    return resultadoBuscaConteudo.getLinkByRel("ultima").getHref();
+    else
+	    return null;
+  }
+	private int recuperarNumeroUltimaPagina(String linkUltimaPagina) throws ComunicacaoComEditorialException {
+	  int ultimaPagina = 1;
+	  List<NameValuePair> listaParam;
+    try {
+	    listaParam = new URIBuilder(linkUltimaPagina).getQueryParams();
+	    for (NameValuePair nameValuePair : listaParam) {
+		    if("pw".equals(nameValuePair.getName())) {
+		    	return ultimaPagina = Integer.parseInt(nameValuePair.getValue());
+		    }
+		  }
+    } catch (URISyntaxException e) {
+	    logger.error("[listaMaterias] erro ao recuperar query ultimas pagina: {}", new Object[] { e.getMessage() });
+	    throw new ComunicacaoComEditorialException();
+    }
+	  
+	  return ultimaPagina;
+  }
 
 	private Materia parseMateria(String jsonString) throws ComunicacaoComEditorialException {
 		Materia materia = modelFactory.materia(jsonUtil.fromString(jsonString));

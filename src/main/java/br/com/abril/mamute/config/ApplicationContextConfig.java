@@ -13,9 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -35,6 +37,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import br.com.abril.mamute.config.settings.ConnectionSettings;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.ProductDAOImpl;
 import br.com.abril.mamute.dao.SourceDAO;
@@ -55,6 +58,7 @@ import br.com.abril.mamute.model.Upload;
 @ComponentScan("br.com.abril.mamute")
 @EnableTransactionManagement
 @EnableScheduling
+@PropertySource("classpath:/mamute.properties")
 public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 
 	private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
@@ -62,6 +66,8 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 
 	private static final String RESOURCES_HANDLER = "/resources/";
 	private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
+//	@Autowired
+//  private Environment env;
 
 	@Bean(name = "messageSource")
 	public MessageSource messageSource() {
@@ -136,14 +142,16 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 		}
 	}
 
+	@Autowired
+	ConnectionSettings conn;
 
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/mamute");
-		dataSource.setUsername("root");
-		dataSource.setPassword("");
+		dataSource.setDriverClassName(conn.getDriverClassName());
+		dataSource.setUrl(conn.getUrl());
+		dataSource.setUsername(conn.getUsername());
+		dataSource.setPassword(conn.getPassword());
 
 		return dataSource;
 	}

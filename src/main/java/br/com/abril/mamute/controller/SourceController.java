@@ -1,18 +1,18 @@
 package br.com.abril.mamute.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +27,11 @@ import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialExcep
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
+import br.com.abril.mamute.model.Template;
+import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
-import br.com.abril.mamute.service.edtorial.EdtorialUrls;
 import br.com.abril.mamute.support.date.DateUtils;
+import br.com.abril.mamute.support.factory.FileFactory;
 
 /**
  * Handles requests for the product home page.
@@ -42,6 +44,7 @@ public class SourceController {
 	private static final String SOURCE_LIST = "sources/SourceList";
 	private static final String SOURCE_FORM = "sources/SourceForm";
 	private static final String SOURCE_RE = "sources/SourceRe";
+	private static final String SOURCE_UN = "sources/SourceUn";
 
 	@Autowired
 	private SourceDAO sourceDao;
@@ -51,6 +54,8 @@ public class SourceController {
 	private TemplateDAO templateDao;
 	@Autowired
 	private Editorial editorial;
+	@Autowired
+	private StaticEngine staticEngine;
 
 	@RequestMapping("/")
 	public ModelAndView handleRequest() throws Exception {
@@ -109,54 +114,89 @@ public class SourceController {
 	
 	@RequestMapping(value = "/{id}/re", method = RequestMethod.POST)
 	public String reproccessSource(ModelMap model,@PathVariable String id,HttpServletRequest request) throws ComunicacaoComEditorialException {
+		long tempoInicioBuscaMaterias = System.currentTimeMillis();
 		String dataRetroativa = request.getParameter("dataRetroativa"); 
-		long tempoInicio = System.currentTimeMillis();
+		
 		
 		int sourceId = Integer.parseInt(id);
 		Source source = sourceDao.get(sourceId);
 		Date data = DateUtils.formataData(dataRetroativa);
 		
 		ResultadoBuscaMateria resultadoBuscaConteudo = editorial.getListaRetroativaPorData(source.getSource(),data);
+		List<Materia> listaMateria = editorial.listaMaterias(resultadoBuscaConteudo); 
 
-		List<Materia> l = new ArrayList<Materia>();
-		if(resultadoBuscaConteudo.getTotalResultados().intValue() > resultadoBuscaConteudo.getItensPorPagina().intValue() ){
-			String linkUltimaPagina = resultadoBuscaConteudo.getLinkByRel("ultima").getHref();
-			int ultimaPagina = 1;
-			 try {
-		    List<NameValuePair> listaParam = new URIBuilder(linkUltimaPagina).getQueryParams();
-		    for (NameValuePair nameValuePair : listaParam) {
-		      if("pw".equals(nameValuePair.getName())) {
-		      	ultimaPagina = Integer.parseInt(nameValuePair.getValue());
-		      }
-	      }
-	    
-		    
-				for (int index = ultimaPagina; index >= 2 ; index--) {
-					String url = EdtorialUrls.BUSCA_ULTIMAS_MATEIAS;
-					url = EdtorialUrls.paramQuery(url, resultadoBuscaConteudo.getQuery());
-					url = EdtorialUrls.filterParam(url, "pw", index+"");
-			    ResultadoBuscaMateria tmp = editorial.getResultadoBuscaMateria(url);
-			    for (Materia m : tmp.getResultado()) {
-		        l.add(m);
-	        }
-		    } 
-				
-				
-			} catch ( Exception e ) { }
-		}
-	  for (Materia m : resultadoBuscaConteudo.getResultado()){
-		  l.add(m);
-		} 
-	  long total = System.currentTimeMillis()-tempoInicio;
-	  
-		model.addAttribute("source", source);
+		long totalBuscaMaterias = System.currentTimeMillis()-tempoInicioBuscaMaterias;
+		
+		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
+		
+		for (Materia materia : listaMateria) {
+    	materia = editorial.getMateriaId(materia.getId());
+
+    	String path = FileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
+    	String modelo = getTemplateDocument(source);
+    	Map<String, Object> conteudo = getConteudo(materia);
+
+    	staticEngine.process(modelo, conteudo, path);
+    }
+		long totalProcessamentoMaterias = System.currentTimeMillis()-tempoInicioProcessamentoMaterias;
+	  model.addAttribute("source", source);
 		model.addAttribute("resultado", resultadoBuscaConteudo);
-		model.addAttribute("lista", l);
-		model.addAttribute("temp", total);
+		model.addAttribute("lista", listaMateria);
+		model.addAttribute("tempoConsultaEditorial", totalBuscaMaterias);
+		model.addAttribute("tempoProcessamentoArquivos", totalProcessamentoMaterias);
+		model.addAttribute("dataRetroativa", dataRetroativa);
 		return SOURCE_RE;
 	}
+
+	@RequestMapping(value = "/{id}/un", method = RequestMethod.GET)
+	public String unShowSource(ModelMap model,@PathVariable String id) {
+		int sourceId = Integer.parseInt(id);
+		Source source = sourceDao.get(sourceId);
+		model.addAttribute("source", source);
+		
+		return SOURCE_UN;
+	}
+	@RequestMapping(value = "/{id}/un", method = RequestMethod.POST)
+	public String unproccessSource(ModelMap model,@PathVariable String id,HttpServletRequest request) throws ComunicacaoComEditorialException {
+		long tempoInicioBuscaMaterias = System.currentTimeMillis();
+		String slug = request.getParameter("slug"); 
+		int sourceId = Integer.parseInt(id);
+		Source source = sourceDao.get(sourceId);
+		
+		ResultadoBuscaMateria resultadoBuscaConteudo = editorial.getListaConsultaSlug(source.getSource(),slug);
+		List<Materia> listaMateria = editorial.listaMaterias(resultadoBuscaConteudo); 
+		long totalBuscaMaterias = System.currentTimeMillis()-tempoInicioBuscaMaterias;
+		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
+		for (Materia materia : listaMateria) {
+    	materia = editorial.getMateriaId(materia.getId());
+
+    	String path = FileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
+    	String modelo = getTemplateDocument(source);
+    	Map<String, Object> conteudo = getConteudo(materia);
+
+    	staticEngine.process(modelo, conteudo, path);
+    }
+		long totalProcessamentoMaterias = System.currentTimeMillis()-tempoInicioProcessamentoMaterias;
+	  model.addAttribute("source", source);
+		model.addAttribute("resultado", resultadoBuscaConteudo);
+		model.addAttribute("lista", listaMateria);
+		model.addAttribute("tempoConsultaEditorial", totalBuscaMaterias);
+		model.addAttribute("tempoProcessamentoArquivos", totalProcessamentoMaterias);
+		return SOURCE_UN;
+	}
+	private String getTemplateDocument(Source source) {
+	  Template template = source.getTemplate();
+	  if(template==null || StringUtils.isEmpty(template.getDocument())) {
+	  	throw new IllegalArgumentException();
+	  }
+		return template.getDocument();
+	}
 	
-	
+	private Map<String, Object> getConteudo(Object obj) {
+	  Map<String, Object> conteudo = new HashMap<String, Object>();
+	  conteudo.put("materia", obj);
+	  return conteudo;
+  }
 	
 	private void validateTemplateId(Source source, Errors errors) {
 	  if (source.getTemplate().getId() == null) errors.rejectValue("template", "validate.template.fail.mandatory_field");

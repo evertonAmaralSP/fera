@@ -30,17 +30,13 @@
 			  </div>
 			</div>
 			<div class="starter-template">
-				<form method="post" th:action="@{/sources/__${source.id}__/re}">
+				<form method="post" th:action="@{/sources/__${source.id}__/un}">
 					<dl class="dl-horizontal">
-					  <dt><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Re-Processar</button></dt>
+					  <dt><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Processar</button></dt>
 					  <dd>
 						  <div class="well">
-							  <div class="input-group date" id="dataPick" >
-		  						<input type="text" class="form-control" name="dataRetroativa"/>
-		  							<span class="input-group-addon">
-		  								<span class="glyphicon glyphicon-th"></span>
-		  							</span>
-								</div>
+						  	<label for="slug">Slug</label>
+								<input type="text" class="form-control" name="slug"/>
 					    </div>
 					  </dd>
 					</dl>
@@ -65,15 +61,4 @@
 	</div>
 </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />
-
-<script type="text/javascript">
-$( document ).ready(function() {
-	$('#dataPick').datepicker({
-		format: "dd/mm/yyyy",
-    autoclose: true,
-    language: "pt-BR",
-    todayHighlight: true
-	});
-});
-</script>
 </html>

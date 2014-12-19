@@ -3,7 +3,6 @@ package br.com.abril.mamute.service.edtorial;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 
 import br.com.abril.mamute.config.SystemConfiguration;
@@ -18,6 +17,7 @@ public class EdtorialUrls {
 
 	public static final String DATA_DISPONIBILIZACAO = "data_disponibilizacao";
 	public static final String DATA_DISPONIBILIZACAO_INICIO = "data_disponibilizacao_inicio";
+	public static final String SLUG = "slug";
 
 	public static final String BUSCA_PATH = "/busca";
 	public static final String ID_PATH = "/id"; 

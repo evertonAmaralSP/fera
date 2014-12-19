@@ -8,15 +8,12 @@ import org.junit.Test;
 
 
 public class EdtorialUrlsTest {
-
 	
 	@Test
 	public void testFilterOrderPrimeiroParametro() throws URISyntaxException {
 		String url = "http://www.mamute.com.br";
 		String resultado = EdtorialUrls.filterOrder(url, EdtorialUrls.DATA_DISPONIBILIZACAO);
 		final String expected = url+"?order="+EdtorialUrls.DATA_DISPONIBILIZACAO;
-		System.out.println(expected);
-		System.out.println(resultado);
 		assertTrue(expected.equals(resultado));
 	}
 	@Test
@@ -24,8 +21,6 @@ public class EdtorialUrlsTest {
 		String url = "http://www.mamute.com.br?marca=mamute";
 		String resultado = EdtorialUrls.filterOrder(url, EdtorialUrls.DATA_DISPONIBILIZACAO);
 		final String expected = url+"&order="+EdtorialUrls.DATA_DISPONIBILIZACAO;
-		System.out.println(expected);
-		System.out.println(resultado);
 		assertTrue(expected.equals(resultado));
 	}
 
@@ -34,8 +29,6 @@ public class EdtorialUrlsTest {
 		String url = "http://www.mamute.com.br";
 		String resultado = EdtorialUrls.filterParam(url, EdtorialUrls.DATA_DISPONIBILIZACAO,"04/12/2014");
 		final String expected = url+"?"+EdtorialUrls.DATA_DISPONIBILIZACAO+"="+"04%2F12%2F2014";
-		System.out.println(expected);
-		System.out.println(resultado);
 		assertTrue(expected.equals(resultado));
 	}
 
@@ -44,8 +37,6 @@ public class EdtorialUrlsTest {
 		String url = "http://www.mamute.com.br/id";
 		String resultado = EdtorialUrls.paramEstruturado(url, "BLABLA");
 		final String expected = url+"/BLABLA";
-		System.out.println(expected);
-		System.out.println(resultado);
 		assertTrue(expected.equals(resultado));
 	}
 	
@@ -56,8 +47,6 @@ public class EdtorialUrlsTest {
 		String resultado = EdtorialUrls.paramQuery(url,query);
 		resultado = EdtorialUrls.filterParam(resultado, "pw",4+"");
 		final String expected = url + "?" + query + "&pw=4";
-		System.out.println(expected);
-		System.out.println(resultado);
 		assertTrue(expected.equals(resultado));
 	}
 

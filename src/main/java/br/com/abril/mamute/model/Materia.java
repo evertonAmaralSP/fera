@@ -51,15 +51,16 @@ public class Materia extends RestModel {
 	private GaleriasMultimidia galeriasMultimidia;
 	
 	public String descricaoTrunc(){
-		final String substring = corpo.substring(0,290).replaceAll("\\<.*?>","") + "...";
-		
-		return substring;
+		int maxCaracter = 290;
+		if (StringUtils.isEmpty(corpo)) return "";
+		if (corpo.length() <= maxCaracter) maxCaracter = corpo.length();
+		return corpo.substring(0,maxCaracter).replaceAll("\\<.*?>","") + "...";
 	}
 	
 	public String getImagemId(){
 		if(imagem != null) {
 			return imagem.getId();
-		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+		} else if(galeriasMultimidia != null && !CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
 			final Midia midia = galeriasMultimidia.getMidias().get(0);
 			return midia.getId();
 		}
@@ -69,7 +70,7 @@ public class Materia extends RestModel {
 	public String thumbnail60x60(){
 		if(imagem != null) {
 			return imagem.getTransformacoes().getThumbnail60x60().linkExtreno(marca);
-		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+		} else if(galeriasMultimidia != null && !CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
 			final Midia midia = galeriasMultimidia.getMidias().get(0);
 			return midia.thumbnail60x60(marca);
 		}
@@ -78,7 +79,7 @@ public class Materia extends RestModel {
 	public String thumbnail240x240(){
 		if(imagem != null) {
 			return imagem.getTransformacoes().getThumbnail240x240().linkExtreno(marca);
-		} else if(!CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
+		} else if(galeriasMultimidia != null && !CollectionUtils.isEmpty(galeriasMultimidia.getMidias())) {
 			final Midia midia = galeriasMultimidia.getMidias().get(0);
 			return midia.thumbnail240x240(marca);
 		}
