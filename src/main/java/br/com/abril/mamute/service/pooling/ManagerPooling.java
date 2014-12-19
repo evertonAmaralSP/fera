@@ -10,22 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import br.com.abril.mamute.config.SystemConfiguration;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
-import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Materia;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.support.factory.FileFactory;
 import br.com.abril.mamute.support.log.Log;
 
 @Service
 public class ManagerPooling {
-
-	private static final String DIR_TMP = SystemConfiguration.getPropertyAsString(SystemConfiguration.DIR_TMP);
 
 	@Autowired
 	private SourceDAO sourceDAO;
@@ -92,7 +90,7 @@ public class ManagerPooling {
 	  	logger.error("O applicacao para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
 	  	throw new IllegalArgumentException();
 	  }
-	  String path = DIR_TMP + "/" + product.getPath() + "/" + template.getPath();
+	  String path = FileFactory.generatePathOfDirectoryTemplate(product.getPath(),template.getPath());
 		return path;
   }
 

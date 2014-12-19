@@ -1,51 +1,87 @@
 package br.com.abril.mamute.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Transformacoes {
 	private Transformacao original;
-	private Transformacao base_crop;
+	@SerializedName("base_crop")
+	private Transformacao baseCrop;
+	@SerializedName("thumbnail_101x81")
 	private Transformacao thumbnail101x81;
+	@SerializedName("thumbnail_60x60")
 	private Transformacao thumbnail60x60;
-	private Transformacao thumbnail120x120;
+	@SerializedName("thumbnail_240x240")
 	private Transformacao thumbnail240x240;
-	private Transformacao thumbnail480x480;
+	@SerializedName("capa_ng")
 	private Transformacao capaNg;
+	@SerializedName("thumbnail_120x120")
+	private Transformacao thumbnail120x120;
+	@SerializedName("thumbnail_480x480")
+	private Transformacao thumbnail480x480;
+	@SerializedName("capa_vtsidebar")
 	private Transformacao capaVtSidebar;
-	private Transformacao autorBlog;
-	private Transformacao carrouselHomeVt;
-	private Transformacao carrosselHome620;
-	private Transformacao carrosselPequeno100;
-	private Transformacao wallpapers553x415;
-	private Transformacao wallpapers1024x768;
+	@SerializedName("capa_190x250")
 	private Transformacao capa190x250;
-	private Transformacao wallpapers800x600;
+	@SerializedName("capa_ng190x276")
 	private Transformacao capaNG190x276;
-	private Transformacao abreLugar300;
-	private Transformacao conteudoRelacionado60;
-	private Transformacao carrosselPequeno80;
-	private Transformacao produto200;
-	private Transformacao catalogo140;
-	private Transformacao fotoAmpliada842;
-	private Transformacao destaque300;
-	private Transformacao sugestoesViagem220;
-	private Transformacao listaDestinos80;
-	private Transformacao thumbGaleria72;
-	private Transformacao fotoGaleriaMateria620;
-	private Transformacao materia100x60;
-	private Transformacao materia620x350;
+	@SerializedName("home_150x200")
 	private Transformacao home150x200;
+	@SerializedName("home_350x250")
 	private Transformacao home350x250;
+	@SerializedName("home_600x200")
 	private Transformacao home600x200;
+	@SerializedName("materia_100x60")
+	private Transformacao materia100x60;
+	@SerializedName("materia_620x350")
+	private Transformacao materia620x350;
+	@SerializedName("wallpapers_553x415")
+	private Transformacao wallpapers553x415;
+	@SerializedName("wallpapers_1024x768")
+	private Transformacao wallpapers1024x768;
+	@SerializedName("wallpapers_800x600")
+	private Transformacao wallpapers800x600;
+	@SerializedName("carrossel_home_620")
+	private Transformacao carrosselHome620;
+	@SerializedName("carrossel_pequeno_100")
+	private Transformacao carrosselPequeno100;
+	@SerializedName("carrossel_pequeno_80")
+	private Transformacao carrosselPequeno80;
+	@SerializedName("carrousel_home_vt")
+	private Transformacao carrouselHomeVt;
+	@SerializedName("autor_blog")
+	private Transformacao autorBlog;
+	@SerializedName("abre_lugar_300")
+	private Transformacao abreLugar300;
+	@SerializedName("conteudo_relacionado_60")
+	private Transformacao conteudoRelacionado60;
+	@SerializedName("produto_200")
+	private Transformacao produto200;
+	@SerializedName("catalogo_140")
+	private Transformacao catalogo140;
+	@SerializedName("foto_ampliada_842")
+	private Transformacao fotoAmpliada842;
+	@SerializedName("destaque_300")
+	private Transformacao destaque300;
+	@SerializedName("sugestoes_viagem_220")
+	private Transformacao sugestoesViagem220;
+	@SerializedName("listadestinos_80")
+	private Transformacao listaDestinos80;
+	@SerializedName("thumb_galeria_72")
+	private Transformacao thumbGaleria72;
+	@SerializedName("foto_galeria_materia_620")
+	private Transformacao fotoGaleriaMateria620;
+	
 	public Transformacao getOriginal() {
 		return original;
 	}
 	public void setOriginal(Transformacao original) {
 		this.original = original;
 	}
-	public Transformacao getBase_crop() {
-		return base_crop;
+	public Transformacao getBaseCrop() {
+		return baseCrop;
 	}
-	public void setBase_crop(Transformacao base_crop) {
-		this.base_crop = base_crop;
+	public void setBaseCrop(Transformacao baseCrop) {
+		this.baseCrop = baseCrop;
 	}
 	public Transformacao getThumbnail101x81() {
 		return thumbnail101x81;

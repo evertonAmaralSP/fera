@@ -36,6 +36,13 @@ Start aplicação:
 
     mvn jetty:run
 
+Eclipse Manute
+------------------------------
+
+Start project eclipse:
+
+    mvn eclipse:eclipse -Dwtpversion=2.0
+
 Contributors
 ------------
 

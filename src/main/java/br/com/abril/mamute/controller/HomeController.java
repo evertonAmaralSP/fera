@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.abril.mamute.config.SystemConfiguration;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
@@ -20,6 +19,7 @@ import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.pooling.ManagerPooling;
+import br.com.abril.mamute.support.factory.FileFactory;
 
 
 /**
@@ -28,8 +28,6 @@ import br.com.abril.mamute.service.pooling.ManagerPooling;
 @Controller
 public class HomeController {
 
-
-	private static final String DIR_TMP = SystemConfiguration.getPropertyAsString(SystemConfiguration.DIR_TMP);
 	@Autowired
 	private StaticEngine staticEngine;
 
@@ -57,16 +55,12 @@ public class HomeController {
 		materia.setCorpo("Miolo");
 		Map<String, Object> conteudo = getConteudo(materia);
 
-		String path = generatePathTemplate(template);
+		String path = FileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
 		staticEngine.process(modelo, conteudo, path );
 		ModelAndView model = new ModelAndView("home");
 		return model;
 	}
 
-	private String generatePathTemplate(Template template) {
-	  String path = DIR_TMP + "/" + template.getProduct().getPath() + "/" + template.getPath();
-	  return path;
-  }
 
 	@RequestMapping("/editorial")
 	public ModelAndView testeEditorial() throws Exception {
@@ -91,7 +85,7 @@ public class HomeController {
 	public ModelAndView generateMateriaId(HttpServletRequest request,@PathVariable String id) throws Exception {
 		Template template = templateDao.get(3);
 		String modelo = template.getDocument();
-		String path = generatePathTemplate(template);
+		String path = FileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
 
 		Materia materia = editorial.getMateriaIdHash(id);
 		Map<String, Object> conteudo = getConteudo(materia);
