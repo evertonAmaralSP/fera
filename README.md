@@ -36,10 +36,10 @@ Start aplicação:
 
     mvn jetty:run
 
-Manute Eclipse
+Eclipse Manute
 ------------------------------
 
-Start eclipse:
+Start project eclipse:
 
     mvn eclipse:eclipse -Dwtpversion=2.0
 
