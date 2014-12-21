@@ -38,7 +38,10 @@ public class HomeController {
 	private Editorial editorial;
 
 	@Autowired
-	ManagerPooling managerPooling;
+	private ManagerPooling managerPooling;
+	
+	@Autowired
+	private FileFactory fileFactory;
 
 	@RequestMapping("/")
 	public ModelAndView handleRequest() throws Exception {
@@ -55,7 +58,7 @@ public class HomeController {
 		materia.setCorpo("Miolo");
 		Map<String, Object> conteudo = getConteudo(materia);
 
-		String path = FileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
+		String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
 		staticEngine.process(modelo, conteudo, path );
 		ModelAndView model = new ModelAndView("home");
 		return model;
@@ -85,7 +88,7 @@ public class HomeController {
 	public ModelAndView generateMateriaId(HttpServletRequest request,@PathVariable String id) throws Exception {
 		Template template = templateDao.get(3);
 		String modelo = template.getDocument();
-		String path = FileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
+		String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(),template.getPath());
 
 		Materia materia = editorial.getMateriaIdHash(id);
 		Map<String, Object> conteudo = getConteudo(materia);

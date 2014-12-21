@@ -4,58 +4,68 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import br.com.abril.mamute.config.SystemConfiguration;
-
+@Component
+@Scope(value = "singleton")
 public class EdtorialUrls {
 
-	private EdtorialUrls() {
-	}
 
-	private static final String EDITORIAL_BASE_URI = SystemConfiguration.getPropertyAsString(SystemConfiguration.EDITORIAL_BASE_URI);
-	public static final String NUMERO_ITEM_POR_PAGINA = SystemConfiguration.getPropertyAsString(SystemConfiguration.EDITORIAL_NUMERO_ITEM_POR_PAGINA);
+	@Value("${editorial.base.uri}")
+	private String EDITORIAL_BASE_URI;
+	@Value("${editorial.numero.item.por.pagina}")
+	public String NUMERO_ITEM_POR_PAGINA;
 
-	public static final String DATA_DISPONIBILIZACAO = "data_disponibilizacao";
-	public static final String DATA_DISPONIBILIZACAO_INICIO = "data_disponibilizacao_inicio";
-	public static final String SLUG = "slug";
+	public final String DATA_DISPONIBILIZACAO = "data_disponibilizacao";
+	public final String DATA_DISPONIBILIZACAO_INICIO = "data_disponibilizacao_inicio";
+	public final String SLUG = "slug";
 
-	public static final String BUSCA_PATH = "/busca";
-	public static final String ID_PATH = "/id"; 
+	public final String BUSCA_PATH = "/busca";
+	public final String ID_PATH = "/id"; 
 	
-	public static final String MATERIAS_PATH = "/materias";
-	public static final String PER_PAGE = "per_page";
+	public final String MATERIAS_PATH = "/materias";
+	public final String PER_PAGE = "per_page";
 	
-	public static final String MATERIA_ID = EDITORIAL_BASE_URI + MATERIAS_PATH + ID_PATH;
+	public final String MATERIA_ID = EDITORIAL_BASE_URI + MATERIAS_PATH + ID_PATH;
 
 
-	public static final String BUSCA_ULTIMAS_MATEIAS = EDITORIAL_BASE_URI + MATERIAS_PATH + BUSCA_PATH;
+	public final String BUSCA_ULTIMAS_MATEIAS = EDITORIAL_BASE_URI + MATERIAS_PATH + BUSCA_PATH;
 
-	public static String filterOrder(String url, String param) throws URISyntaxException {
+	public String filterOrder(String url, String param) throws URISyntaxException {
 		 return filterParam(url,"order",param);
 	}
-	public static String filterParam(String url,String param, String value) throws URISyntaxException {
+	public String filterParam(String url,String param, String value) throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(url).addParameter(param, value);
 		URI uri = uriBuilder.build();
 		
 		return uri.toString();
 	}
 	
-	public static String paramEstruturado(String url, String value) throws URISyntaxException {
+	public String paramEstruturado(String url, String value) throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(url);
 		uriBuilder.setPath( uriBuilder.getPath() + "/" + value);
 
 		return uriBuilder.toString();
 	}
 	@SuppressWarnings("deprecation")
-  public static String paramQuery(String url, String value) throws URISyntaxException {
+  public String paramQuery(String url, String value) throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(url);
 		uriBuilder.setQuery(value);  
 		return uriBuilder.toString();
 	}
+	public String getEDITORIAL_BASE_URI() {
+		return EDITORIAL_BASE_URI;
+	}
+	public void setEDITORIAL_BASE_URI(String eDITORIAL_BASE_URI) {
+		EDITORIAL_BASE_URI = eDITORIAL_BASE_URI;
+	}
+	public String getNUMERO_ITEM_POR_PAGINA() {
+		return NUMERO_ITEM_POR_PAGINA;
+	}
+	public void setNUMERO_ITEM_POR_PAGINA(String nUMERO_ITEM_POR_PAGINA) {
+		NUMERO_ITEM_POR_PAGINA = nUMERO_ITEM_POR_PAGINA;
+	}
 	
-//	public static String buscaParamQuery(String url, String param) throws URISyntaxException {
-//		UriBuilder uri = UriBuilder.fromPath(url).`
-//
-//		return uriBuilder.toString();
-//	}
 }

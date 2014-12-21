@@ -46,12 +46,14 @@ public class Editorial {
 	private JsonUtil jsonUtil;
 	@Autowired
 	private ModelFactory modelFactory;
+	@Autowired
+	private EdtorialUrls edtorialUrls;
 
 	public Materia getMateriaIdHash(String idHash) throws ComunicacaoComEditorialException {
 		if (StringUtils.isEmpty(idHash))
 			throw new IllegalArgumentException("Atributo idHash não pode ser vazio.");
     try {
-    	String url = EdtorialUrls.paramEstruturado(EdtorialUrls.MATERIA_ID, idHash);
+    	String url = edtorialUrls.paramEstruturado(edtorialUrls.MATERIA_ID, idHash);
 	    return getMateriaId(url);
     } catch (URISyntaxException e) {
     	 logger.error("[getMateriaIdHash] erro Uri Syntax: {}", new Object[] {e.getMessage() });
@@ -73,9 +75,9 @@ public class Editorial {
 			throw new IllegalArgumentException("Atributo marca não pode ser vazio.");
 
 		try {
-		  String url = EdtorialUrls.filterParam(EdtorialUrls.BUSCA_ULTIMAS_MATEIAS, "marca", marca);
-		  url = EdtorialUrls.filterParam(url,EdtorialUrls.PER_PAGE , EdtorialUrls.NUMERO_ITEM_POR_PAGINA);
-		  url = EdtorialUrls.filterOrder(url, EdtorialUrls.DATA_DISPONIBILIZACAO);
+		  String url = edtorialUrls.filterParam(edtorialUrls.BUSCA_ULTIMAS_MATEIAS, "marca", marca);
+		  url = edtorialUrls.filterParam(url,edtorialUrls.PER_PAGE , edtorialUrls.NUMERO_ITEM_POR_PAGINA);
+		  url = edtorialUrls.filterOrder(url, edtorialUrls.DATA_DISPONIBILIZACAO);
 		  return getResultadoBuscaMateria(url);
     } catch (URISyntaxException e) {
 	    logger.error("[getListaUltimasNoticias] erro Uri Syntax: {}", new Object[] {e.getMessage() });
@@ -88,9 +90,9 @@ public class Editorial {
 			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
 
 		try {
-		  url = EdtorialUrls.filterParam(url,EdtorialUrls.PER_PAGE , EdtorialUrls.NUMERO_ITEM_POR_PAGINA);
-		  url = EdtorialUrls.filterParam(url,EdtorialUrls.DATA_DISPONIBILIZACAO_INICIO , DateUtils.format(date));
-		  url = EdtorialUrls.filterOrder(url, EdtorialUrls.DATA_DISPONIBILIZACAO);
+		  url = edtorialUrls.filterParam(url,edtorialUrls.PER_PAGE , edtorialUrls.NUMERO_ITEM_POR_PAGINA);
+		  url = edtorialUrls.filterParam(url,edtorialUrls.DATA_DISPONIBILIZACAO_INICIO , DateUtils.format(date));
+		  url = edtorialUrls.filterOrder(url, edtorialUrls.DATA_DISPONIBILIZACAO);
 		  return getResultadoBuscaMateria(url);
     } catch (URISyntaxException e) {
 	    logger.error("[getListaRetroativaPorData] erro Uri Syntax: {}", new Object[] {e.getMessage() });
@@ -102,7 +104,7 @@ public class Editorial {
 			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
 
 		try {
-		  url = EdtorialUrls.filterParam(url,EdtorialUrls.SLUG , slug);
+		  url = edtorialUrls.filterParam(url,edtorialUrls.SLUG , slug);
 		  return getResultadoBuscaMateria(url);
     } catch (URISyntaxException e) {
 	    logger.error("[getListaConsultaSlug] erro Uri Syntax: {}", new Object[] {e.getMessage() });
@@ -175,10 +177,10 @@ public class Editorial {
 	  }
   }
 	private String generateUrlPaginada(String query, int index) throws ComunicacaoComEditorialException {
-	  String url = EdtorialUrls.BUSCA_ULTIMAS_MATEIAS;
+	  String url = edtorialUrls.BUSCA_ULTIMAS_MATEIAS;
 	  try {
-	    url = EdtorialUrls.paramQuery(url, query);
-	    url = EdtorialUrls.filterParam(url, "pw", index+"");
+	    url = edtorialUrls.paramQuery(url, query);
+	    url = edtorialUrls.filterParam(url, "pw", index+"");
 	  } catch (URISyntaxException e) {
 	    logger.error("[listaMaterias] erro ao recuperar query compor query uri: {}", new Object[] { e.getMessage() });
 	    throw new ComunicacaoComEditorialException();
