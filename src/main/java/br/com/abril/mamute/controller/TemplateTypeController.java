@@ -31,11 +31,10 @@ public class TemplateTypeController {
 	private TemplateTypeDAO templateTypeDao;
 
 	@RequestMapping("/")
-	public ModelAndView handleRequest() throws Exception {
+	public String getListaTemplateType(ModelMap model) throws Exception {
 		List<TemplateType> listTemplateTypes = templateTypeDao.list();
-		ModelAndView model = new ModelAndView(TEMPLATE_TYPE_LIST);
-		model.addObject("listTemplateTypes", listTemplateTypes);
-		return model;
+		model.addAttribute("listTemplateTypes", listTemplateTypes);
+		return TEMPLATE_TYPE_LIST;
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
