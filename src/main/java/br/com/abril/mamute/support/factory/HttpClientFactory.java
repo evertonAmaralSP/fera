@@ -3,14 +3,14 @@ package br.com.abril.mamute.support.factory;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import br.com.abril.mamute.config.SystemConfiguration;
 
 @Component
 public class HttpClientFactory {
 
-	private static final int HTTP_CLIENT_CONFIG_TIMEOUT = SystemConfiguration.getPropertyAsInteger(SystemConfiguration.HTTP_CLIENT_CONFIG_TIMEOUT);
+	@Value("${http.client.config.timeout}")
+	private static int HTTP_CLIENT_CONFIG_TIMEOUT;
 
 	public static final String APPLICATION_JSON_UTF8 = "product/json; charset=utf-8";
 
@@ -26,6 +26,16 @@ public class HttpClientFactory {
 		requestBuilder = requestBuilder.setConnectionRequestTimeout(httpTimeout);
 
 		return HttpClientBuilder.create().disableContentCompression().setDefaultRequestConfig(requestBuilder.build()).build();
+	}
+
+
+	public static int getHTTP_CLIENT_CONFIG_TIMEOUT() {
+		return HTTP_CLIENT_CONFIG_TIMEOUT;
+	}
+
+
+	public static void setHTTP_CLIENT_CONFIG_TIMEOUT(int hTTP_CLIENT_CONFIG_TIMEOUT) {
+		HTTP_CLIENT_CONFIG_TIMEOUT = hTTP_CLIENT_CONFIG_TIMEOUT;
 	}
 
 }

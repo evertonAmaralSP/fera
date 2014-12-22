@@ -56,6 +56,13 @@
 			<artifactId>spring-boot-starter</artifactId>
 			<version>1.1.6.RELEASE</version>
 		</dependency>
+		
+		<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-test-mvc</artifactId>
+	  <version>1.0.0.BUILD-SNAPSHOT</version>
+	  <scope>test</scope>
+	</dependency>
 
 		<!-- Hibernate -->
 		<dependency>
@@ -102,14 +109,6 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.20</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.3</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -213,6 +212,12 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
 			<version>4.3.3</version>
+		</dependency>
+		<!-- HTML PARSE -->
+		<dependency>
+		  <groupId>org.jsoup</groupId>
+		  <artifactId>jsoup</artifactId>
+		  <version>1.8.1</version>
 		</dependency>
 	</dependencies>	
 	<build>
@@ -441,6 +446,12 @@
 			<name>Spring Milestone Repository</name>
 			<url>http://repo.spring.io/milestone</url>
 		</repository>
+		<repository>
+			<id>repository.spring.libs-snapshot</id>
+			<name>Spring libs snapshot</name>
+			<url>http://repo.springsource.org/libs-snapshot</url>
+		</repository>
+		
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>EBR Spring Release Repository</name>

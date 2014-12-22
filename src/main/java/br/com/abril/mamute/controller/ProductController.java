@@ -26,12 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.abril.mamute.config.SystemConfiguration;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.UploadDAO;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.model.Upload;
+import br.com.abril.mamute.support.factory.FileFactory;
 import br.com.abril.mamute.support.slug.SlugUtil;
 
 /**
@@ -42,8 +42,6 @@ import br.com.abril.mamute.support.slug.SlugUtil;
 public class ProductController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	private static final String DIR_TMP = SystemConfiguration.getPropertyAsString(SystemConfiguration.DIR_TMP);
 
 	private static final String PRODUCT_LIST = "marcas/ProductList";
 	private static final String PRODUCT_FORM = "marcas/ProductForm";
@@ -56,6 +54,9 @@ public class ProductController {
 
 	@Autowired
 	private UploadDAO uploadDAO;
+	
+	@Autowired
+	private FileFactory fileFactory;
 
 	@RequestMapping("/")
 	public ModelAndView handleRequest() throws Exception {
@@ -135,7 +136,7 @@ public class ProductController {
 		Product product = productDao.get(productId);
 
 		String fileName = null;
-		String path = DIR_TMP+ product.getPath();
+		String path = fileFactory.generatePathOfDirectoryProduct(product.getPath());
 
 		if (!file.isEmpty() && validateFileType(file)) {
 			logger.debug("File Description: {} ", new Object[] { file.getName() });
@@ -192,11 +193,11 @@ public class ProductController {
 	  return false;
   }
 
-	private List<String> getFilesInProduct(Product app) {
-		List<Template> list = app.getTemplates();
+	private List<String> getFilesInProduct(Product product) {
+		List<Template> list = product.getTemplates();
 		List<String> listaFile = new ArrayList<String>();
 		for (Template template : list) {
-			String path = DIR_TMP+ "/" + app.getPath()+"/"+template.getPath();
+			String path = fileFactory.generatePathOfDirectoryTemplate(product.getPath(), template.getPath());
 			File file = new File(path);
 			File afile[] = file.listFiles();
 			if(afile!=null) {

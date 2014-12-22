@@ -33,6 +33,8 @@ public class ManagerPooling {
 	StaticEngine staticEngine;
 	@Log
 	private Logger logger;
+	@Autowired
+	private FileFactory fileFactory;
 
 	public void processPoolings(){
 		List<Source> list = sourceDAO.listSourceActives();
@@ -79,6 +81,9 @@ public class ManagerPooling {
 		return template.getDocument();
   }
 
+	/* TODO: RETIRAR ESSE METODO DAQUI 
+	 * MANAGERPOOLING NAO DEVE SABER RECUPERAR PATH
+	 */
 	private String getPathTemplateSource(Source source) {
 	  Template template = source.getTemplate();
 	  Product product = template.getProduct();
@@ -90,7 +95,7 @@ public class ManagerPooling {
 	  	logger.error("O applicacao para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
 	  	throw new IllegalArgumentException();
 	  }
-	  String path = FileFactory.generatePathOfDirectoryTemplate(product.getPath(),template.getPath());
+	  String path = fileFactory.generatePathOfDirectoryTemplate(product.getPath(),template.getPath());
 		return path;
   }
 

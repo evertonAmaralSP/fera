@@ -27,6 +27,7 @@ import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.support.factory.FileFactory;
 
 @RunWith(PowerMockRunner.class)
 public class ManagerPoolingTest {
@@ -36,6 +37,8 @@ public class ManagerPoolingTest {
 	Editorial editorial;
 	@Mock
 	private Logger logger;
+	@Mock
+	private FileFactory fileFactory;
 	@Mock
 	private StaticEngine staticEngine;
 	@InjectMocks
@@ -49,6 +52,8 @@ public class ManagerPoolingTest {
 		Source source = createSource();
 		listSource.add(source);
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
+		
+		Mockito.doCallRealMethod().when(fileFactory).createDiretorio(any(String.class));
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
 		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1)).thenReturn(createMateria(HASH_ID1,10,12));

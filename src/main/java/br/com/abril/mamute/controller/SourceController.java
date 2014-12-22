@@ -56,6 +56,8 @@ public class SourceController {
 	private Editorial editorial;
 	@Autowired
 	private StaticEngine staticEngine;
+	@Autowired
+	private FileFactory fileFactory;
 
 	@RequestMapping("/")
 	public ModelAndView handleRequest() throws Exception {
@@ -132,7 +134,7 @@ public class SourceController {
 		for (Materia materia : listaMateria) {
     	materia = editorial.getMateriaId(materia.getId());
 
-    	String path = FileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
+    	String path = fileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
     	String modelo = getTemplateDocument(source);
     	Map<String, Object> conteudo = getConteudo(materia);
 
@@ -170,7 +172,7 @@ public class SourceController {
 		for (Materia materia : listaMateria) {
     	materia = editorial.getMateriaId(materia.getId());
 
-    	String path = FileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
+    	String path = fileFactory.generatePathOfDirectoryTemplate(source.getProduct().getPath(), source.getTemplate().getPath());
     	String modelo = getTemplateDocument(source);
     	Map<String, Object> conteudo = getConteudo(materia);
 

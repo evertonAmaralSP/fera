@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.abril.mamute.model.Materia;
@@ -22,6 +23,9 @@ import freemarker.template.TemplateException;
 
 @Component("staticEngine")
 public class StaticEngine {
+	
+	@Autowired
+	private FileFactory fileFactory;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	Configuration cfg;
@@ -35,10 +39,10 @@ public class StaticEngine {
 	public void process(String modelo, Map<String, Object> conteudo,String path) {
 		try {
 			Template template = new Template("materia", new StringReader(modelo), cfg);
-			FileFactory.createDiretorio(path);
+			fileFactory.createDiretorio(path);
 			String slug = ((Materia)conteudo.get("materia")).getSlug();
 
-			File file = FileFactory.createHtmlFile(path, slug);
+			File file = fileFactory.createHtmlFile(path, slug);
 			Writer writer =  new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF8"));
       template.process(conteudo, writer);
       writer.flush();
@@ -48,9 +52,5 @@ public class StaticEngine {
 		} catch (IOException e) {
 			logger.error("[StaticEngine.process] erro ao gravar arquivo na pasta tmp: {}", new Object[] {e.getMessage() });
 		}
-	}
-
-	
-
-	
+	}	
 }
