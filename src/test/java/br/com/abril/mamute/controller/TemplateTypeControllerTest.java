@@ -48,7 +48,7 @@ public class TemplateTypeControllerTest {
 		                .andExpect(MockMvcResultMatchers.status().isOk())
 		                .andExpect(MockMvcResultMatchers.model().attribute("listTemplateTypes", list))
 		                .andExpect(MockMvcResultMatchers.view().name("templateTypes/TemplateTypeList"));;
-
+		                
 	}
 
 }

@@ -213,6 +213,12 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.3.3</version>
 		</dependency>
+		<!-- HTML PARSE -->
+		<dependency>
+		  <groupId>org.jsoup</groupId>
+		  <artifactId>jsoup</artifactId>
+		  <version>1.8.1</version>
+		</dependency>
 	</dependencies>	
 	<build>
 		<plugins>
