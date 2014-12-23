@@ -184,18 +184,21 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 	}
 
 	@Autowired
+	@Primary
 	@Bean(name = "productDao")
 	public ProductDAO getProductDao(SessionFactory sessionFactory) {
 		return new ProductDAOImpl(sessionFactory);
 	}
 
 	@Autowired
+	@Primary
 	@Bean(name = "templateTypeDao")
 	public TemplateTypeDAO getTemplateTypeDao(SessionFactory sessionFactory) {
 		return new TemplateTypeDAOImpl(sessionFactory);
 	}
 
 	@Autowired
+	@Primary
 	@Bean(name = "templateDao")
 	public TemplateDAO getTemplateDao(SessionFactory sessionFactory) {
 		return new TemplateDAOImpl(sessionFactory);

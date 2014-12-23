@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import br.com.abril.mamute.dao.SourceDAO;
+import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.Product;
@@ -28,6 +29,8 @@ public class ManagerPooling {
 	@Autowired
 	private SourceDAO sourceDAO;
 	@Autowired
+	private TemplateDAO templateDAO;
+	@Autowired
 	private Editorial editorial;
 	@Autowired
 	StaticEngine staticEngine;
@@ -41,40 +44,42 @@ public class ManagerPooling {
 
 		for (Source source : list) {
 			ResultadoBuscaMateria buscaMateria;
-      try {
-	      buscaMateria = editorial.getListaInSource(source.getSource());
-	      Date ultimaAtualizacao = source.getLastUpdateDatePooling();
-	      Materia[] listaMateria = buscaMateria.getResultado();
-      
-					for (Materia materia : listaMateria) {
-						
-				    if(source.getLastUpdateDatePooling()==null || source.getLastUpdateDatePooling().before(materia.getDataDisponibilizacao())) {
-				    	materia = editorial.getMateriaId(materia.getId());
-				
-				    	String path = getPathTemplateSource(source);
-				    	String modelo = getTemplateDocument(source);
-				    	Map<String, Object> conteudo = getConteudo(materia);
-				
-				    	staticEngine.process(modelo, conteudo, path);
-				
-				    	if (ultimaAtualizacao ==null || ultimaAtualizacao.before(materia.getDisponibilizacao().getData())) {
-				    		ultimaAtualizacao = materia.getDataDisponibilizacao();
-				    	}
-				    }
-					}
-				source.setLastUpdateDatePooling(ultimaAtualizacao);
-				sourceDAO.saveOrUpdate(source);
-      } catch (ComunicacaoComEditorialException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
+			for (Template template : source.getTemplates()) {
+				try {
+		      buscaMateria = editorial.getListaInSource(source.getSource());
+		      Date ultimaAtualizacao = template.getLastUpdateDateUpdatePooling();
+		      Materia[] listaMateria = buscaMateria.getResultado();
+	      
+						for (Materia materia : listaMateria) {
+							
+					    if(template.getLastUpdateDateUpdatePooling()==null || template.getLastUpdateDateUpdatePooling().before(materia.getDataDisponibilizacao())) {
+					    	materia = editorial.getMateriaId(materia.getId());
+					
+					    	String path = getPathTemplate(template);
+					    	String modelo = getTemplateDocument(template);
+					    	Map<String, Object> conteudo = getConteudo(materia);
+					
+					    	staticEngine.process(modelo, conteudo, path);
+					
+					    	if (ultimaAtualizacao ==null || ultimaAtualizacao.before(materia.getDisponibilizacao().getData())) {
+					    		ultimaAtualizacao = materia.getDataDisponibilizacao();
+					    	}
+					    }
+						}
+						template.setLastUpdateDateUpdatePooling(ultimaAtualizacao);
+						templateDAO.saveOrUpdate(template);
+	      } catch (ComunicacaoComEditorialException e) {
+		      // TODO Auto-generated catch block
+		      e.printStackTrace();
+	      }  
       }
     }
 	}
 
-	private String getTemplateDocument(Source source) {
-	  Template template = source.getTemplate();
+	private String getTemplateDocument(Template template) {
+	  
 	  if(template==null || StringUtils.isEmpty(template.getDocument())) {
-	  	logger.error("O template para source ( {} ) nao esta carregando ou esta com o parametro document vazio.", new Object[] { source.getName()});
+	  	logger.error("O template para source ( {} ) nao esta carregando ou esta com o parametro document vazio.", new Object[] { template.getName()});
 			throw new IllegalArgumentException();
 
 	  }
@@ -84,15 +89,14 @@ public class ManagerPooling {
 	/* TODO: RETIRAR ESSE METODO DAQUI 
 	 * MANAGERPOOLING NAO DEVE SABER RECUPERAR PATH
 	 */
-	private String getPathTemplateSource(Source source) {
-	  Template template = source.getTemplate();
+	private String getPathTemplate(Template template) {
 	  Product product = template.getProduct();
 	  if(template==null || StringUtils.isEmpty(template.getPath())) {
-	  	logger.error("O template para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
+	  	logger.error("O template para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { template.getName()});
 			throw new IllegalArgumentException();
 	  }
 	  if(product==null || StringUtils.isEmpty(product.getPath())) {
-	  	logger.error("O applicacao para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { source.getName()});
+	  	logger.error("O applicacao para source ( {} ) nao esta carregando ou esta com o parametro path vazio.", new Object[] { template.getName()});
 	  	throw new IllegalArgumentException();
 	  }
 	  String path = fileFactory.generatePathOfDirectoryTemplate(product.getPath(),template.getPath());

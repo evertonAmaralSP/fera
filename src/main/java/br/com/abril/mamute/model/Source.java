@@ -1,6 +1,7 @@
 package br.com.abril.mamute.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -26,7 +28,6 @@ public class Source {
 	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
 	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
 	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
-	private static final String NOT_BLANCK_TEMPLATE = "{validate.template.fail.mandatory_field}";
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,19 +40,16 @@ public class Source {
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	@Length(max = 120, message = TAMANHO_NOME_EXCEDIDO)
 	private String source;
-	private Date lastUpdateDatePooling;
-	private String lastUpdateIdPooling;
 	private Boolean active;
 	private Date created;
 	private Date updated;
-	@NotNull(message = NOT_BLANCK_TEMPLATE)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "templateId")
-	private Template template;
 	@NotNull(message = NOT_BLANCK_PRODUCT)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")
 	private Product product;
+	
+	@OneToMany(targetEntity=Template.class, fetch = FetchType.LAZY, mappedBy = "source")
+	private List<Template> templates;
 
 
 	public Integer getId() {
@@ -78,12 +76,6 @@ public class Source {
 	public void setSource(String source) {
 		this.source = source;
 	}
-	public Template getTemplate() {
-		return template;
-	}
-	public void setTemplate(Template template) {
-		this.template = template;
-	}
 	public Product getProduct() {
 		return product;
 	}
@@ -101,18 +93,7 @@ public class Source {
 	}
 	public void setUpdated(Date updated) {
 		this.updated = updated;
-	}	public Date getLastUpdateDatePooling() {
-		return lastUpdateDatePooling;
-	}
-	public void setLastUpdateDatePooling(Date lastUpdateDatePooling) {
-		this.lastUpdateDatePooling = lastUpdateDatePooling;
-	}
-	public String getLastUpdateIdPooling() {
-		return lastUpdateIdPooling;
-	}
-	public void setLastUpdateIdPooling(String lastUpdateIdPooling) {
-		this.lastUpdateIdPooling = lastUpdateIdPooling;
-	}
+	}	
 
 	@PrePersist
 	protected void onCreate() {
@@ -128,6 +109,12 @@ public class Source {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	public List<Template> getTemplates() {
+		return templates;
+	}
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
 	}
 
 

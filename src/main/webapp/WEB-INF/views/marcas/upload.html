@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>Mamute - MVP</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -10,7 +10,7 @@
 			<h1 th:text="${app.name}"></h1>
 			<form method="post" enctype="multipart/form-data"
 				th:action="@{/marcas/upload/__${app.id}__/save}">
-				<p>File to upload: <input type="file" name="file" id="file"/></p> 
+				<p>File to upload: <input type="file" name="file" id="file"/></p>
 				<input type="submit"  class="btn btn-primary" value="submit"/>
 			</form>
 		</div>

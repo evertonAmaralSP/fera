@@ -41,6 +41,10 @@ public class TemplateDAOImpl implements TemplateDAO {
 	@Override
 	@Transactional
 	public void saveOrUpdate(Template template) {
+		Boolean validateSource = template.getSource().getId() == null;
+		if (validateSource) {
+			template.setSource(null);
+		}
 		sessionFactory.getCurrentSession().saveOrUpdate(template);
 	}
 
@@ -59,6 +63,7 @@ public class TemplateDAOImpl implements TemplateDAO {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Template.class);
 		criteria.setFetchMode("product", FetchMode.JOIN);
 		criteria.setFetchMode("type", FetchMode.JOIN);
+		criteria.setFetchMode("source", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("id",id));
 		Template template = (Template) criteria.setResultTransformer(distinctRootEntity).uniqueResult();
 		return template;
