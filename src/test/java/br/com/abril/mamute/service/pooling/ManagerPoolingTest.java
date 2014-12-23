@@ -59,7 +59,7 @@ public class ManagerPoolingTest {
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1)).thenReturn(createMateria(HASH_ID1,10,12));
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
-//		Mockito.when(staticEngine.process(documentTest,map ,pathTest)).thenReturn(true);
+
 		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
 
 		managerPooling.processPoolings();
