@@ -2,6 +2,7 @@ package br.com.abril.mamute.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -53,8 +54,10 @@ public class Template {
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	@Length(max = 120, message = TAMANHO_PATH_EXCEDIDO)
 	private String path;
-	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String document;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Column(name = "document_draft")
+	private String documentDraft;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -164,6 +167,14 @@ public class Template {
 
 	public void setLastUpdateDateUpdatePooling(Date lastUpdateDateUpdatePooling) {
 		this.lastUpdateDateUpdatePooling = lastUpdateDateUpdatePooling;
+	}
+
+	public String getDocumentDraft() {
+		return documentDraft;
+	}
+
+	public void setDocumentDraft(String documentDraft) {
+		this.documentDraft = documentDraft;
 	}
 
 

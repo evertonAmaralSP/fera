@@ -40,16 +40,16 @@
 <script src="src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../resources/js/ace/ace.js" th:href="@{/resources/js/ace.js}"></script>
 <script>
-    var editor = ace.edit("documentEditor");
-    editor.setTheme("ace/theme/dreamweaver");
-    editor.getSession().setMode("ace/mode/html");
-    editor.getSession().setTabSize(2);
-    editor.getSession().setUseSoftTabs(true);
-    editor.setHighlightActiveLine(true);
-
-    editor.getSession().on('change', function(e) {
-    	$("#document").attr("value",editor.getValue());
-    });
-    editor.setValue($("#document").val());
+	var editor = ace.edit("documentEditor");
+	editor.setTheme("ace/theme/dreamweaver");
+	editor.getSession().setMode("ace/mode/html");
+	editor.getSession().setTabSize(2);
+	editor.getSession().setUseSoftTabs(true);
+	editor.setHighlightActiveLine(true);
+	
+	editor.getSession().on('change', function(e) {
+	  $("#documentDraft").attr("value",editor.getValue());
+	});
+	editor.setValue($("#documentDraft").val());
 </script>
 </html>

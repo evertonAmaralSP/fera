@@ -12,7 +12,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -108,18 +107,16 @@ public class TemplateController {
 		validateTemplateTypeId(template, errors);
 
 		try {
-	    staticEngine.validate(template.getDocument());
+	    staticEngine.validate(template.getDocumentDraft());
     } catch (IOException e) {
     	listaSelects(model);
     	model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.sintax",null, null), e.getMessage().replaceAll("(\n)", "<br />")));
     	return TEMPLATE_FORM;
     }
-		
+
 		if (errors.hasErrors()) {
 			return TEMPLATE_FORM;
 		}
-		
-		
 
 		templateDao.saveOrUpdate(template);
 		return REDIRECT_TEMPLATES;
