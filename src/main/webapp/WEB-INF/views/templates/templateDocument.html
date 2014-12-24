@@ -3,10 +3,11 @@
 	<head>
 	</head>
 	<body>
-	<th:block th:fragment="templateDocument">
+	<th:block th:fragment="documentContent">
 				<div class="form-group" style="margin-top:10px;">
 					<label for="name">Template</label>
-					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="7" />
+					<pre id="documentEditor" style="height: 200px;" th:value="*{document}"></pre>
+					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="1" style="display:none;"/>
 					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('document')}" th:errors="*{document}"></div>
 				</div>	
 	</th:block>

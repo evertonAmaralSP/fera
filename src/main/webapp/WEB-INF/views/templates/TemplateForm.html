@@ -17,15 +17,15 @@
 				</div>
 				<div role="tabpanel">
 				  <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" id="confTab" class="active"><a href="#conf" aria-controls="home" role="tab" data-toggle="tab">Configurações</a></li>
-				    <li role="presentation"  id="documentTab"><a href="#document" aria-controls="document" role="tab" data-toggle="tab">Documento</a></li>
+				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
+				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a href="#documentContent" aria-controls="documentContent" role="tab" data-toggle="tab">Documento</a></li>
 				  </ul>
 				  <div class="tab-content">
-				    <div role="tabpanel" class="tab-pane active" id="conf">
+				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ?  '' : active" id="confContent">
 							<th:block th:replace="templates/templateConfig:: templateConf " />
 						</div>
-				    <div role="tabpanel" class="tab-pane" id="document">
-							<th:block th:replace="templates/templateDocument:: templateDocument " />
+				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ? active : '' " id="documentContent">
+							<th:block th:replace="templates/templateDocument:: documentContent " />
 				    </div>
 				  </div>
 				</div>
@@ -37,5 +37,19 @@
   </th:block>
 </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />
+<script src="src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../resources/js/ace/ace.js" th:href="@{/resources/js/ace.js}"></script>
+<script>
+    var editor = ace.edit("documentEditor");
+    editor.setTheme("ace/theme/dreamweaver");
+    editor.getSession().setMode("ace/mode/html");
+    editor.getSession().setTabSize(2);
+    editor.getSession().setUseSoftTabs(true);
+    editor.setHighlightActiveLine(true);
 
+    editor.getSession().on('change', function(e) {
+    	$("#document").attr("value",editor.getValue());
+    });
+    editor.setValue($("#document").val());
+</script>
 </html>
