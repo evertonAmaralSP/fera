@@ -69,7 +69,7 @@ public class SourceDAOImpl implements SourceDAO {
 		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Source.class);
 		criteria.setFetchMode("product", FetchMode.JOIN);
-		criteria.setFetchMode("template", FetchMode.JOIN);
+		criteria.setFetchMode("templates", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("active",true));
 		@SuppressWarnings("unchecked")
     List<Source> listSource = (List<Source>) criteria.setResultTransformer(distinctRootEntity).list();

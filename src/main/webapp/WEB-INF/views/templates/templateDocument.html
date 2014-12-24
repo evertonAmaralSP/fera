@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	<th:block th:fragment="templateDocument">
+				<div class="form-group" style="margin-top:10px;">
+					<label for="name">Template</label>
+					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="7" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('document')}" th:errors="*{document}"></div>
+				</div>	
+	</th:block>
+	</body>
+</html>

@@ -1,6 +1,6 @@
 package br.com.abril.mamute.service.pooling;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 
 import java.util.ArrayList;
@@ -21,15 +21,14 @@ import org.slf4j.Logger;
 
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
-import br.com.abril.mamute.dao.TemplateDAOImpl;
 import br.com.abril.mamute.model.DataEditoria;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
-import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
 
 @RunWith(PowerMockRunner.class)
@@ -43,7 +42,7 @@ public class ManagerPoolingTest {
 	@Mock
 	private FileFactory fileFactory;
 	@Mock
-	private StaticEngine staticEngine;
+	private StaticEngineMateria staticEngine;
 	@InjectMocks
 	private ManagerPooling managerPooling;
 	@Mock

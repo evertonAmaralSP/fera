@@ -7,59 +7,35 @@
 	<th:block th:replace="fragments/layout:: menu" />
 	<div class="container corpo-conteudo" role="main">
 		<div class="starter-template">
-			<h1>Novo/Edição Marca</h1>
-			<form method="post" th:object="${template}"
-				th:action="@{/templates/save}" role="form">
-				<input type="hidden" name="id" th:value="*{id}" />
+			<h1>Template</h1>
+			
+			
+			<form method="post" th:object="${template}" th:action="@{/templates/save}" role="form">
 				<div class="form-group">
-					<label for="name">Marca</label>
-					<select class="form-control" th:field="*{product.id}">
-						<option value="" label="--- Select ---"></option>
-						<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
-					</select>
-					<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+					<button type="button" class="btn btn-warning"  disabled="disabled">Publicar</button>
 				</div>
-				<div class="form-group">
-					<label for="name">Tipo</label>
-					<select class="form-control" th:field="*{type.id}">
-						<option value="" label="--- Select ---"></option>
-						<option th:each="type : ${listType}" th:value="${type.id}" th:text="${type.name}"></option>
-					</select>
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
-				</div>
-				<div class="form-group">
-					<label for="name">Source</label>
-					<select class="form-control" th:field="*{source.id}">
-						<option value="" label="--- Select ---"></option>
-						<option th:each="source : ${listSource}" th:value="${source.id}" th:text="${source.name}"></option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="name">Nome</label>
-					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-				</div>
-				<div class="form-group">
-					<label for="name">Descrição</label>
-					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
-				</div>
-				<div class="form-group">
-					<label for="name">Path</label>
-					<input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="path" />
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('path')}" th:errors="*{path}"></div>
-				</div>
-				<div class="form-group">
-					<label for="name">Template</label>
-					<textarea class="form-control" th:value="*{document}" th:field="*{document}" placeholder="Insira o Template" rows="7" />
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('document')}" th:errors="*{document}"></div>
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary">Save</button>
+				<div role="tabpanel">
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" id="confTab" class="active"><a href="#conf" aria-controls="home" role="tab" data-toggle="tab">Configurações</a></li>
+				    <li role="presentation"  id="documentTab"><a href="#document" aria-controls="document" role="tab" data-toggle="tab">Documento</a></li>
+				  </ul>
+				  <div class="tab-content">
+				    <div role="tabpanel" class="tab-pane active" id="conf">
+							<th:block th:replace="templates/templateConfig:: templateConf " />
+						</div>
+				    <div role="tabpanel" class="tab-pane" id="document">
+							<th:block th:replace="templates/templateDocument:: templateDocument " />
+				    </div>
+				  </div>
 				</div>
 			</form>
 		</div>
 	</div>
+	<th:block th:if="${template_errors}">
+ 	 <div th:replace="fragments/modal :: modal (errors=${template_errors})">Modal</div>
+  </th:block>
 </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />
+
 </html>

@@ -108,7 +108,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/listExports/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/listExports", method = RequestMethod.GET)
 	public ModelAndView listFile(HttpServletRequest request,@PathVariable String id) throws Exception {
 		Product product = productDao.get(Integer.parseInt(id));
 
@@ -119,7 +119,7 @@ public class ProductController {
 		return model;
 	}
 
-	@RequestMapping(value = "/upload/{id}")
+	@RequestMapping(value = "/{id}/upload")
 	public ModelAndView singleUpload(HttpServletRequest request,@PathVariable String id) {
 		int productId = Integer.parseInt(id);
 		Product product = productDao.get(productId);

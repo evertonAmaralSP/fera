@@ -18,8 +18,8 @@ import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
-import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
 import br.com.abril.mamute.support.log.Log;
 
@@ -33,7 +33,7 @@ public class ManagerPooling {
 	@Autowired
 	private Editorial editorial;
 	@Autowired
-	StaticEngine staticEngine;
+	StaticEngineMateria staticEngine;
 	@Log
 	private Logger logger;
 	@Autowired

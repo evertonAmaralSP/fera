@@ -1,5 +1,6 @@
 package br.com.abril.mamute.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,11 +28,11 @@ import br.com.abril.mamute.dao.TemplateTypeDAO;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
-import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
-import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.date.DateUtils;
+import br.com.abril.mamute.support.errors.TemplateErrors;
 import br.com.abril.mamute.support.factory.FileFactory;
 
 /**
@@ -59,8 +61,10 @@ public class TemplateController {
 	@Autowired
 	private Editorial editorial;
 	@Autowired
-	private StaticEngine staticEngine;
-
+	private StaticEngineMateria staticEngine;
+	@Autowired
+	private MessageSource messageSource;
+	
 	@RequestMapping("/")
 	public String handleRequest(ModelMap model) {
 		List<Template> listTemplates = templateDao.list();
@@ -71,9 +75,7 @@ public class TemplateController {
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newTemplate(ModelMap model) {
 		model.addAttribute("template", new Template());
-		model.addAttribute("listProduct", productDao.list());
-		model.addAttribute("listType", templateTypeDao.list());
-		model.addAttribute("listSource", sourceDAO.list());
+		listaSelects(model);
 		return TEMPLATE_FORM;
 	}
 
@@ -82,11 +84,15 @@ public class TemplateController {
 		int templateId = Integer.parseInt(id);
 		Template template = templateDao.get(templateId);
 		model.addAttribute("template", template);
-		model.addAttribute("listProduct", productDao.list());
-		model.addAttribute("listType", templateTypeDao.list());
-		model.addAttribute("listSource", sourceDAO.list());
+		listaSelects(model);
 		return TEMPLATE_FORM;
 	}
+
+	private void listaSelects(ModelMap model) {
+	  model.addAttribute("listProduct", productDao.list());
+		model.addAttribute("listType", templateTypeDao.list());
+		model.addAttribute("listSource", sourceDAO.list());
+  }
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
 	public String deleteTemplate(@PathVariable String id) {
@@ -96,23 +102,42 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveTemplate(Model model, @Valid @ModelAttribute Template template, Errors errors) {
+	public String saveTemplate(ModelMap model, @Valid @ModelAttribute Template template, Errors errors) {
 
-		Boolean validateMarca = template.getProduct().getId() != null;
-		if (!validateMarca) {
-			errors.rejectValue("product", "validate.product.fail.mandatory_field");
-		}
-		Boolean validateTemplateType = template.getType().getId() != null;
-		if (!validateTemplateType) {
-			errors.rejectValue("type", "validate.templatetype.fail.mandatory_field");
-		}
+		validadeProductId(template, errors);
+		validateTemplateTypeId(template, errors);
+
+		try {
+	    staticEngine.validate(template.getDocument());
+    } catch (IOException e) {
+    	listaSelects(model);
+    	model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.sintax",null, null), e.getMessage().replaceAll("(\n)", "<br />")));
+    	return TEMPLATE_FORM;
+    }
+		
 		if (errors.hasErrors()) {
 			return TEMPLATE_FORM;
 		}
+		
+		
 
 		templateDao.saveOrUpdate(template);
 		return REDIRECT_TEMPLATES;
 	}
+
+	private void validateTemplateTypeId(Template template, Errors errors) {
+	  Boolean validateTemplateType = template.getType().getId() != null;
+		if (!validateTemplateType) {
+			errors.rejectValue("type", "validate.templatetype.fail.mandatory_field");
+		}
+  }
+
+	private void validadeProductId(Template template, Errors errors) {
+	  Boolean validateMarca = template.getProduct().getId() != null;
+		if (!validateMarca) {
+			errors.rejectValue("product", "validate.product.fail.mandatory_field");
+		}
+  }
 
 	@RequestMapping(value = "/{id}/re", method = RequestMethod.GET)
 	public String reShowSource(ModelMap model, @PathVariable String id) {
@@ -207,11 +232,6 @@ public class TemplateController {
 		Map<String, Object> conteudo = new HashMap<String, Object>();
 		conteudo.put("materia", obj);
 		return conteudo;
-	}
-
-	private void validateProductId(Source source, Errors errors) {
-		if (source.getProduct().getId() == null)
-			errors.rejectValue("product", "validate.product.fail.mandatory_field");
 	}
 
 }

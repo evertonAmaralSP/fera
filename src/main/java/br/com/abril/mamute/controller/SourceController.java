@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.model.Source;
-import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
+import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
 
 /**
@@ -40,7 +40,7 @@ public class SourceController {
 	@Autowired
 	private Editorial editorial;
 	@Autowired
-	private StaticEngine staticEngine;
+	private StaticEngineMateria staticEngine;
 	@Autowired
 	private FileFactory fileFactory;
 
