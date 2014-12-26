@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	<th:block th:fragment="templateConf">
+				<input type="hidden" name="id" th:value="*{id}" />
+				<div class="row" style="margin-top:10px;">
+			  	<div class="col-xs-6">
+			  		<div class="form-group">
+							<label for="name">Marca</label>
+							<select class="form-control" th:field="*{product.id}">
+								<option value="" label="--- Select ---"></option>
+								<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
+							</select>
+							<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
+						</div>
+					</div>
+				  <div class="col-xs-6">
+  					<div class="form-group">
+							<label for="name">Source</label>
+							<select class="form-control" th:field="*{source.id}">
+								<option value="" label="--- Select ---"></option>
+								<option th:each="source : ${listSource}" th:value="${source.id}" th:text="${source.name}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+			  	<div class="col-xs-6">
+						<div class="form-group">
+							<label for="name">Nome</label>
+							<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
+							<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+						</div>
+			 	  </div>
+				  <div class="col-xs-6">
+			  		<div class="form-group">
+							<label for="name">Tipo</label>
+							<select class="form-control" th:field="*{type.id}">
+								<option value="" label="--- Select ---"></option>
+								<option th:each="type : ${listType}" th:value="${type.id}" th:text="${type.name}"></option>
+							</select>
+							<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name">Descrição</label>
+					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+				</div>
+				<div class="form-group">
+					<label for="name">Path</label>
+					<input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="path" />
+					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('path')}" th:errors="*{path}"></div>
+				</div>
+					
+	</th:block>
+	</body>
+</html>

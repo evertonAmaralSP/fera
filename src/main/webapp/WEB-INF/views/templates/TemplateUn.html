@@ -9,38 +9,34 @@
 		<div class="starter-template">
 			<h1>ReProcess</h1>
 			<div class="panel panel-default">
-			  <div class="panel-heading"><h3>Source:</h3></div>
+			  <div class="panel-heading"><h3>Template:</h3></div>
 			  <div class="panel-body">
 				  <dl class="dl-horizontal">
 					  <dt>Marca</dt>
-					  <dd th:text="${source.product.name}">...</dd>
+					  <dd th:text="${template.product.name}">...</dd>
 					</dl>
 				  <dl class="dl-horizontal">
 					  <dt>Nome</dt>
-					  <dd th:text="${source.name}">...</dd>
+					  <dd th:text="${template.name}">...</dd>
 					</dl>
 				  <dl class="dl-horizontal">
 					  <dt>Descrição</dt>
-					  <dd th:text="${source.description}">...</dd>
+					  <dd th:text="${template.description}">...</dd>
 					</dl>
 				  <dl class="dl-horizontal">
 					  <dt>Url Source</dt>
-					  <dd th:text="${source.source}">...</dd>
+					  <dd th:text="${template.source.source}">...</dd>
 					</dl>
 			  </div>
 			</div>
 			<div class="starter-template">
-				<form method="post" th:action="@{/sources/__${source.id}__/re}">
+				<form method="post" th:action="@{/templates/__${template.id}__/un}">
 					<dl class="dl-horizontal">
-					  <dt><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Re-Processar</button></dt>
+					  <dt><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Processar</button></dt>
 					  <dd>
 						  <div class="well">
-							  <div class="input-group date" id="dataPick" >
-		  						<input type="text" class="form-control" name="dataRetroativa"/>
-		  							<span class="input-group-addon">
-		  								<span class="glyphicon glyphicon-th"></span>
-		  							</span>
-								</div>
+						  	<label for="slug">Slug</label>
+								<input type="text" class="form-control" name="slug"/>
 					    </div>
 					  </dd>
 					</dl>
@@ -65,15 +61,4 @@
 	</div>
 </body>
 <th:block th:replace="fragments/layout:: footer-javascript " />
-
-<script type="text/javascript">
-$( document ).ready(function() {
-	$('#dataPick').datepicker({
-		format: "dd/mm/yyyy",
-    autoclose: true,
-    language: "pt-BR",
-    todayHighlight: true
-	});
-});
-</script>
 </html>

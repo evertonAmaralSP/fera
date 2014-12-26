@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>Mamute - MVP</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -17,8 +17,8 @@
 				<th>Gerenciamento</th>
 				<tr th:each="app : ${listProducts}">
 					<td th:text="${app.name}"></td>
-					<td><a th:href="@{/marcas/listExports/__${app.id}__}">Lista</a></td>
-					<td><a th:href="@{/marcas/upload/__${app.id}__ }">upload</a></td>
+					<td><a th:href="@{/marcas/__${app.id}__/listExports}">Lista</a></td>
+					<td><a th:href="@{/marcas/__${app.id}__/upload}">upload</a></td>
 					<td>
 					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/edit(id=${app.id})}">Editar</a>&nbsp;
 					  <a class="btn btn-danger btn-xs" th:href="@{/marcas/delete(id=${app.id})}">Deletar</a>

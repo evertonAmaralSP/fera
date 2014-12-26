@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+			<div th:fragment="modal (errors)">
+	    <div id="modalErrorsTest" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-sm">
+				  <div class="modal-content">
+				    <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" style="color:#d9534f; " >Template Error:</h4>
+			      </div>
+				    <div class="modal-body">
+				    	<h5  style="color:#d9534f;" th:utext="${errors.titulo}">...</h5>
+				    	<div class="well">
+				    	<p th:utext="${errors.corpo}">...</p>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<script type="text/javascript">
+				$('#modalErrorsTest').modal('show');
+				$( "#confTab" ).removeClass("active");
+				$( "#documentTab" ).addClass( "active" );
+				$( "#confContent" ).removeClass("active");
+				$( "#documentContent" ).addClass( "active" );
+			</script>
+			</div>
+</body>
+</html>

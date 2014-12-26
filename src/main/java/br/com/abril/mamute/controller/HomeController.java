@@ -16,9 +16,9 @@ import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Template;
-import br.com.abril.mamute.service.StaticEngine;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.pooling.ManagerPooling;
+import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
 
 
@@ -29,7 +29,7 @@ import br.com.abril.mamute.support.factory.FileFactory;
 public class HomeController {
 
 	@Autowired
-	private StaticEngine staticEngine;
+	private StaticEngineMateria staticEngine;
 
 	@Autowired
 	private TemplateDAO templateDao;

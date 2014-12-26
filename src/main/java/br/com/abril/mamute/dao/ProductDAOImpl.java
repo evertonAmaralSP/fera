@@ -3,6 +3,7 @@ package br.com.abril.mamute.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
@@ -56,6 +57,7 @@ public class ProductDAOImpl implements ProductDAO {
 		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Product.class);
 		criteria.add(Restrictions.eq("id",id));
+		criteria.setFetchMode("templates", FetchMode.JOIN);
 		Product product = (Product) criteria.setResultTransformer(distinctRootEntity).uniqueResult();
 
     return product;

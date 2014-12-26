@@ -1,8 +1,8 @@
 package br.com.abril.mamute.model;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +26,7 @@ public class Template {
 	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
 	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
 	private static final String NOT_BLANCK_TEMPLATE_TYPE = "{validate.templatetype.fail.mandatory_field}";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -44,17 +44,22 @@ public class Template {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
 	private TemplateType type;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "source_id" )
+	private Source source;
 	private Integer master_id;
 
+	private Date lastUpdateDateAvailablePooling;
+	private Date lastUpdateDateUpdatePooling;
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	@Length(max = 120, message = TAMANHO_PATH_EXCEDIDO)
 	private String path;
-	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String document;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Column(name = "document_draft")
+	private String documentDraft;
 	private Date createdAt;
 	private Date updatedAt;
-	@OneToMany(targetEntity=Source.class, fetch = FetchType.LAZY, mappedBy = "template")
-	private List<Source> sources;
 
 	public Integer getId() {
 		return id;
@@ -140,12 +145,36 @@ public class Template {
 	  return "Template [id=" + id + ", name=" + name + ", description=" + description + ", product=" + product + ", type=" + type + ", master_id=" + master_id + ", path=" + path + ", document=" + document + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
   }
 
-	public List<Source> getSources() {
-		return sources;
+	public Source getSource() {
+		return source;
 	}
 
-	public void setSources(List<Source> sources) {
-		this.sources = sources;
+	public void setSource(Source source) {
+		this.source = source;
+	}
+
+	public Date getLastUpdateDateAvailablePooling() {
+		return lastUpdateDateAvailablePooling;
+	}
+
+	public void setLastUpdateDateAvailablePooling(Date lastUpdateDateAvailablePooling) {
+		this.lastUpdateDateAvailablePooling = lastUpdateDateAvailablePooling;
+	}
+
+	public Date getLastUpdateDateUpdatePooling() {
+		return lastUpdateDateUpdatePooling;
+	}
+
+	public void setLastUpdateDateUpdatePooling(Date lastUpdateDateUpdatePooling) {
+		this.lastUpdateDateUpdatePooling = lastUpdateDateUpdatePooling;
+	}
+
+	public String getDocumentDraft() {
+		return documentDraft;
+	}
+
+	public void setDocumentDraft(String documentDraft) {
+		this.documentDraft = documentDraft;
 	}
 
 

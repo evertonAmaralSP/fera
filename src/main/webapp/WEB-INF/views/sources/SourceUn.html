@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>Mamute - MVP</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -43,8 +43,8 @@
 				</form>
 			</div>
 			<div class="starter-template" th:if="${resultado!=null}">
-					
-					
+
+
 					<p>Total de Registros: <b  th:text="${resultado.totalResultados}"></b></p>
 					<p>Tempo da Consulta ao Editorial: <b  th:text="${tempoConsultaEditorial}"></b> milesegundos</p>
 					<p>Tempo de Processamento paginas: <b  th:text="${tempoProcessamentoArquivos}"></b> milesegundos</p>

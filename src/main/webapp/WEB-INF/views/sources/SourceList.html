@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>MVP - Mamute</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -12,16 +12,12 @@
 			
 			<table class="table">
 				<th>Name</th>
-				<th>Processe em Massa</th>
-				<th>Processe Unitario</th>
 				<th>Gerenciamento</th>
 				<tr th:each="source : ${listSources}">
 					<td th:text="${source.name}"></td>
-					<td><a class="btn btn-primary btn-xs" th:href="@{/sources/__${source.id}__/re}">Re-Processar</a></td>
-					<td><a class="btn btn-primary btn-xs" th:href="@{/sources/__${source.id}__/un}">Unitario</a></td>
 					<td>
 					  <a class="btn btn-primary btn-xs" th:href="@{/sources/__${source.id}__/edit}">Editar</a>&nbsp; 
-					  <a class="btn btn-danger btn-xs" th:href="@{/sources/delete(id=${source.id})}">Deletar</a>
+					  <a class="btn btn-danger btn-xs" th:href="@{/sources/__${source.id}__/delete}">Deletar</a>
 					</td>
 				</tr>
 			</table>

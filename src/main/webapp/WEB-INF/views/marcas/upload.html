@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>Mamute - MVP</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
 	<div class="container corpo-conteudo" role="main">
 		<div class="starter-template">
-			<h1 th:text="${app.name}"></h1>
+			<h1>Marca - <b th:text="${product.name}"></b></h1>
 			<form method="post" enctype="multipart/form-data"
-				th:action="@{/marcas/upload/__${app.id}__/save}">
-				<p>File to upload: <input type="file" name="file" id="file"/></p> 
-				<input type="submit"  class="btn btn-primary" value="submit"/>
+				th:action="@{/marcas/upload/__${product.id}__/save}">
+				<p>Upload de arquivo: <input type="file" name="file" id="file" class="filestyle"  data-buttonName="btn-primary"  data-buttonText="Escolher arquivo"/></p>
+				<input type="submit"  class="btn btn-primary" value="Upload"/>
 			</form>
 		</div>
 

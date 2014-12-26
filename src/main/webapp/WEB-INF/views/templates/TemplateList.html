@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - ViajeAqui</title>
+<title>Mamute - MVP</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -13,13 +13,17 @@
 			<table class="table">
 				<th>Name</th>
 				<th>Marca</th>
+				<th>Processe em Massa</th>
+				<th>Processe Unitario</th>
 				<th>Gerenciamento</th>
 				<tr th:each="template : ${listTemplates}">
 					<td th:text="${template.name}"></td>
 					<td th:text="${template.product.name}"></td>
+					<td><a class="btn btn-primary btn-xs" th:href="@{/templates/__${template.id}__/re}">Re-Processar</a></td>
+					<td><a class="btn btn-primary btn-xs" th:href="@{/templates/__${template.id}__/un}">Unitario</a></td>
 					<td>
-					  <a class="btn btn-primary btn-xs" th:href="@{/templates/edit(id=${template.id})}">Editar</a>&nbsp;
-					  <a class="btn btn-danger btn-xs" th:href="@{/templates/delete(id=${template.id})}">Deletar</a>
+					  <a class="btn btn-primary btn-xs" th:href="@{/templates/__${template.id}__/edit}">Editar</a>&nbsp;
+					  <a class="btn btn-danger btn-xs" th:href="@{/templates/__${template.id}__/delete}">Deletar</a>
 					</td>
 				</tr>
 			</table>

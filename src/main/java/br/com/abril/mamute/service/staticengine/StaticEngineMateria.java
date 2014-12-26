@@ -1,4 +1,4 @@
-package br.com.abril.mamute.service;
+package br.com.abril.mamute.service.staticengine;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,16 +21,17 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-@Component("staticEngine")
-public class StaticEngine {
+@Component
+public class StaticEngineMateria {
 	
 	@Autowired
 	private FileFactory fileFactory;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	Configuration cfg;
+	
+	private Configuration cfg;
 
-	public StaticEngine() {
+	public StaticEngineMateria() {
 		this.cfg = new Configuration();
 		this.cfg.setClassForTemplateLoading(Materia.class,"materia");
 		this.cfg.setObjectWrapper(new DefaultObjectWrapper());
@@ -53,4 +54,7 @@ public class StaticEngine {
 			logger.error("[StaticEngine.process] erro ao gravar arquivo na pasta tmp: {}", new Object[] {e.getMessage() });
 		}
 	}	
+	public void validate(String modelo) throws IOException {
+    Template template = new Template("materia", new StringReader(modelo), cfg);
+	}
 }
