@@ -45,7 +45,7 @@ public class ParserTest {
 		parser.addPrimitivoParser(new ConteudoParser());
 		String textoParseado = parser.parse("<p>Quando queremos podemos</p></p><p>Agora suportamos soud cloud</p><p><conteudo href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\" id=\"\" slug=\"\" tipo_recurso=\"sound_cloud\" titulo=\"David Gueta\" type=\"application/json\" /></p></p><p>E tambem suportamos gmaps</p><p><conteudo href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\" id=\"(-23.6269015, -46.6901785)\" slug=\"\" tipo_recurso=\"mapa\" titulo=\"mapa\" type=\"application/json\" /></p>\");}");
 		
-		assertContains(textoParseado, "<mapa titulo=\"mapa\" href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\">");
+		assertContains(textoParseado, "<mapa titulo=\"mapa\" href=\"//www.google.com/maps/search/\\(-23.6269015, -46.6901785\\)\" id=\"\\(-23.6269015, -46.6901785\\)\" slug=\"\" type=\"application/json\">");
 		assertNotContains(textoParseado, "tipo_recurso=\"mapa\"");
 	}
 	
@@ -54,7 +54,7 @@ public class ParserTest {
 		parser.addPrimitivoParser(new ConteudoParser());
 		String textoParseado = parser.parse("<p>Quando queremos podemos</p></p><p>Agora suportamos soud cloud</p><p><conteudo href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\" id=\"\" slug=\"\" tipo_recurso=\"sound_cloud\" titulo=\"David Gueta\" type=\"application/json\" /></p></p><p>E tambem suportamos gmaps</p><p><conteudo href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\" id=\"(-23.6269015, -46.6901785)\" slug=\"\" tipo_recurso=\"mapa\" titulo=\"mapa\" type=\"application/json\" /></p>\");}");
 		
-		assertContains(textoParseado, "<soundcloud titulo=\"David Gueta\" href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\">");
+		assertContains(textoParseado, "<soundcloud titulo=\"David Gueta\" href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\" id=\"\" slug=\"\" type=\"application/json\">");
 		assertNotContains(textoParseado, "tipo_recurso=\"sound_cloud\"");
 	}
 	
