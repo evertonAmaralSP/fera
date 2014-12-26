@@ -45,7 +45,7 @@ public class ParserTest {
 		parser.addPrimitivoParser(new ConteudoParser());
 		String textoParseado = parser.parse("<p>Quando queremos podemos</p></p><p>Agora suportamos soud cloud</p><p><conteudo href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\" id=\"\" slug=\"\" tipo_recurso=\"sound_cloud\" titulo=\"David Gueta\" type=\"application/json\" /></p></p><p>E tambem suportamos gmaps</p><p><conteudo href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\" id=\"(-23.6269015, -46.6901785)\" slug=\"\" tipo_recurso=\"mapa\" titulo=\"mapa\" type=\"application/json\" /></p>\");}");
 		
-		assertContains(textoParseado, "<mapa>");
+		assertContains(textoParseado, "<mapa titulo=\"mapa\" href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\">");
 		assertNotContains(textoParseado, "tipo_recurso=\"mapa\"");
 	}
 	
@@ -54,7 +54,7 @@ public class ParserTest {
 		parser.addPrimitivoParser(new ConteudoParser());
 		String textoParseado = parser.parse("<p>Quando queremos podemos</p></p><p>Agora suportamos soud cloud</p><p><conteudo href=\"https://soundcloud.com/davidguetta/sets/david-guetta-listen-deluxe-edition-previews\" id=\"\" slug=\"\" tipo_recurso=\"sound_cloud\" titulo=\"David Gueta\" type=\"application/json\" /></p></p><p>E tambem suportamos gmaps</p><p><conteudo href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\" id=\"(-23.6269015, -46.6901785)\" slug=\"\" tipo_recurso=\"mapa\" titulo=\"mapa\" type=\"application/json\" /></p>\");}");
 		
-		assertContains(textoParseado, "<soundcloud>");
+		assertContains(textoParseado, "<soundcloud titulo=\"David Gueta\" href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\">");
 		assertNotContains(textoParseado, "tipo_recurso=\"sound_cloud\"");
 	}
 	
@@ -65,6 +65,15 @@ public class ParserTest {
 		
 		assertContains(textoParseado, "<div class=\"Nova Seção\"><p>Quando queremos podemos</p></div>");
 		assertNotContains(textoParseado, "<secao classe=\"Nova Seção\">");
+	}
+	
+	@Test
+	public void testNovaPaginaDeveriaPaginar() throws Exception {
+		parser.addPrimitivoParser(new NovaPagina());
+		String textoParseado = parser.parse("<p>Quando queremos podemos</p><nova-pagina/><secao classe=\"Nova Seção\"><p>Quando queremos podemos</p></secao>");
+		
+		assertContains(textoParseado, "<novapagina>");
+		assertNotContains(textoParseado, "<nova-pagina/>");
 	}
 
 	private void assertContains(String texto, String regexp) {

@@ -14,9 +14,8 @@ public class PrimitivoParser {
 	private List<Parser> parsers = new ArrayList<>();
 
 	public String parse(String texto) {
-		for (Parser parser : parsers) {
+		for (Parser parser : parsers)
 			texto = parser.parse(texto);
-		}
 		
 		return texto;
 	}
