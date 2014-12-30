@@ -1,51 +1,49 @@
 package br.com.abril.mamute.service.parser;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public abstract class BaseParser implements Parser {
-	public static final Pattern CHAVE_VALOR = Pattern.compile("\\s([^=\\s]*)\\s*=\\s*\"([^\"]*)\"");
-	protected Map<String, Map<String, String>> chavesValoresHolder = new HashMap<>();
+	private ThreadLocal<String> body = new ThreadLocal<>();
 	
 	@Override
 	public String parse(String texto) {
-		Matcher matcher = doGetPattern().matcher(texto);
-		StringBuffer sb = new StringBuffer(texto.length());
-		while(matcher.find())
-			matcher.appendReplacement(sb, doPrepareReplacement(matcher));
+		Document document = Jsoup.parseBodyFragment(texto);
+		Elements elements = document.select(doGetSelector());
 		
-		matcher.appendTail(sb);
-		return sb.toString();
-	}
-
-	protected abstract String doPrepareReplacement(Matcher matcher);
-	protected abstract Pattern doGetPattern();
-	
-	protected String getValue(String key, String primitivesText) {
-		return getKeyValues(primitivesText).get(key);
-	}
-	
-	protected Map<String, String> getKeyValues(String primitivesText) {
-		Map<String, String> chavesValores = null;
-		
-		chavesValores = getChavesValores(primitivesText);
-		
-		Matcher matcher = CHAVE_VALOR.matcher(primitivesText);
-		while(matcher.find())
-			chavesValores.put(matcher.group(1), matcher.group(2));
-		
-		return chavesValores;
-	}
-
-	private Map<String, String> getChavesValores(String primitivesText) {
-		Map<String, String> chavesValores;
-		if((chavesValores = chavesValoresHolder.get(primitivesText)) == null) {
-			chavesValores = new HashMap<>();
-			chavesValoresHolder.put(primitivesText, chavesValores);
+		for (Element element : elements) {
+			body.set(element.html());
+			element.after(doGetHtml(retrieveAttributesAndValues(element)));
+			element.remove();
 		}
 		
-		return chavesValores;
+		return document.body().html();
+	}
+
+	protected Map<String, String> retrieveAttributesAndValues(Element element) {
+		String[] attributesNames = doGetAttributesNames();
+		
+		if(attributesNames == null || attributesNames.length == 0)
+			return Collections.emptyMap();
+		
+		Map<String, String> attrValues = new HashMap<>();
+		for(String attrName : attributesNames)
+			attrValues.put(attrName, element.attr(attrName));
+		
+		return attrValues;
+	}
+
+	protected abstract String doGetHtml(Map<String, String> attributesAndValues);
+	protected abstract String[] doGetAttributesNames();
+	protected abstract String doGetSelector();
+
+	protected String getBody() {
+		return body.get();
 	}
 }
