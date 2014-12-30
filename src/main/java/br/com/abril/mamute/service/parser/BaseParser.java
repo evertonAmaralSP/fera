@@ -8,18 +8,30 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.abril.mamute.support.json.JsonUtil;
+
+import com.google.gson.JsonObject;
 
 public abstract class BaseParser implements Parser {
+	@Autowired
+	private JsonUtil jsonUtil;
+	
+	public void setJsonUtil(JsonUtil jsonUtil) {
+		this.jsonUtil = jsonUtil;
+	}
+	
 	private ThreadLocal<String> body = new ThreadLocal<>();
 	
 	@Override
-	public String parse(String texto) {
-		Document document = Jsoup.parseBodyFragment(texto);
+	public String parse(String corpo, JsonObject entity) {
+		Document document = Jsoup.parseBodyFragment(corpo);
 		Elements elements = document.select(doGetSelector());
 		
 		for (Element element : elements) {
 			body.set(element.html());
-			element.after(doGetHtml(retrieveAttributesAndValues(element)));
+			element.after(doGetHtml(retrieveAttributesAndValues(element), entity));
 			element.remove();
 		}
 		
@@ -39,7 +51,7 @@ public abstract class BaseParser implements Parser {
 		return attrValues;
 	}
 
-	protected abstract String doGetHtml(Map<String, String> attributesAndValues);
+	protected abstract String doGetHtml(Map<String, String> attributesAndValues, JsonObject entity);
 	protected abstract String[] doGetAttributesNames();
 	protected abstract String doGetSelector();
 
