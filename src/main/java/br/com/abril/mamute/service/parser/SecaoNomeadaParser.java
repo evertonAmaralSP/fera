@@ -7,19 +7,19 @@ import org.springframework.stereotype.Component;
 import com.google.gson.JsonObject;
 
 @Component
-public class NovaPagina extends BaseParser {
+public class SecaoNomeadaParser extends BaseParser {
 	@Override
 	protected String doGetHtml(Map<String, String> attributesAndValues, JsonObject entity) {
-		return "<novapagina>";
+		return String.format("<div class=\"%s\">%s</div>", attributesAndValues.get("classe"), getBody());
 	}
 
 	@Override
 	protected String[] doGetAttributesNames() {
-		return null;
+		return new String[]{"classe"};
 	}
 
 	@Override
 	protected String doGetCssSelector() {
-		return "nova-pagina";
+		return "secao";
 	}
 }

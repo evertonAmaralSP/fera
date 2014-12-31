@@ -1,5 +1,6 @@
 package br.com.abril.mamute.service.parser;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -85,7 +86,7 @@ public class ParserTest {
 	
 	@Test
 	public void testSecaoNomeada() throws Exception {
-		parser.addParser(new SecaoNomeada());
+		parser.addParser(new SecaoNomeadaParser());
 		String entidade = wrapTextIntoJson("<p>Quando queremos podemos</p><secao classe=\"Nova Seção\"><p>Quando queremos podemos</p></secao>");
 		String textoParseado = parser.parse(entidade);
 		
@@ -95,7 +96,7 @@ public class ParserTest {
 	
 	@Test
 	public void testNovaPaginaDeveriaPaginar() throws Exception {
-		parser.addParser(new NovaPagina());
+		parser.addParser(new NovaPaginaParser());
 		String entidade = wrapTextIntoJson("<p>Quando queremos podemos</p><nova-pagina/><secao classe=\"Nova Seção\"><p>Quando queremos podemos</p></secao>");
 		String textoParseado = parser.parse(entidade);
 		
@@ -105,13 +106,24 @@ public class ParserTest {
 	
 	@Test
 	public void testSecaoNomeadaComSoundcloudDentro() throws Exception {
-		parser.addParser(new SecaoNomeada()).addParser(new ConteudoParser());
+		parser.addParser(new SecaoNomeadaParser()).addParser(new ConteudoParser());
 		String entidade = wrapTextIntoJson(String.format("<p>Quando queremos podemos</p></p><p>Agora suportamos soud cloud</p><p><secao classe=\"Nova Seção\">%s</secao></p></p><p>E tambem suportamos gmaps</p><p><conteudo href=\"//www.google.com/maps/search/(-23.6269015, -46.6901785)\" id=\"(-23.6269015, -46.6901785)\" slug=\"\" tipo_recurso=\"mapa\" titulo=\"mapa\" type=\"application/json\" /></p>\");}", SOUND_CLOUD_TEXT));
 		String textoParseado = parser.parse(entidade);
 		
 		
 		assertContains(textoParseado, String.format("<div class=\"Nova Seção\">\\n*\\s*%s\\n*\\s*</div>", SOUND_CLOUD_EXPECTED));
 		assertNotContains(textoParseado, "tipo_recurso=\"mapa\"");
+	}
+	
+	@Test
+	public void testGaleriaMultimidia() throws Exception {
+		parser.addParser(new ConteudoParser());
+		String entidade = wrapTextIntoJson("<p>Eu disse duas.. :(</p><p>&nbsp;<conteudo href=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" id=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" slug=\"549b0f8e6b6c1250cd0000f1\" tipo_recurso=\"galeria_multimidia\" titulo=\"Fundos legais\" type=\"application/json\" /></p>");
+		
+		String textoParseado = parser.parse(entidade);
+		
+		assertContains(textoParseado, "<galeria_multimidia titulo=\"Fundos legais\" href=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" id=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" slug=\"549b0f8e6b6c1250cd0000f1\" type=\"application/json\">(</galeria_multimidia>)?");
+		assertNotContains(textoParseado, "tipo_recurso=\"galeria_multimidia\"");
 	}
 	
 	private String wrapTextIntoJson(String corpo) {
