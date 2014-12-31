@@ -53,8 +53,10 @@ public class PrimitivoParser {
 		return corpo;
 	}
 
-	public void addParser(Parser parser) {
+	public PrimitivoParser addParser(Parser parser) {
 		parser.setJsonUtil(jsonUtil);
 		parsers.add(parser);
+		
+		return this;
 	}
 }

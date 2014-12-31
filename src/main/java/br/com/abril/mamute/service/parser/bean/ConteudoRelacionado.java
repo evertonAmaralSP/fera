@@ -1,4 +1,4 @@
-package br.com.abril.mamute.service.parser;
+package br.com.abril.mamute.service.parser.bean;
 
 import com.google.gson.JsonObject;
 

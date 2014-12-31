@@ -19,7 +19,7 @@ public class NovaPagina extends BaseParser {
 	}
 
 	@Override
-	protected String doGetSelector() {
+	protected String doGetCssSelector() {
 		return "nova-pagina";
 	}
 }

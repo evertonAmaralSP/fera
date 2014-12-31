@@ -22,20 +22,32 @@ public abstract class BaseParser implements Parser {
 		this.jsonUtil = jsonUtil;
 	}
 	
-	private ThreadLocal<String> body = new ThreadLocal<>();
+	private ThreadLocal<String> tagBody = new ThreadLocal<>();
 	
 	@Override
 	public String parse(String corpo, JsonObject entity) {
 		Document document = Jsoup.parseBodyFragment(corpo);
-		Elements elements = document.select(doGetSelector());
 		
-		for (Element element : elements) {
-			body.set(element.html());
-			element.after(doGetHtml(retrieveAttributesAndValues(element), entity));
-			element.remove();
-		}
+		substituteOcurrencesOfPrimitivo(entity, document.select(doGetCssSelector()));
 		
 		return document.body().html();
+	}
+
+	private void substituteOcurrencesOfPrimitivo(JsonObject entity, Elements elements) {
+		for (Element element : elements) {
+			storeTheTagBody(element);
+			
+			replaceElement(entity, element);
+		}
+	}
+
+	private void replaceElement(JsonObject entity, Element element) {
+		element.after(doGetHtml(retrieveAttributesAndValues(element), entity));
+		element.remove();
+	}
+
+	private void storeTheTagBody(Element element) {
+		tagBody.set(element.html());
 	}
 
 	protected Map<String, String> retrieveAttributesAndValues(Element element) {
@@ -53,9 +65,9 @@ public abstract class BaseParser implements Parser {
 
 	protected abstract String doGetHtml(Map<String, String> attributesAndValues, JsonObject entity);
 	protected abstract String[] doGetAttributesNames();
-	protected abstract String doGetSelector();
+	protected abstract String doGetCssSelector();
 
 	protected String getBody() {
-		return body.get();
+		return tagBody.get();
 	}
 }

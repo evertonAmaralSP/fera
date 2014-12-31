@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 
 @Component
 public class SecaoNomeada extends BaseParser {
-
 	@Override
 	protected String doGetHtml(Map<String, String> attributesAndValues, JsonObject entity) {
 		return String.format("<div class=\"%s\">%s</div>", attributesAndValues.get("classe"), getBody());
@@ -20,7 +19,7 @@ public class SecaoNomeada extends BaseParser {
 	}
 
 	@Override
-	protected String doGetSelector() {
+	protected String doGetCssSelector() {
 		return "secao";
 	}
 }
