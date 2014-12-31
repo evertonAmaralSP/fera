@@ -1,6 +1,5 @@
 package br.com.abril.mamute.service.parser;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -124,6 +123,17 @@ public class ParserTest {
 		
 		assertContains(textoParseado, "<galeria_multimidia titulo=\"Fundos legais\" href=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" id=\"http://editorial.api.abril.com.br/galerias_multimidia/549b0f8e6b6c1250cd0000f1\" slug=\"549b0f8e6b6c1250cd0000f1\" type=\"application/json\">(</galeria_multimidia>)?");
 		assertNotContains(textoParseado, "tipo_recurso=\"galeria_multimidia\"");
+	}
+	
+	@Test
+	public void testTabela() throws Exception {
+		parser.addParser(new ConteudoParser());
+		String entidade = wrapTextIntoJson("<conteudo href=\"embed://conteudos_embutidos/tabela/54a3f4d76b6c1250cb0000b4\" id=\"embed://conteudos_embutidos/tabela/54a3f4d76b6c1250cb0000b4\" slug=\"\" tipo_recurso=\"tabela\" titulo=\"Nova Tabela\" type=\"application/json\" />");
+		
+		String textoParseado = parser.parse(entidade);
+		
+		assertContains(textoParseado, "<tabela titulo=\"Nova Tabela\" href=\"embed://conteudos_embutidos/tabela/54a3f4d76b6c1250cb0000b4\" id=\"embed://conteudos_embutidos/tabela/54a3f4d76b6c1250cb0000b4\" slug=\"\" type=\"application/json\">(</tabela>)?");
+		assertNotContains(textoParseado, "tipo_recurso=\"tabela\"");
 	}
 	
 	private String wrapTextIntoJson(String corpo) {

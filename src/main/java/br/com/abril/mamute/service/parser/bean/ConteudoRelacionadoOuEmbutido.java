@@ -2,15 +2,15 @@ package br.com.abril.mamute.service.parser.bean;
 
 import com.google.gson.JsonObject;
 
-public class ConteudoRelacionado {
+public class ConteudoRelacionadoOuEmbutido {
 
 	private JsonObject conteudoRelacionado;
 
-	public ConteudoRelacionado(JsonObject conteudoRelacionado) {
+	public ConteudoRelacionadoOuEmbutido(JsonObject conteudoRelacionado) {
 		this.conteudoRelacionado = conteudoRelacionado;
 	}
 
-	public ConteudoRelacionado() {
+	public ConteudoRelacionadoOuEmbutido() {
 		this(null);
 	}
 
