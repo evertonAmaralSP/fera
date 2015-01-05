@@ -55,6 +55,6 @@ public class StaticEngineMateria {
 		}
 	}	
 	public void validate(String modelo) throws IOException {
-    Template template = new Template("materia", new StringReader(modelo), cfg);
+    new Template("materia", new StringReader(modelo), cfg);
 	}
 }

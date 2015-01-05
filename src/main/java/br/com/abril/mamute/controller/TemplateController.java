@@ -87,12 +87,6 @@ public class TemplateController {
 		return TEMPLATE_FORM;
 	}
 
-	private void listaSelects(ModelMap model) {
-	  model.addAttribute("listProduct", productDao.list());
-		model.addAttribute("listType", templateTypeDao.list());
-		model.addAttribute("listSource", sourceDAO.list());
-  }
-
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
 	public String deleteTemplate(@PathVariable String id) {
 		int templateId = Integer.parseInt(id);
@@ -123,15 +117,15 @@ public class TemplateController {
 	}
 
 	private void validateTemplateTypeId(Template template, Errors errors) {
-	  Boolean validateTemplateType = template.getType().getId() != null;
-		if (!validateTemplateType) {
+	  Boolean validateTemplateType = (template.getType() == null || template.getType().getId() == null);
+		if (validateTemplateType) {
 			errors.rejectValue("type", "validate.templatetype.fail.mandatory_field");
 		}
   }
 
 	private void validadeProductId(Template template, Errors errors) {
-	  Boolean validateMarca = template.getProduct().getId() != null;
-		if (!validateMarca) {
+	  Boolean validateMarca = (template.getProduct() == null || template.getProduct().getId() == null);
+		if (validateMarca) {
 			errors.rejectValue("product", "validate.product.fail.mandatory_field");
 		}
   }
@@ -165,10 +159,19 @@ public class TemplateController {
 			materia = editorial.getMateriaId(materia.getId());
 
 			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
-			String modelo = getTemplateDocument(template);
-			Map<String, Object> conteudo = getConteudo(materia);
-
-			staticEngine.process(modelo, conteudo, path);
+			
+			try {
+				String modelo = getTemplateDocument(template);
+				Map<String, Object> conteudo = getConteudo(materia);
+				staticEngine.process(modelo, conteudo, path);
+			} catch (IllegalArgumentException e){
+				model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.not.public.header",null, null) ,String.format(messageSource.getMessage("template.falha.template.not.public",null, null) , template.getId(), template.getName())));
+				model.addAttribute("template", template);
+				return TEMPLATE_RE;
+			}
+			
+			
+			
 		}
 		long totalProcessamentoMaterias = System.currentTimeMillis() - tempoInicioProcessamentoMaterias;
 		model.addAttribute("template", template);
@@ -190,7 +193,7 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/{id}/un", method = RequestMethod.POST)
-	public String unproccessSource(ModelMap model, @PathVariable String id, HttpServletRequest request) throws ComunicacaoComEditorialException {
+	public String unProccessSource(ModelMap model, @PathVariable String id, HttpServletRequest request) throws ComunicacaoComEditorialException {
 		long tempoInicioBuscaMaterias = System.currentTimeMillis();
 		String slug = request.getParameter("slug");
 		int templateId = Integer.parseInt(id);
@@ -204,10 +207,16 @@ public class TemplateController {
 			materia = editorial.getMateriaId(materia.getId());
 
 			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
-			String modelo = getTemplateDocument(template);
-			Map<String, Object> conteudo = getConteudo(materia);
-
-			staticEngine.process(modelo, conteudo, path);
+			try {
+				String modelo = getTemplateDocument(template);
+				Map<String, Object> conteudo = getConteudo(materia);
+				staticEngine.process(modelo, conteudo, path);
+			} catch (IllegalArgumentException e){
+				model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.not.public.header",null, null) ,String.format(messageSource.getMessage("template.falha.template.not.public",null, null) , template.getId(), template.getName())));
+				model.addAttribute("template", template);
+				return TEMPLATE_UN;
+			}
+			
 		}
 		long totalProcessamentoMaterias = System.currentTimeMillis() - tempoInicioProcessamentoMaterias;
 		model.addAttribute("template", template);
@@ -230,5 +239,11 @@ public class TemplateController {
 		conteudo.put("materia", obj);
 		return conteudo;
 	}
+
+	private void listaSelects(ModelMap model) {
+	  model.addAttribute("listProduct", productDao.list());
+		model.addAttribute("listType", templateTypeDao.list());
+		model.addAttribute("listSource", sourceDAO.list());
+  }
 
 }
