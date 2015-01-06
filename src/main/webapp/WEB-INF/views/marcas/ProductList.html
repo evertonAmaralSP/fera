@@ -20,8 +20,8 @@
 					<td><a th:href="@{/marcas/__${app.id}__/listExports}">Lista</a></td>
 					<td><a th:href="@{/marcas/__${app.id}__/upload}">upload</a></td>
 					<td>
-					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/edit(id=${app.id})}">Editar</a>&nbsp;
-					  <a class="btn btn-danger btn-xs" th:href="@{/marcas/delete(id=${app.id})}">Deletar</a>
+					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/__${app.id}__/edit}">Editar</a>&nbsp;
+					  <a class="btn btn-danger btn-xs" th:href="@{/marcas/__${app.id}__/delete}">Deletar</a>
 					</td>
 				</tr>
 			</table>

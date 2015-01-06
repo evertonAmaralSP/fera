@@ -41,6 +41,8 @@ import br.com.abril.mamute.support.slug.SlugUtil;
 @RequestMapping("/marcas")
 public class ProductController {
 
+	private static final String REDIRECT_MARCAS = "redirect:/marcas/";
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private static final String PRODUCT_LIST = "marcas/ProductList";
@@ -59,11 +61,10 @@ public class ProductController {
 	private FileFactory fileFactory;
 
 	@RequestMapping("/")
-	public ModelAndView handleRequest() throws Exception {
+	public String handleRequest(ModelMap model) throws Exception {
 		List<Product> listProducts = productDao.list();
-		ModelAndView model = new ModelAndView(PRODUCT_LIST);
-		model.addObject("listProducts", listProducts);
-		return model;
+		model.addAttribute("listProducts", listProducts);
+		return PRODUCT_LIST;
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -72,20 +73,19 @@ public class ProductController {
 		return PRODUCT_FORM;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String editProduct(ModelMap model, HttpServletRequest request) {
-		int productId = Integer.parseInt(request.getParameter("id"));
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	public String editProduct(ModelMap model, @PathVariable String id) {
+		int productId = Integer.parseInt(id);
 		Product product = productDao.get(productId);
 		model.addAttribute("product", product);
 		return PRODUCT_FORM;
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteProduct(HttpServletRequest request) {
-		int productId = Integer.parseInt(request.getParameter("id"));
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable String id) {
+		int productId = Integer.parseInt(id);
 		productDao.delete(productId);
-
-		return "redirect:/marcas/";
+		return REDIRECT_MARCAS;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -97,7 +97,7 @@ public class ProductController {
 
 		productDao.saveOrUpdate(product);
 
-		return "redirect:/marcas/";
+		return REDIRECT_MARCAS;
 	}
 
 	/**
