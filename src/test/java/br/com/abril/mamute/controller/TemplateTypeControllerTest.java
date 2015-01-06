@@ -41,7 +41,7 @@ public class TemplateTypeControllerTest {
 	@InjectMocks
 	private TemplateTypeController templateTypeController;
 
-	MockMvc mockMvc;
+	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() throws Exception {

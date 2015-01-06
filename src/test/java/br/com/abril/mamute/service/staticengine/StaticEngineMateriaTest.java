@@ -1,40 +1,32 @@
 package br.com.abril.mamute.service.staticengine;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.any;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.com.abril.mamute.model.Materia;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-
+@RunWith(PowerMockRunner.class)
 public class StaticEngineMateriaTest {
 
+	@InjectMocks
+	private StaticEngineMateria staticEngineMateria;
+	
+	@Test(expected=IOException.class)
+	public void testValidateErrorSintax() throws IOException {
+		String modelo = "<html>${materia.doido()</html>";
+		staticEngineMateria.validate(modelo);
+	}
+	
 	@Test
-	public void test() {
+	public void testValidate() throws IOException {
 		String modelo = "<html>${materia.doido()}</html>";
-		Template template = null;
-    try {
-	    template = new Template("materia", new StringReader(modelo), configuracaoBasica());
-    } catch (IOException e) {
-	    // TODO Auto-generated catch block
-    	System.out.println(e.getMessage());
-    }
-    
-		System.out.println(template.getName());
+		staticEngineMateria.validate(modelo); 
 	}
 
-	
-	public Configuration configuracaoBasica() {
-		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(Materia.class,"materia");
-	  cfg.setObjectWrapper(new DefaultObjectWrapper());
-	  return cfg;
-  }
 
 }

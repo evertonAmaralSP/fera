@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
@@ -45,11 +44,10 @@ public class SourceController {
 	private FileFactory fileFactory;
 
 	@RequestMapping("/")
-	public ModelAndView handleRequest() throws Exception {
+	public String handleRequest(ModelMap model) throws Exception {
 		List<Source> listSources = sourceDao.list();
-		ModelAndView model = new ModelAndView(SOURCE_LIST);
-		model.addObject("listSources", listSources);
-		return model;
+		model.addAttribute("listSources", listSources);
+		return SOURCE_LIST;
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -87,7 +85,7 @@ public class SourceController {
 	}
 
 	private void validateProductId(Source source, Errors errors) {
-	  if (source.getProduct().getId() == null) errors.rejectValue("product", "validate.product.fail.mandatory_field");
+	  if (source.getProduct() == null || source.getProduct().getId() == null) errors.rejectValue("product", "validate.product.fail.mandatory_field");
   }
 
 }
