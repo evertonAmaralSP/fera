@@ -62,4 +62,17 @@ public class ProductDAOImpl implements ProductDAO {
 
     return product;
 	}
+	
+	@Override
+	@Transactional
+	public Product getIdJoinUpload(int id) {
+		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Product.class);
+		criteria.add(Restrictions.eq("id",id));
+		criteria.setFetchMode("uploads", FetchMode.JOIN);
+		Product product = (Product) criteria.setResultTransformer(distinctRootEntity).uniqueResult();
+
+    return product;
+	}
+	
 }

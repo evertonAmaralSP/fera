@@ -85,7 +85,9 @@ public class SourceController {
 	}
 
 	private void validateProductId(Source source, Errors errors) {
-	  if (source.getProduct() == null || source.getProduct().getId() == null) errors.rejectValue("product", "validate.product.fail.mandatory_field");
+	  if (source.getProduct() == null || source.getProduct().getId() == null) {
+	  	errors.rejectValue("product", "validate.product.fail.mandatory_field");
+	  }
   }
 
 }

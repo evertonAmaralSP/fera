@@ -12,12 +12,12 @@
 
 			<table class="table">
 				<th>Name</th>
-				<th>Lista Arquivos Gerados</th>
+				<!-- <th>Lista Arquivos Gerados</th> -->
 				<th>Lista Upload</th>
 				<th>Gerenciamento</th>
 				<tr th:each="app : ${listProducts}">
 					<td th:text="${app.name}"></td>
-					<td><a th:href="@{/marcas/__${app.id}__/listExports}">Lista</a></td>
+					<!-- <td><a th:href="@{/marcas/__${app.id}__/listExports}">Lista</a></td> -->
 					<td><a th:href="@{/marcas/__${app.id}__/upload}">upload</a></td>
 					<td>
 					  <a class="btn btn-primary btn-xs" th:href="@{/marcas/__${app.id}__/edit}">Editar</a>&nbsp;

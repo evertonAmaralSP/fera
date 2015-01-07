@@ -3,6 +3,9 @@ package br.com.provaconceito;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -18,5 +21,18 @@ public class Teste {
 
 		assertTrue(now.after(menor));
 		assertTrue(now.before(maior));
+	}
+	
+	@Test
+	public void maps(){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("1", "Ola");
+
+		System.out.println(map.get("1")!=null);
+		System.out.println(map.get(null));
+		System.out.println(map.get("2")!=null);
+		
 	}
 }

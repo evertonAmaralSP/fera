@@ -9,12 +9,34 @@
 		<div class="starter-template">
 			<h1>Marca - <b th:text="${product.name}"></b></h1>
 			<form method="post" enctype="multipart/form-data"
-				th:action="@{/marcas/upload/__${product.id}__/save}">
+				th:action="@{/marcas/__${product.id}__/upload}">
 				<p>Upload de arquivo: <input type="file" name="file" id="file" class="filestyle"  data-buttonName="btn-primary"  data-buttonText="Escolher arquivo"/></p>
+					<th:block th:if="${mamuteErrors}">
+						<th:block th:if="${mamuteErrors.is('file.empty')}">	
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.empty')}">ERROR</div>
+				 	 	</th:block>
+				 	 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">	
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
+				 	 	</th:block>
+				 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">	
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
+				 	 	</th:block>
+				  </th:block>
 				<input type="submit"  class="btn btn-primary" value="Upload"/>
 			</form>
 		</div>
-
+			<div style="margin-top: 10px;">
+				<table class="table  table-bordered  table-hover table-striped">
+					<tr class="success">
+						<th>Tipo Arquivo</th>
+						<th>Nome</th>
+					</tr>
+					<tr th:each="upload : ${product.uploads}">
+						<td th:text="${upload.type}"></td>
+						<td th:text="${upload.name}"></td>
+					</tr>
+				</table>
+			</div>
 	</div>
 	<!-- /.container -->
 

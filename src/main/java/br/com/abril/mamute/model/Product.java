@@ -43,6 +43,8 @@ public class Product  implements Serializable {
 	private List<Template> templates;
 	@OneToMany(targetEntity=Source.class, fetch = FetchType.LAZY, mappedBy = "product")
 	private List<Source> sources;
+	@OneToMany(targetEntity=Upload.class, fetch = FetchType.LAZY, mappedBy = "product")
+	private List<Upload> uploads;
 
 	public Integer getId() {
 		return id;
@@ -139,6 +141,14 @@ public class Product  implements Serializable {
 		  return false;
 	  return true;
   }
+
+	public List<Upload> getUploads() {
+		return uploads;
+	}
+
+	public void setUploads(List<Upload> uploads) {
+		this.uploads = uploads;
+	}
 
 
 }

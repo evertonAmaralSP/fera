@@ -15,17 +15,27 @@ import javax.persistence.Table;
 @Table(name = "UPLOADS")
 public class Upload {
 
+	public Upload() {}
+	
+	public Upload(Product product, String fileName, String path, String contentType) {
+		this.product=product;
+		this.name=fileName;
+		this.path=path;
+		this.type=contentType;
+  }
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
 	private String type;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")
 	private Product product;
 	private String path;
 	private Date created;
 	private Date updated;
+	
 	public Integer getId() {
 		return id;
 	}
