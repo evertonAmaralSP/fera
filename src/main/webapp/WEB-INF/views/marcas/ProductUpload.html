@@ -26,14 +26,23 @@
 			</form>
 		</div>
 			<div style="margin-top: 10px;">
+				<th:block th:if="${mamuteErrors}">
+					<th:block th:if="${mamuteErrors.is('file.not.delete')}">	
+			 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.delete')}">ERROR</div>
+			 	 	</th:block>
+			  </th:block>
 				<table class="table  table-bordered  table-hover table-striped">
 					<tr class="success">
 						<th>Tipo Arquivo</th>
 						<th>Nome</th>
+						<th>Excluir</th>
 					</tr>
 					<tr th:each="upload : ${product.uploads}">
 						<td th:text="${upload.type}"></td>
 						<td th:text="${upload.name}"></td>
+					<td>
+					  <a class="btn btn-danger btn-xs" th:href="@{/marcas/__${product.id}__/upload/__${upload.id}__/delete}">Excluir</a>
+					</td>
 					</tr>
 				</table>
 			</div>

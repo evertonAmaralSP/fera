@@ -91,6 +91,11 @@ public class FileFactory {
 		return null;
 	}
 	
+	public boolean excluir(String path, String name) {
+		File file = new File(path + "/" + name);
+		return file.delete();
+	}
+	
 	public boolean validateFileType(MultipartFile file) {
 		String[] typeValid = {"text/html", "text/x-server-parsed-html", "product/x-javascript", "text/javascript", "image/jpeg", "image/gif", "image/png", "text/css"};
 		for (String type : typeValid) {
