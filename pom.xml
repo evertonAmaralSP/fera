@@ -15,6 +15,8 @@
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<ch.qos.logback-version>1.0.13</ch.qos.logback-version>
 		<org.thymeleaf-version>2.1.2.RELEASE</org.thymeleaf-version>
+		<springdata.version>1.6.1.RELEASE</springdata.version>
+		<mongojavadriver.version>2.12.4</mongojavadriver.version>
 	</properties>
 
 	<dependencies>
@@ -50,14 +52,27 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		
-		<dependency>
-	  <groupId>org.springframework</groupId>
-	  <artifactId>spring-test-mvc</artifactId>
-	  <version>1.0.0.BUILD-SNAPSHOT</version>
-	  <scope>test</scope>
-	</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring Data for MongoDB -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>${springdata.version}</version>
+		</dependency>
+
+		<!-- Java MongoDB Driver -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongojavadriver.version}</version>
+		</dependency>
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -209,12 +224,12 @@
 		</dependency>
 		<!-- HTML PARSE -->
 		<dependency>
-		  <groupId>org.jsoup</groupId>
-		  <artifactId>jsoup</artifactId>
-		  <version>1.8.1</version>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 
-	</dependencies>	
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -316,10 +331,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<!-- <phase>compile</phase>
-						<goals>
-							<goal>check</goal>
-						</goals> -->
+						<!-- <phase>compile</phase> <goals> <goal>check</goal> </goals> -->
 					</execution>
 				</executions>
 			</plugin>
@@ -347,14 +359,15 @@
 				<configuration>
 					<warName>mamute-1.0-SNAPSHOT</warName>
 					<warName>mamute-abril</warName>
-		            <failOnMissingWebXml>false</failOnMissingWebXml>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
 
-		 <pluginManagement>
+		<pluginManagement>
 			<plugins>
-				<!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!-- This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -389,9 +402,9 @@
 		</pluginManagement>
 	</build>
 
- 	<reporting>
+	<reporting>
 		<plugins>
- 			<plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>3.0.0</version>
@@ -446,7 +459,7 @@
 			<name>Spring libs snapshot</name>
 			<url>http://repo.springsource.org/libs-snapshot</url>
 		</repository>
-		
+
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>EBR Spring Release Repository</name>

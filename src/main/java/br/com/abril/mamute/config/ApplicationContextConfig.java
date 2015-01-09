@@ -12,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -35,7 +36,10 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import com.google.gson.Gson;
+
 import br.com.abril.mamute.config.settings.ConnectionSettings;
+import br.com.abril.mamute.config.settings.MongoConfig;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.ProductDAOImpl;
 import br.com.abril.mamute.dao.SourceDAO;
@@ -54,6 +58,7 @@ import br.com.abril.mamute.model.Upload;
 
 @Configuration
 @ComponentScan("br.com.abril.mamute")
+@Import({ MongoConfig.class })
 @EnableTransactionManagement
 @EnableScheduling
 @PropertySource("classpath:/mamute.properties")
@@ -64,8 +69,8 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 
 	private static final String RESOURCES_HANDLER = "/resources/";
 	private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
-//	@Autowired
-//  private Environment env;
+
+	
 
 	@Bean(name = "messageSource")
 	public MessageSource messageSource() {
@@ -216,6 +221,12 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 	@Bean(name = "sourceDao")
 	public SourceDAO getSourceDao(SessionFactory sessionFactory) {
 		return new SourceDAOImpl(sessionFactory);
+	}
+	
+	@Autowired
+	@Bean(name = "gson")
+	public Gson getGson() {
+		return new Gson();
 	}
 	
 	@Bean

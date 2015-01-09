@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 
-import br.com.abril.mamute.model.Materia;
-import br.com.abril.mamute.model.ResultadoBuscaMateria;
+import br.com.abril.mamute.model.editorial.Materia;
+import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.support.json.JsonUtil;
 
 import com.google.gson.Gson;

@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.abril.mamute.model.GaleriasMultimidia;
-import br.com.abril.mamute.model.Imagem;
-import br.com.abril.mamute.model.Link;
-import br.com.abril.mamute.model.Materia;
-import br.com.abril.mamute.model.ResultadoBuscaMateria;
+import br.com.abril.mamute.model.editorial.GaleriasMultimidia;
+import br.com.abril.mamute.model.editorial.Imagem;
+import br.com.abril.mamute.model.editorial.Link;
+import br.com.abril.mamute.model.editorial.Materia;
+import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.support.json.JsonUtil;
 import br.com.abril.mamute.support.log.Log;
 

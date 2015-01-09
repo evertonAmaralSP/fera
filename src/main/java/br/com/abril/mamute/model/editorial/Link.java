@@ -1,4 +1,4 @@
-package br.com.abril.mamute.model;
+package br.com.abril.mamute.model.editorial;
 
 public class Link {
 

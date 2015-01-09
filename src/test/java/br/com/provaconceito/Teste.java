@@ -1,19 +1,24 @@
 package br.com.provaconceito;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
+
+import br.com.abril.mamute.support.tipos.TipoComponenteEnum;
 
 public class Teste {
 
 	
-	@Test
+//	@Test
 	public void data(){
 		Date now = new GregorianCalendar(2014, Calendar.DECEMBER, 11, 0, 0, 0).getTime();
 		Date maior = new GregorianCalendar(2014, Calendar.DECEMBER, 12, 0, 0, 0).getTime();
@@ -23,7 +28,7 @@ public class Teste {
 		assertTrue(now.before(maior));
 	}
 	
-	@Test
+//	@Test
 	public void maps(){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -34,5 +39,16 @@ public class Teste {
 		System.out.println(map.get(null));
 		System.out.println(map.get("2")!=null);
 		
+	}
+	
+	
+	@Test
+	public void listEnum(){
+		List<TipoComponenteEnum> list = new ArrayList<TipoComponenteEnum>(Arrays.asList(TipoComponenteEnum.values()));
+		for (TipoComponenteEnum tipoComponenteEnum : list) {
+	    System.out.println(tipoComponenteEnum);
+    }
+		TipoComponenteEnum obj = TipoComponenteEnum.get("manual");
+		System.out.println(obj);
 	}
 }

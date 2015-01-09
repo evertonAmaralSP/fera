@@ -8,8 +8,7 @@
 	<div class="container corpo-conteudo" role="main">
 		<div class="starter-template">
 			<h1>Marca - <b th:text="${product.name}"></b></h1>
-			<form method="post" enctype="multipart/form-data"
-				th:action="@{/marcas/__${product.id}__/upload}">
+			<form method="post" enctype="multipart/form-data" th:action="@{/marcas/__${product.id}__/upload}">
 				<p>Upload de arquivo: <input type="file" name="file" id="file" class="filestyle"  data-buttonName="btn-primary"  data-buttonText="Escolher arquivo"/></p>
 					<th:block th:if="${mamuteErrors}">
 						<th:block th:if="${mamuteErrors.is('file.empty')}">	

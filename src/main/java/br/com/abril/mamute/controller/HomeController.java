@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.abril.mamute.dao.TemplateDAO;
-import br.com.abril.mamute.model.Materia;
-import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Template;
+import br.com.abril.mamute.model.editorial.Materia;
+import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.pooling.ManagerPooling;
 import br.com.abril.mamute.service.staticengine.StaticEngineMateria;

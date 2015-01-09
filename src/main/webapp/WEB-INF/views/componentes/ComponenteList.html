@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>Mamute - MVP</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
+		<div class="starter-template">
+			<h1>Lista Componentes</h1>
+			<p><a href="new" class="btn btn-primary" >Novo Componente</a></p>
+
+			<th:block th:if="${listComponentes}">
+				<table class="table">
+					<th>Name</th>
+					<!-- <th>Tipo</th> -->
+					<th>Gerenciamento</th>
+					<tr th:each="componente : ${listComponentes}">
+						<td th:text="${componente.name}"></td>
+						<td th:text="${componente.type}"></td>
+						<td>
+						  <a class="btn btn-primary btn-xs" th:href="@{/componentes/__${componente.id}__/edit}">Editar</a>
+						  <a class="btn btn-danger btn-xs" th:href="@{/componentes/__${componente.id}__/delete}">Deletar</a>
+						</td>
+					</tr>
+				</table>
+			</th:block>
+			<h1 th:unless="${listComponentes}" style="color:#ccc">...Lista Vazia...</h1>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+</html>

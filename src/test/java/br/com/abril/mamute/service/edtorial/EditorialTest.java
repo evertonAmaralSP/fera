@@ -28,9 +28,9 @@ import org.slf4j.Logger;
 
 import br.com.abril.mamute.exception.editorial.InternalServerErrorException;
 import br.com.abril.mamute.exception.editorial.ServiceUnavailableException;
-import br.com.abril.mamute.model.Conteudo;
-import br.com.abril.mamute.model.Materia;
-import br.com.abril.mamute.model.ResultadoBuscaMateria;
+import br.com.abril.mamute.model.editorial.Conteudo;
+import br.com.abril.mamute.model.editorial.Materia;
+import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.support.factory.HttpClientFactory;
 import br.com.abril.mamute.support.factory.ModelFactory;
 import br.com.abril.mamute.support.json.JsonUtil;

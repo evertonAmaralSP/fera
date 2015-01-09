@@ -1,5 +1,6 @@
 package br.com.abril.mamute.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,10 +17,16 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "TEMPLATES")
-public class Template {
+public class Template implements Serializable {
 
+	/**
+	 * 
+	 */
+  private static final long serialVersionUID = 1730857665779052176L;
 	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
 	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
 	private static final String TAMANHO_PATH_EXCEDIDO = "{validate.path.fail.length_exceeded}";
@@ -39,13 +46,16 @@ public class Template {
 	@NotNull(message = NOT_BLANCK_PRODUCT)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
+	@Expose
 	private Product product;
 	@NotNull(message = NOT_BLANCK_TEMPLATE_TYPE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
+	@Expose
 	private TemplateType type;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source_id" )
+	@Expose
 	private Source source;
 	private Integer master_id;
 

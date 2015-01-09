@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.abril.mamute.dao.ProductDAO;
+import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.dao.UploadDAO;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Upload;
@@ -45,6 +46,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductDAO productDAO;
+	
+	@Autowired
+	private TemplateDAO templateDAO;
+	
 	@Autowired
 	private MamuteErrors mamuteErrors;
 
@@ -56,9 +61,10 @@ public class ProductController {
 	
 	@Autowired
 	private FileFactory fileFactory;
+	
 	@Autowired
 	private MessageSource messageSource;
-
+	
 	@RequestMapping("/")
 	public String handleRequest(ModelMap model) throws Exception {
 		List<Product> listProducts = productDAO.list();

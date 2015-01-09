@@ -1,12 +1,12 @@
-package br.com.abril.mamute.model;
+package br.com.abril.mamute.model.editorial;
 
 import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GaleriasMultimidia extends RestModel {
-	
+public class Imagem extends RestModel {
+
 	private String id;
 	private String slug;
 	private String titulo;
@@ -18,21 +18,21 @@ public class GaleriasMultimidia extends RestModel {
 	private String metaDescription;
 	private String status;
 	private String descricao;
+	private String credito;
+	private String fonte;
 	private String marca;
 	private List<String> categorias;
 	private List<String> editorias;
-	private List<String> tags;
 	@SerializedName("rotulos_controlados")
 	private List<String> rotulosControlados;
+	private List<String> tags;
 	private DataEditoria criacao;
 	@SerializedName("ultima_atualizacao")
 	private DataEditoria ultimaAtualizacao;
 	private DataEditoria disponibilizacao;
 	@SerializedName("data_disponibilizacao")
 	private Date dataDisponibilizacao;
-	private List<Midia> midias;
-	private List<Imagem> imagems;
-	private Imagem capa;
+	private Transformacoes transformacoes;
 	
 	public String getId() {
 		return id;
@@ -82,6 +82,18 @@ public class GaleriasMultimidia extends RestModel {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	public String getCredito() {
+		return credito;
+	}
+	public void setCredito(String credito) {
+		this.credito = credito;
+	}
+	public String getFonte() {
+		return fonte;
+	}
+	public void setFonte(String fonte) {
+		this.fonte = fonte;
+	}
 	public String getMarca() {
 		return marca;
 	}
@@ -100,17 +112,17 @@ public class GaleriasMultimidia extends RestModel {
 	public void setEditorias(List<String> editorias) {
 		this.editorias = editorias;
 	}
-	public List<String> getTags() {
-		return tags;
-	}
-	public void setTags(List<String> tags) {
-		this.tags = tags;
-	}
 	public List<String> getRotulosControlados() {
 		return rotulosControlados;
 	}
 	public void setRotulosControlados(List<String> rotulosControlados) {
 		this.rotulosControlados = rotulosControlados;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 	public DataEditoria getCriacao() {
 		return criacao;
@@ -136,22 +148,11 @@ public class GaleriasMultimidia extends RestModel {
 	public void setDataDisponibilizacao(Date dataDisponibilizacao) {
 		this.dataDisponibilizacao = dataDisponibilizacao;
 	}
-	public List<Midia> getMidias() {
-		return midias;
+	public Transformacoes getTransformacoes() {
+		return transformacoes;
 	}
-	public void setMidias(List<Midia> midias) {
-		this.midias = midias;
+	public void setTransformacoes(Transformacoes transformacoes) {
+		this.transformacoes = transformacoes;
 	}
-	public Imagem getCapa() {
-		return capa;
-	}
-	public void setCapa(Imagem capa) {
-		this.capa = capa;
-	}
-	public List<Imagem> getImagems() {
-		return imagems;
-	}
-	public void setImagems(List<Imagem> imagems) {
-		this.imagems = imagems;
-	}
+	
 }

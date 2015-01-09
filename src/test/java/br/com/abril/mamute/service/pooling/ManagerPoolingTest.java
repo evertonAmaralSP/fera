@@ -21,12 +21,12 @@ import org.slf4j.Logger;
 
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
-import br.com.abril.mamute.model.DataEditoria;
-import br.com.abril.mamute.model.Materia;
 import br.com.abril.mamute.model.Product;
-import br.com.abril.mamute.model.ResultadoBuscaMateria;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
+import br.com.abril.mamute.model.editorial.DataEditoria;
+import br.com.abril.mamute.model.editorial.Materia;
+import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
