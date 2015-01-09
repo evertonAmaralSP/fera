@@ -60,6 +60,17 @@ public class Editorial {
     }
 		return null;
 	}
+	public Materia getMateriaId(String url,boolean eager) throws ComunicacaoComEditorialException {
+		if (StringUtils.isEmpty(url))
+			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
+		
+		final Materia materiaId = getMateriaId(url);
+		if(eager) {
+			instrumentarMateriasRelacionadas(materiaId);
+		}
+		return materiaId;
+	}
+	
 	public Materia getMateriaId(String url) throws ComunicacaoComEditorialException {
 		if (StringUtils.isEmpty(url))
 			throw new IllegalArgumentException("Atributo url não pode ser vazio.");
@@ -69,7 +80,6 @@ public class Editorial {
 	}
 	
 	
-
 	public ResultadoBuscaMateria getListaUltimasNoticias(String marca) throws ComunicacaoComEditorialException {
 		if (StringUtils.isEmpty(marca))
 			throw new IllegalArgumentException("Atributo marca não pode ser vazio.");
@@ -214,15 +224,11 @@ public class Editorial {
 	  return ultimaPagina;
   }
 
-	private Materia parseMateria(String jsonString) throws ComunicacaoComEditorialException {
+	private Materia parseMateria(String jsonString) throws ComunicacaoComEditorialException  {
 		Materia materia = modelFactory.materia(jsonUtil.fromString(jsonString));
-		List<Conteudo> listaMateriasRelacionadas = new ArrayList<Conteudo>();
-		List<Conteudo> conteudos = materia.getConteudos();
-		if (!CollectionUtils.isEmpty(conteudos)) {
-			for (Conteudo conteudo : conteudos) {
-				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.MATERIA.toString())) {
-					listaMateriasRelacionadas.add(conteudo);
-				}
+		
+		if (!CollectionUtils.isEmpty(materia.getConteudos())) {
+			for (Conteudo conteudo : materia.getConteudos()) {
 				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.IMAGEM.toString())) {
 					String json = buscaUrlRest(conteudo.getId());
 					Imagem imagem = modelFactory.imagem(jsonUtil.fromString(json));
@@ -235,7 +241,19 @@ public class Editorial {
 				}
 			}
 		}
-		materia.setMateriasRelacionadas(listaMateriasRelacionadas);
 		return materia;
+	}
+	private void instrumentarMateriasRelacionadas(Materia materia)  throws ComunicacaoComEditorialException {
+		List<Materia> listaMateriasRelacionadas = new ArrayList<Materia>();
+		List<Conteudo> conteudos = materia.getConteudos();
+		if (!CollectionUtils.isEmpty(conteudos)) {
+			for (Conteudo conteudo : conteudos) {
+				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.MATERIA.toString())) {
+					Materia materiaTmp = getMateriaId(conteudo.getId());
+					listaMateriasRelacionadas.add(materiaTmp);
+				}
+			}
+		}
+		materia.setMateriasRelacionadas(listaMateriasRelacionadas);
 	}
 }

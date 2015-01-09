@@ -18,11 +18,11 @@ public class Transformacoes {
 	private Transformacao thumbnail120x120;
 	@SerializedName("thumbnail_480x480")
 	private Transformacao thumbnail480x480;
-	@SerializedName("capa_vtsidebar")
+	@SerializedName("capa_vt_sidebar")
 	private Transformacao capaVtSidebar;
 	@SerializedName("capa_190x250")
 	private Transformacao capa190x250;
-	@SerializedName("capa_ng190x276")
+	@SerializedName("capa_ng_190x276")
 	private Transformacao capaNG190x276;
 	@SerializedName("home_150x200")
 	private Transformacao home150x200;
@@ -64,7 +64,7 @@ public class Transformacoes {
 	private Transformacao destaque300;
 	@SerializedName("sugestoes_viagem_220")
 	private Transformacao sugestoesViagem220;
-	@SerializedName("listadestinos_80")
+	@SerializedName("lista_destinos_80")
 	private Transformacao listaDestinos80;
 	@SerializedName("thumb_galeria_72")
 	private Transformacao thumbGaleria72;

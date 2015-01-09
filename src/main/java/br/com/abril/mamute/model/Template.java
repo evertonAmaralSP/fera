@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -60,6 +61,8 @@ public class Template {
 	private String documentDraft;
 	private Date createdAt;
 	private Date updatedAt;
+	@Transient 
+	private boolean publicar;
 
 	public Integer getId() {
 		return id;
@@ -201,6 +204,14 @@ public class Template {
 		  return false;
 	  return true;
   }
+
+	public boolean isPublicar() {
+		return publicar;
+	}
+
+	public void setPublicar(boolean publicar) {
+		this.publicar = publicar;
+	}
 
 
 }

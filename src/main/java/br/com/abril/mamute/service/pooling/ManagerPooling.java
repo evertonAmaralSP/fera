@@ -53,7 +53,7 @@ public class ManagerPooling {
 						for (Materia materia : listaMateria) {
 							
 					    if(template.getLastUpdateDateUpdatePooling()==null || template.getLastUpdateDateUpdatePooling().before(materia.getDataDisponibilizacao())) {
-					    	materia = editorial.getMateriaId(materia.getId());
+					    	materia = editorial.getMateriaId(materia.getId(),true);
 					
 					    	String path = getPathTemplate(template);
 					    	String modelo = getTemplateDocument(template);
