@@ -27,6 +27,7 @@ public class Source {
 	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
 	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
 	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
+	private static final String TAMANHO_URL_EXCEDIDO = "{validate.url.fail.length_exceeded}";
 	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
 	
 	@Id
@@ -38,7 +39,7 @@ public class Source {
 	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
 	@NotBlank(message = NOT_BLANK_MESSAGE)
-	@Length(max = 120, message = TAMANHO_NOME_EXCEDIDO)
+	@Length(max = 254, message = TAMANHO_URL_EXCEDIDO)
 	private String source;
 	private Boolean active;
 	private Date created;

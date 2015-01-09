@@ -111,7 +111,13 @@ public class TemplateController {
 		if (errors.hasErrors()) {
 			return TEMPLATE_FORM;
 		}
-
+		if(template.isPublicar()){
+			template.setDocument(template.getDocumentDraft());	
+		} else if(!StringUtils.isEmpty(template.getId())) {
+			Template templateAntigo = templateDao.get(template.getId());
+			template.setDocument(templateAntigo.getDocument());
+		}
+		
 		templateDao.saveOrUpdate(template);
 		return REDIRECT_TEMPLATES;
 	}
@@ -156,7 +162,7 @@ public class TemplateController {
 		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
 
 		for (Materia materia : listaMateria) {
-			materia = editorial.getMateriaId(materia.getId());
+			materia = editorial.getMateriaId(materia.getId(),true);
 
 			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
 			
@@ -204,7 +210,7 @@ public class TemplateController {
 		long totalBuscaMaterias = System.currentTimeMillis() - tempoInicioBuscaMaterias;
 		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
 		for (Materia materia : listaMateria) {
-			materia = editorial.getMateriaId(materia.getId());
+			materia = editorial.getMateriaId(materia.getId(),true);
 
 			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
 			try {

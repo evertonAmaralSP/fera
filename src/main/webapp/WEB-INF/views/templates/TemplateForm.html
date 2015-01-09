@@ -10,10 +10,11 @@
 			<h1>Template</h1>
 			
 			
-			<form method="post" th:object="${template}" th:action="@{/templates/save}" role="form">
+			<form method="post" th:object="${template}" th:action="@{/templates/save}" id="templateFrom" role="form">
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">Salvar</button>
-					<button type="button" class="btn btn-warning"  disabled="disabled">Publicar</button>
+					<button type="button" id="btPublicar" class="btn btn-warning">Publicar</button>
+					<input type="hidden" name="publicar" id="publicar" th:value="*{publicar}" />
 				</div>
 				<div role="tabpanel">
 				  <ul class="nav nav-tabs" role="tablist">
@@ -51,5 +52,10 @@
 	  $("#documentDraft").attr("value",editor.getValue());
 	});
 	editor.setValue($("#documentDraft").val());
+	
+	$( "#btPublicar" ).click(function() {
+		$( "#publicar" ).val(true);
+	  $( "#templateFrom" ).submit();
+	});
 </script>
 </html>

@@ -46,10 +46,30 @@ public class Materia extends RestModel {
 	private List<String> tags;
 	@SerializedName("conteudos_relacionados")
 	private List<Conteudo> conteudos;
-	private List<Conteudo> materiasRelacionadas;
+	private List<Materia> materiasRelacionadas;
 	private Imagem imagem;
 	private GaleriasMultimidia galeriasMultimidia;
 	
+
+	public String descricaoSubTitle(){
+		int maxCaracter = 98;
+		if (StringUtils.isEmpty(subtitulo)) return "";
+		if (subtitulo.length() <= maxCaracter) maxCaracter = subtitulo.length();
+		return subtitulo.substring(0,maxCaracter).replaceAll("\\<.*?>","") + "...";
+	}
+	public String capa190x250(){
+		if(imagem != null) {
+			return imagem.getTransformacoes().getCapa190x250().linkExtreno(marca);
+		} 
+		return "";
+	}
+	
+	public String listaDestinos80(){
+		if(imagem != null) {
+			return imagem.getTransformacoes().getListaDestinos80().linkExtreno(marca);
+		} 
+		return "";
+	}
 	public String descricaoTrunc(){
 		int maxCaracter = 290;
 		if (StringUtils.isEmpty(corpo)) return "";
@@ -296,10 +316,10 @@ public class Materia extends RestModel {
 	public void setConteudos(List<Conteudo> conteudos) {
 		this.conteudos = conteudos;
 	}
-	public List<Conteudo> getMateriasRelacionadas() {
+	public List<Materia> getMateriasRelacionadas() {
 		return materiasRelacionadas;
 	}
-	public void setMateriasRelacionadas(List<Conteudo> materiasRelacionadas) {
+	public void setMateriasRelacionadas(List<Materia> materiasRelacionadas) {
 		this.materiasRelacionadas = materiasRelacionadas;
 	}
 	public Imagem getImagem() {
