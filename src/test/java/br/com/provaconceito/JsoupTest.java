@@ -18,8 +18,8 @@ public class JsoupTest {
 		doc = Jsoup.parse(htmlMaisCodigoAlexandria);
 		Elements conteudos = doc.select("conteudo[tipo_recurso~=(?i)]");
 		for (Element element : conteudos) {
-	    System.out.println(element.attr("id"));
-	    System.out.println(element.attr("tipo_recurso"));
+//	    System.out.println(element.attr("id"));
+//	    System.out.println(element.attr("tipo_recurso"));
     }
 	}
 }

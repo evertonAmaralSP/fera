@@ -30,9 +30,9 @@ public class Teste {
 		
 		map.put("1", "Ola");
 
-		System.out.println(map.get("1")!=null);
-		System.out.println(map.get(null));
-		System.out.println(map.get("2")!=null);
+//		System.out.println(map.get("1")!=null);
+//		System.out.println(map.get(null));
+//		System.out.println(map.get("2")!=null);
 		
 	}
 }
