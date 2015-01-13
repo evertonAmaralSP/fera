@@ -30,22 +30,39 @@
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
           </button>
-          <img th:alt="#{view.index.title}" class="navbar-brand" th:src="@{/resources/images/mamute.png}" style="padding: 5px;width: 40px; height: 40px; "><a class="navbar-brand link-createpage" style="margin-left:-15px" th:href="@{~/}" th:text="#{view.index.title}"></a></img>
+          <img th:alt="#{view.index.title}" class="navbar-brand" th:src="@{/resources/images/mamute.png}" style="padding: 5px;width: 40px; height: 40px; margin-left: 0px;"><a class="navbar-brand link-createpage" th:href="@{~/}" th:text="#{view.index.title}"></a></img>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+          	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle link-createpage" style="font-size: 14px;" data-toggle="dropdown" role="button" aria-expanded="false" >
+						  Marca<th:block th:if="${session.useMarca}">: <label th:text="${session.useMarca.name}"></label></th:block><span class="caret"></span>
+						  </a>
+          	  <ul class="dropdown-menu" role="menu" th:each="marca : ${session.listaMarcas}">
+						    <li><a th:href="@{~/selectMarca/}+${marca.id}" th:text="${marca.name}">Marcas</a></li>
+						  </ul>
+						</li>
+						
             <li class="dropdown">
 						  <a href="#" class="dropdown-toggle link-createpage" style="font-size: 14px;" data-toggle="dropdown" role="button" aria-expanded="false">Cadastros<span class="caret"></span></a>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/marcas/}">Marcas</a></li>
-						    <li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/templateTypes/}">Tipo Template</a></li>
-						    <li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/templates/}">Templates</a></li>
-						    <li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/sources/}">Sources</a></li>
+						    <li><a class="link-createpage" th:href="@{~/marcas/}">Marcas</a></li>
+						    <li><a class="link-createpage" th:href="@{~/templateTypes/}">Tipo Template</a></li>
+						    <li><a class="link-createpage" th:href="@{~/templates/}">Templates</a></li>
+						    <li><a class="link-createpage" th:href="@{~/sources/}">Sources</a></li>
 						  </ul>
 						</li>
 						<li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/componentes/}">Create Componente</a></li>
 						<li><a class="link-createpage" style="font-size: 14px;" th:href="@{~/createpages/}">Create Page</a></li>
           </ul>
+	        <ul class="nav navbar-nav pull-right">
+	       		<li class="dropdown">
+						  <a href="#" class="dropdown-toggle link-createpage fontawesome-lock" data-toggle="dropdown" role="button" aria-expanded="false"> Admin<span class="caret"></span></a>
+						  <ul class="dropdown-menu" role="menu">
+						    <li><a class="link-createpage" th:href="@{~/marcas/admin/}">Marcas</a></li>
+						  </ul>
+						</li>
+					</ul>		
         </div><!--/.nav-collapse -->
       </div>
     </nav>

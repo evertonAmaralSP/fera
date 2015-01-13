@@ -42,6 +42,9 @@ public class ProductController {
 	private static final String MARCA_LIST = "marcas/ProductList";
 	private static final String MARCA_FORM = "marcas/ProductForm";
 	private static final String REDIRECT_MARCAS = "redirect:/marcas/";
+	private static final String MARCA_ADMIN_LIST = "admin/marcas/ProductList";
+	private static final String MARCA_ADMIN_FORM = "admin/marcas/ProductForm";
+	private static final String REDIRECT_MARCAS_ADMIN = "redirect:/marcas/admin/";
 	private static final String REDIRECT_MARCAS_UPLOAD = "redirect:/marcas/%s/upload";
 
 	@Autowired
@@ -64,45 +67,52 @@ public class ProductController {
 	
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@RequestMapping("/")
-	public String handleRequest(ModelMap model) throws Exception {
+	public String list(ModelMap model) {
 		List<Product> listProducts = productDAO.list();
 		model.addAttribute("listProducts", listProducts);
 		return MARCA_LIST;
 	}
-
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newProduct(ModelMap model) {
-		model.addAttribute("product", new Product());
-		return MARCA_FORM;
+	
+	@RequestMapping("/admin")
+	public String listAdmin(ModelMap model) {
+		List<Product> listProducts = productDAO.list();
+		model.addAttribute("listProducts", listProducts);
+		return MARCA_ADMIN_LIST;
 	}
 
-	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/new", method = RequestMethod.GET)
+	public String newProduct(ModelMap model) {
+		model.addAttribute("product", new Product());
+		return MARCA_ADMIN_FORM;
+	}
+
+	@RequestMapping(value = "/{id}/admin/edit", method = RequestMethod.GET)
 	public String editProduct(ModelMap model, @PathVariable String id) {
 		int productId = Integer.parseInt(id);
 		Product product = productDAO.get(productId);
 		model.addAttribute("product", product);
-		return MARCA_FORM;
+		return MARCA_ADMIN_FORM;
 	}
 
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/admin/delete", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable String id) {
 		int productId = Integer.parseInt(id);
 		productDAO.delete(productId);
-		return REDIRECT_MARCAS;
+		return REDIRECT_MARCAS_ADMIN;
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/save", method = RequestMethod.POST)
 	public String saveProduct(Model model, @Valid @ModelAttribute Product product, Errors errors) {
 
 		if (errors.hasErrors()) {
-			return MARCA_FORM;
+			return MARCA_ADMIN_FORM;
 		}
 
 		productDAO.saveOrUpdate(product);
 
-		return REDIRECT_MARCAS;
+		return REDIRECT_MARCAS_ADMIN;
 	}
 
 	/**

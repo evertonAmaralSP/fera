@@ -1,18 +1,23 @@
 package br.com.abril.mamute.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.model.editorial.Materia;
 import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
@@ -26,6 +31,7 @@ import br.com.abril.mamute.support.factory.FileFactory;
  * Handles requests for the product home page.
  */
 @Controller
+@SessionAttributes({"listaMarcas","useMarca"})
 public class HomeController {
 
 	@Autowired
@@ -36,6 +42,9 @@ public class HomeController {
 
 	@Autowired
 	private Editorial editorial;
+	
+	@Autowired
+	private ProductDAO productDAO;
 
 	@Autowired
 	private ManagerPooling managerPooling;
@@ -44,9 +53,17 @@ public class HomeController {
 	private FileFactory fileFactory;
 
 	@RequestMapping("/")
-	public ModelAndView handleRequest() throws Exception {
-		ModelAndView model = new ModelAndView("home");
-		return model;
+	public String home(ModelMap model) {
+		List<Product> listaMarcas = productDAO.list();
+		model.addAttribute("listaMarcas", listaMarcas);
+		return "home";
+	}
+	
+	@RequestMapping("/selectMarca/{id}")
+	public String list(ModelMap model,@PathVariable int id) {
+		Product product = productDAO.get(id);
+		model.addAttribute("useMarca", product);
+		return "redirect:/";
 	}
 
 	@RequestMapping("/generate")
