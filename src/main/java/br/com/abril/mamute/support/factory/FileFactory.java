@@ -97,7 +97,7 @@ public class FileFactory {
 	}
 
 	public boolean validateFileTypes(MultipartFile file) {
-		String[] typeValid = {"text/html", "text/x-server-parsed-html", "application/x-javascript", "text/javascript", "image/jpeg", "image/gif", "image/png", "text/css"};
+		String[] typeValid = {"text/html", "text/x-server-parsed-html", "application/x-javascript", "text/javascript", "image/jpeg", "image/gif", "image/png", "image/x-ico", "image/ico","image/vnd.microsoft.icon", "text/css",};
 		for (String type : typeValid) {
 	     if(type.equalsIgnoreCase(file.getContentType())) {
 	    	 return true;

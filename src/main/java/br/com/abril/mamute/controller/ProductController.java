@@ -157,7 +157,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
 	public String singleSave(ModelMap model, @RequestParam("file") MultipartFile file, @PathVariable int id) {
-		Product product = productDAO.get(id);
+		Product product = productDAO.getIdJoinUpload(id);
 		model.addAttribute("product", product);
 		
 		if (file.isEmpty() || !fileFactory.validateFileTypes(file)) {
@@ -205,7 +205,7 @@ public class ProductController {
 	  	path=path+"/stylesheets";
 	  } else if("product/x-javascript".equalsIgnoreCase(file.getContentType()) || "text/javascript".equalsIgnoreCase(file.getContentType()) ){
 	  	path=path+"/javascripts";
-	  } else if(file.getContentType().matches("(image\\/)*+(jpeg|gif|png)")){
+	  } else if(file.getContentType().matches("(image\\/)*+(jpeg|gif|png|ico|x-ico|vnd.microsoft.icon)")){
 	  	path=path+"/images";
 	  } else {
 	  	path=path+"/includes";
