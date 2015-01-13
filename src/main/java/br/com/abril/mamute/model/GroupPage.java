@@ -1,6 +1,6 @@
 package br.com.abril.mamute.model;
 
-public class GrupoPage {
+public class GroupPage {
 	
 	private String id;
 	private String name;

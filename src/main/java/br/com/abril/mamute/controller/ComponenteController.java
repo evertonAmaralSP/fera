@@ -6,10 +6,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,48 +26,52 @@ import br.com.abril.mamute.dao.ComponenteDAOImpl;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.model.Componente;
+import br.com.abril.mamute.model.Product;
+import br.com.abril.mamute.support.errors.MamuteErrors;
+import br.com.abril.mamute.support.factory.FileFactory;
 import br.com.abril.mamute.support.tipos.TipoComponenteEnum;
 
 @Controller
 @RequestMapping("/componentes")
 public class ComponenteController {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private static final String COMPONENTE_LIST = "componentes/ComponenteList";
 	private static final String COMPONENTE_FORM = "componentes/ComponenteForm";
 	private static final String REDIRECT_COMPONENTES = "redirect:/componentes/";
-	
+
 	@Autowired
 	private ComponenteDAOImpl componenteDAO;
 	@Autowired
 	private ProductDAO productDAO;
 	@Autowired
-	private TemplateDAO templateDAO; 
-	
+	private TemplateDAO templateDAO;
+
+	@Autowired
+	private MamuteErrors mamuteErrors;
+	@Autowired
+	private FileFactory fileFactory;
+	@Autowired
+	private MessageSource messageSource;
+
 	@RequestMapping("/")
 	public String showListComponente(ModelMap model) {
 		List<Componente> list = componenteDAO.list();
-		model.addAttribute("listComponentes",list);
+		model.addAttribute("listComponentes", list);
 		return COMPONENTE_LIST;
 	}
-	
+
 	@RequestMapping("/new")
 	public String newComponente(ModelMap model) {
-		model.addAttribute("listProduct", productDAO.list());
-		model.addAttribute("listTemplate", templateDAO.list());
-		model.addAttribute("listType", listComponenteTypeItens());
+		selectPageBasic(model);
 		model.addAttribute("componente", new Componente());
 		return COMPONENTE_FORM;
 	}
-	
-	private ArrayList<TipoComponenteEnum> listComponenteTypeItens() {
-		return new ArrayList<TipoComponenteEnum>(Arrays.asList(TipoComponenteEnum.values()));
-  }
-	
+
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public String editComponente(ModelMap model, @PathVariable String id) {
 		Componente componente = componenteDAO.get(id);
-		model.addAttribute("listProduct", productDAO.list());
-		model.addAttribute("listTemplate", templateDAO.list());
-		model.addAttribute("listType", listComponenteTypeItens());
+		selectPageBasic(model);
 		model.addAttribute("componente", componente);
 		return COMPONENTE_FORM;
 	}
@@ -76,28 +83,75 @@ public class ComponenteController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveComponente(Model model, @Valid @ModelAttribute Componente componente, @RequestParam("files") List<MultipartFile> files, Errors errors) {
+	public String saveComponente(ModelMap model, @Valid @ModelAttribute Componente componente, @RequestParam("files") List<MultipartFile> files, Errors errors) {
 
-//		List<MultipartFile> files = file.getFiles();
-//    	for(MultipartFile f:files){
-//    		
-//    	}
-    		
-    	
 		if (errors.hasErrors()) {
-			model.addAttribute("listProduct", productDAO.list());
-			model.addAttribute("listTemplate", templateDAO.list());
-			model.addAttribute("listType", listComponenteTypeItens());
+			selectPageBasic(model);
 			return COMPONENTE_FORM;
 		}
+		for (MultipartFile file : files) {
+			if (!file.isEmpty()  && !fileFactory.validateFileJavascript(file)) {
+				mamuteErrors.clean();
+				mamuteErrors.addError(getMessageSource("product.falha.file.not.valide.error"), getMessageSource("product.falha.file.not.valide.js.text"));
+				logger.error(getMessageSource("product.falha.file.not.valide.text"));
+				model.addAttribute("mamuteErrors", mamuteErrors);
+				selectPageBasic(model);
+				return COMPONENTE_FORM;
+			}
+		}
+
 		validadeComponenteId(componente);
 		componenteDAO.saveOrUpdate(componente);
+
+		Product product = productDAO.get(componente.getProductId());
+		String path = fileFactory.generatePathOfDirectoryProduct(product.getPath());
+		String pathRelative = "/componentes/" + componente.getId();
+		path = path + pathRelative;
+		List<String> listJavaScriptsComponente = null;
+		for (MultipartFile file : files) {
+			if (!file.isEmpty()) {
+				if (CollectionUtils.isEmpty(listJavaScriptsComponente)) {
+					listJavaScriptsComponente = new ArrayList<String>();
+				}
+				String fileName = file.getOriginalFilename();
+				try {
+					fileFactory.salvarArquivoPathProduct(path, file, fileName);
+					listJavaScriptsComponente.add(pathRelative + "/" + fileName);
+				} catch (Exception e) {
+					mamuteErrors.clean();
+					mamuteErrors.addError(getMessageSource("global.inesperado.error"), getMessageSource("global.inesperado.text"));
+					logger.error("You failed to upload {} : {} ", new Object[] { fileName,e.getMessage() });
+					return COMPONENTE_FORM;
+				}
+				
+			}
+			if (!CollectionUtils.isEmpty(listJavaScriptsComponente)) {
+				componente.setScripts(listJavaScriptsComponente);
+				componenteDAO.saveOrUpdate(componente);
+			}
+		}
+		
+		
 
 		return REDIRECT_COMPONENTES;
 	}
 
 	private void validadeComponenteId(Componente componente) {
-		if(StringUtils.isEmpty(componente.getId())) componente.setId(null);
-  }
-	
+		if (StringUtils.isEmpty(componente.getId()))
+			componente.setId(null);
+	}
+
+	private String getMessageSource(String key) {
+		return messageSource.getMessage(key, null, null);
+	}
+
+	private void selectPageBasic(ModelMap model) {
+		model.addAttribute("listProduct", productDAO.list());
+		model.addAttribute("listTemplate", templateDAO.list());
+		model.addAttribute("listType", listComponenteTypeItens());
+	}
+
+	private ArrayList<TipoComponenteEnum> listComponenteTypeItens() {
+		return new ArrayList<TipoComponenteEnum>(Arrays.asList(TipoComponenteEnum.values()));
+	}
 }

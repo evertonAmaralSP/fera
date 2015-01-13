@@ -2,22 +2,40 @@ package br.com.abril.mamute.model;
 
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import br.com.abril.mamute.support.tipos.TipoPageEnum;
-
-@Document(collection = "Componente")
+@Document(collection = "CreatePage")
 public class CreatePage {
 	
+
+	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
+	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
+	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
+	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
-	private Integer productId;
-	private Integer templateLayoutId;
+	
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
+	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
-	private TipoPageEnum type;
-	private GrupoPage grupoPage;
+	@NotNull(message = NOT_BLANCK_PRODUCT)
+	private Integer productId;
+	@NotNull(message = NOT_BLANK_MESSAGE)
+	private Integer templateLayoutId;
+	@NotNull(message = NOT_BLANK_MESSAGE)
+	private String type;
+	private String groupPage;
 	private Integer version;
 	private MetaDocument document;
 	private MetaDocument documentDraft;
@@ -49,17 +67,17 @@ public class CreatePage {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public TipoPageEnum getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(TipoPageEnum type) {
+	public void setType(String type) {
 		this.type = type;
 	}
-	public GrupoPage getGrupoPage() {
-		return grupoPage;
+	public String getGroupPage() {
+		return groupPage;
 	}
-	public void setGrupoPage(GrupoPage grupoPage) {
-		this.grupoPage = grupoPage;
+	public void setGroupPage(String groupPage) {
+		this.groupPage = groupPage;
 	}
 	public Integer getVersion() {
 		return version;

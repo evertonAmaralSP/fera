@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	<th:block th:fragment="createPageContent">
+				<textarea class="form-control" th:value="*{documentDraft}" th:field="*{documentDraft}" placeholder="Insira o Template" rows="1" style="display:none;"/>
+				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('documentDraft')}" th:errors="*{documentDraft}"></div>
+				<div class="pagina-edit"> Escolha um layout para trabalhar em <a class="link-createpage" href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab" id="mudaAbaConfig">configurações</a></div>	
+	</th:block>
+	</body>
+</html>

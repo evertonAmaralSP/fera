@@ -1,3 +1,25 @@
+/* 16px / 16px - 100% */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+@import url(http://weloveiconfonts.com/api/?family=fontawesome|entypo);
+/* @font-face {
+font-family: 'entypo';
+font-weight: normal;
+ font-style: normal;
+ src: url('../fonts/entypo.eot');
+ src: url('../fonts/entypo.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/entypo.woff') format('woff'),
+      url('../fonts/entypo.ttf') format('truetype'),
+      url('../fonts/entypo.svg#entypo') format('svg');
+} */
+/* entypo */
+[class*="entypo-"]:before {
+	font-family: 'entypo', 'Lato', sans-serif;
+}
+/* fontawesome */
+[class*="fontawesome-"]:before {
+	font-family: 'fontawesome', 'Lato', sans-serif;
+}
+
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
 }
@@ -35,4 +57,41 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+.container-maluco {
+    width: 1170px;
+    margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .container-maluco {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container-maluco {
+    width: 970px;
+  }
+}
+.pagina-edit {
+	margin-top: 10px;
+	margin-left: -7px;
+	padding-right: 12px;
+	display: block; 
+	width: 100%;
+	height: 200px;
+	padding-top:100px;
+	display: inline-block;
+	border-style: dashed;
+	border-color: #555;
+	border-radius: 3px;
+	border-width: 1px;
+	background-color: #bbb;
+	text-align: center;
+	color: #555;
+}
+.col-xs-6 {
+	width: 47%;
+}
+.text-padrao {
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }

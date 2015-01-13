@@ -32,6 +32,7 @@ public class Componente {
 	private String type;
 	@NotNull(message = NOT_BLANCK_PRODUCT)
 	private Integer productId;
+	@NotNull(message = NOT_BLANCK_PRODUCT)
 	private Integer templateId;
 	private List<MetaTag> metaTags;
 	private List<String> scripts;

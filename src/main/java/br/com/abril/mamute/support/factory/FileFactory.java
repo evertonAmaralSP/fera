@@ -95,9 +95,18 @@ public class FileFactory {
 		File file = new File(path + "/" + name);
 		return file.delete();
 	}
-	
-	public boolean validateFileType(MultipartFile file) {
-		String[] typeValid = {"text/html", "text/x-server-parsed-html", "product/x-javascript", "text/javascript", "image/jpeg", "image/gif", "image/png", "text/css"};
+
+	public boolean validateFileTypes(MultipartFile file) {
+		String[] typeValid = {"text/html", "text/x-server-parsed-html", "application/x-javascript", "text/javascript", "image/jpeg", "image/gif", "image/png", "text/css"};
+		for (String type : typeValid) {
+	     if(type.equalsIgnoreCase(file.getContentType())) {
+	    	 return true;
+	     }
+    }
+	  return false;
+  }
+	public boolean validateFileJavascript(MultipartFile file) {
+		String[] typeValid = {"application/x-javascript", "text/javascript"};
 		for (String type : typeValid) {
 	     if(type.equalsIgnoreCase(file.getContentType())) {
 	    	 return true;

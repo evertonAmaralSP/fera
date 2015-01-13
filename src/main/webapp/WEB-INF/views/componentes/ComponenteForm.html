@@ -46,11 +46,20 @@
 				<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição" />
 				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
 			</div>
-			<div class="form-group" id="componenteMultFile">
+			<!-- DESABILITADO POR HORA PROMOVER A SIMPLICIDADE-->
+			<!-- <div class="form-group" id="componenteMultFile">
 				<label for="file">Upload de arquivo para componente:</label>
 				<input type="file" name="files" class="filestyle"  data-buttonName="btn-primary" accept=".js" data-buttonBefore="true" data-buttonText="Escolher arquivo"/>
 			</div>
 			<a class="btn btn-primary btn-xs" style="float: right; margin-top:10px;" id="addArquivoJS" href="javascript:void(0);">Adicionar mais arquivos</a>
+			<th:block th:if="${mamuteErrors}">
+			 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">	
+		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
+		 	 	</th:block>
+		 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">	
+		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
+		 	 	</th:block>
+		  </th:block> -->
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Save</button>
 			</div>

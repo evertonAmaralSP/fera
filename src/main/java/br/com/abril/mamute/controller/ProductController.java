@@ -151,7 +151,7 @@ public class ProductController {
 		Product product = productDAO.get(Integer.parseInt(id));
 		model.addAttribute("product", product);
 		
-		if (file.isEmpty() || !fileFactory.validateFileType(file)) {
+		if (file.isEmpty() || !fileFactory.validateFileTypes(file)) {
 			mamuteErrors.clean();
 			if (file.isEmpty()) {
 				mamuteErrors.addError(getMessageSource("product.falha.file.empty.error"), getMessageSource("product.falha.file.empty.text"));

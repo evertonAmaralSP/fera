@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layoutCustomPageCreate:: head">
+<title>Mamute - MVP</title>
+</head>
+<body>
+	<th:block th:replace="fragments/layoutCustomPageCreate:: menu" />
+	<div class="container corpo-conteudo" role="main" style="display: flex; ">
+		<form method="post" th:object="${createpage}" th:action="@{/createpages/save}" role="form">
+		<div class="container">
+			<h1 style="font-size: 36px;margin-bottom: 10px; margin-top: 20px;font-weight: 500;line-height: 1.1;" class="text-padrao">Create Page</h1>
+			
+			
+			<input type="hidden" name="id" th:value="*{id}"/>
+				<div>
+					<div  style="float: left;" class="text-padrao">
+						Vervão: 
+						<select name="oi" class="selectCustom">
+							<option>Atual - 2.0</option>
+							<option>1.0</option>
+						</select>
+					</div>
+					<div style="float: right;">
+						<button type="button" class="btn btn-primary">Cancelar</button>
+						<button type="button" class="btn btn-primary">Salvar</button>
+						<button type="button" id="btPublicar" class="btn btn-warning">Publicar</button>
+						<!-- <a href="javascript:void(0);" id="btconfig" class="btn btn-default link-createpage" style="width:40px !important;height:36px !important; padding: 0;padding-top: 0px;box-sizing: border-box; "><span class="entypo-cog" style="font-size:180%;"></span></a> -->
+						<!-- <input type="hidden" name="publicar" id="publicar" th:value="*{publicar}" /> -->
+					</div>
+				</div>
+			</div>	
+			<div class="container">
+				<div role="tabpanel">
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a class="link-createpage" href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
+				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a class="link-createpage" href="#documentContent" aria-controls="documentContent" role="tab" data-toggle="tab">Edição Pagina</a></li>
+				  </ul>
+				  <div class="tab-content">
+				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ?  '' : active" id="confContent">
+							<th:block th:replace="createpages/CreatePageConfig:: createPageConf " />
+						</div>
+				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ? active : '' " id="documentContent">
+							<th:block th:replace="createpages/CreatePageDocument:: createPageContent " />
+				    </div>
+				  </div>
+				</div>
+		</div>
+		</form>
+				
+	</div>
+	<!-- /.container -->
+
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(".selectCustom").selectpicker();
+$("#mudaAbaConfig").click(function(){
+	$("#confTab").addClass("active");
+	$("#documentTab").removeClass("active");
+});
+/*]]>*/
+
+</script>
+</html>

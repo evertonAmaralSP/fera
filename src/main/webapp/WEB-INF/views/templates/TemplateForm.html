@@ -8,14 +8,15 @@
 	<div class="container corpo-conteudo" role="main">
 		<div class="starter-template">
 			<h1>Template</h1>
-			
-			
 			<form method="post" th:object="${template}" th:action="@{/templates/save}" id="templateFrom" role="form">
-				<div class="form-group">
+			<div class="container">
+				<div class="form-group pull-right ">
 					<button type="submit" class="btn btn-primary">Salvar</button>
 					<button type="button" id="btPublicar" class="btn btn-warning">Publicar</button>
 					<input type="hidden" name="publicar" id="publicar" th:value="*{publicar}" />
 				</div>
+			</div>
+			<div class="container">
 				<div role="tabpanel">
 				  <ul class="nav nav-tabs" role="tablist">
 				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
@@ -30,6 +31,7 @@
 				    </div>
 				  </div>
 				</div>
+			</div>
 			</form>
 		</div>
 	</div>
