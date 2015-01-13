@@ -311,6 +311,9 @@
 						<excludes>
 							<exclude>br/com/abril/mamute/config/**/*.class</exclude>
 							<exclude>br/com/abril/mamute/support/log/**/*.class</exclude>
+							<exclude>br/com/abril/mamute/support/errors/**/*.class</exclude>
+							<exclude>br/com/abril/mamute/dao/**/*.class</exclude>
+							<exclude>br/com/abril/mamute/service/schedule/**/*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
@@ -366,7 +369,7 @@
 
 		<pluginManagement>
 			<plugins>
-				<!-- This plugin's configuration is used to store Eclipse m2e settings 
+				<!-- This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>

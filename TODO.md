@@ -15,7 +15,25 @@ Pendencias:
  * Motor de Publicacoes - done
  * Plugins de Qualidade - done
  * Layout getbootstrap - done
- * Validate - WIP
- * I18N - WIP 
+ * Validate - done
+ * I18N - done
  
+ V 1
+----------------
+ * Tratamento de erro sintax freemarker - done
+ * Json validade - done
+ * busca Editorial - done
+ * Editor html highlight - done 
+ 
+ V 3
+----------------
+ * Poc jquery sortable - done
+ * Poc jquery tmpl - done 
+ * Poc mongo - done 
+ * Jsop para tratar tipos primitivos editorial - WIP
+ * Ajustes update file - done
+ * Config Teste materias nginx - done
+ * Criacao de componentes - WIP
+ * Criacao de paginas - WIP
+ * Refactor para select marcas e admin - WIP
  

@@ -13,6 +13,7 @@ Requirements
  * Java => 7.0
  * Maven3
  * Mysql
+ * Mongo
 
 
 Installation

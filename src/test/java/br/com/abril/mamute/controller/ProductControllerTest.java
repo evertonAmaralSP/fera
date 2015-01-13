@@ -57,6 +57,16 @@ public class ProductControllerTest {
 		                .andExpect(view().name(MARCA_LIST));;
 	}
 	@Test
+	public void testListaAdminProduct() throws Exception {
+		final ArrayList<Product> list = new ArrayList<Product>();
+		when(productDao.list()).thenReturn(list);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/admin/"))
+		                .andExpect(status().isOk())
+		                .andExpect(model().attribute("listProducts", list))
+		                .andExpect(view().name(MARCA_ADMIN_LIST));;
+	}
+	@Test
 	public void testNewProduct() throws Exception {
 		modelMap.addAttribute("product",new Product());
 

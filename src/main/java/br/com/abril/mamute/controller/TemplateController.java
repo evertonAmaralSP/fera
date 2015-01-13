@@ -247,11 +247,4 @@ public class TemplateController {
 		}
   }
 
-	private void validadeProductId(Template template, Errors errors) {
-	  Boolean validateMarca = (template.getProduct() == null || template.getProduct().getId() == null);
-		if (validateMarca) {
-			errors.rejectValue("product", "validate.product.fail.mandatory_field");
-		}
-  }
-
 }
