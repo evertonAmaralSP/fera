@@ -25,9 +25,10 @@ import br.com.abril.mamute.model.Product;
 
 public class ProductControllerTest {
 
-	private static final String REDIRECT_MARCAS = "redirect:/marcas/";
+	private static final String REDIRECT_MARCAS = "redirect:/marcas/admin/";
 	private static final String MARCA_LIST = "marcas/ProductList";
-	private static final String MARCA_FORM = "marcas/ProductForm";
+	private static final String MARCA_ADMIN_LIST = "admin/marcas/ProductList";
+	private static final String MARCA_ADMIN_FORM = "admin/marcas/ProductForm";
 	@Mock
 	private ProductDAOImpl productDao;
 	@Mock
@@ -59,11 +60,11 @@ public class ProductControllerTest {
 	public void testNewProduct() throws Exception {
 		modelMap.addAttribute("product",new Product());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/new").sessionAttr("modelMap", modelMap))
+		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/admin/new").sessionAttr("modelMap", modelMap))
 			.andExpect(status().isOk())
 	    .andExpect(model().attributeExists("product"))
 	    .andExpect(model().attribute("product",new Product()))
-	    .andExpect(view().name(MARCA_FORM));;
+	    .andExpect(view().name(MARCA_ADMIN_FORM));;
 	}
 
 	@Test
@@ -72,16 +73,16 @@ public class ProductControllerTest {
 		when(productDao.get(any(Integer.class))).thenReturn(createProductCompleto());
 		modelMap.addAttribute("product",createProductCompleto());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/1/edit").sessionAttr("modelMap", modelMap))
+		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/1/admin/edit").sessionAttr("modelMap", modelMap))
       .andExpect(status().isOk())
       .andExpect(model().attributeExists("product"))
       .andExpect(model().attribute("product",createProductCompleto()))
-      .andExpect(view().name(MARCA_FORM));;
+      .andExpect(view().name(MARCA_ADMIN_FORM));;
 	}
 
 	@Test
 	public void testDeleteProduct() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/1/delete"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/1/admin/delete"))
 	    .andExpect(status().is3xxRedirection())
 	    .andExpect(view().name(REDIRECT_MARCAS));
 	}
@@ -92,7 +93,7 @@ public class ProductControllerTest {
 		modelMap.addAttribute("product", product);
 		Mockito.doCallRealMethod().when(productDao).saveOrUpdate(product);
 
-		mockMvc.perform(MockMvcRequestBuilders.post("/marcas/save")
+		mockMvc.perform(MockMvcRequestBuilders.post("/marcas/admin/save")
 			.param("name", "productTeste")
 			.param("path", "/pathProduct")
 			.sessionAttr("errors", errors))
@@ -107,13 +108,13 @@ public class ProductControllerTest {
 		final Product product = createProductCompleto();
 		modelMap.addAttribute("product", product);
 
-		mockMvc.perform(MockMvcRequestBuilders.post("/marcas/save")
+		mockMvc.perform(MockMvcRequestBuilders.post("/marcas/admin/save")
 			.sessionAttr("errors", errors))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasFieldErrors("product", "name"))
 			.andExpect(model().attributeHasFieldErrors("product", "path"))
 			.andExpect(model().errorCount(2))
-	    .andExpect(view().name(MARCA_FORM));
+	    .andExpect(view().name(MARCA_ADMIN_FORM));
 
 	}
 

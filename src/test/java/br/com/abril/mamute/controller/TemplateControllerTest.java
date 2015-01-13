@@ -132,7 +132,6 @@ public class TemplateControllerTest {
 		Mockito.doCallRealMethod().when(templateDao).saveOrUpdate(template);
 		mockMvc.perform(MockMvcRequestBuilders.post("/templates/save")
 			.param("name", "testeTemplateMamute")
-			.param("product.id", "1")
 			.param("type.id", "1")
 			.param("path", "/pathTemplate")
 			.param("documentDraft", "<div>teste</div>")
@@ -146,7 +145,6 @@ public class TemplateControllerTest {
 	@Test
 	public void testSaveTemplateNameNaoPreenchido() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/templates/save")
-			.param("product.id", "1")
 			.param("type.id", "1")
 			.param("path", "/pathTemplate")
 			.param("documentDraft", "<div>teste</div>")
@@ -168,9 +166,8 @@ public class TemplateControllerTest {
 			.param("documentDraft", "<div>teste</div>")
 			.sessionAttr("errors", errors))
 			.andExpect(status().isOk())
-			.andExpect(model().attributeHasFieldErrors("template", "product"))
 			.andExpect(model().attributeHasFieldErrors("template", "type"))
-			.andExpect(model().errorCount(4))
+			.andExpect(model().errorCount(2))
 	    .andExpect(view().name(TEMPLATE_FORM));
 	}
 	

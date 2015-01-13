@@ -102,9 +102,7 @@ public class TemplateController {
 	public String saveTemplate(ModelMap model, @Valid @ModelAttribute Template template, Errors errors,HttpServletRequest request) {
 		Product product = (Product) request.getSession().getAttribute("useMarca");
 		template.setProduct(product);
-		validadeProductId(template, errors);
 		validateTemplateTypeId(template, errors);
-
 		try {
 	    staticEngine.validate(template.getDocumentDraft());
     } catch (IOException e) {
