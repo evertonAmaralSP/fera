@@ -38,8 +38,8 @@
           		<a href="#" class="dropdown-toggle link-createpage" style="font-size: 14px;" data-toggle="dropdown" role="button" aria-expanded="false" >
 						  Marca<th:block th:if="${session.useMarca}">: <label th:text="${session.useMarca.name}"></label></th:block><span class="caret"></span>
 						  </a>
-          	  <ul class="dropdown-menu" role="menu" th:each="marca : ${session.listaMarcas}">
-						    <li><a th:href="@{~/selectMarca/}+${marca.id}" th:text="${marca.name}">Marcas</a></li>
+          	  <ul class="dropdown-menu" role="menu">
+						    <li th:each="marca : ${session.listaMarcas}"><a th:href="@{~/selectMarca/}+${marca.id}" th:text="${marca.name}">Marcas</a></li>
 						  </ul>
 						</li>
 						
@@ -47,7 +47,6 @@
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Cadastros<span class="caret"></span></a>
 						  <ul class="dropdown-menu" role="menu">
 						    <li><a th:href="@{~/marcas/}">Marca</a></li>
-						    <li><a th:href="@{~/templateTypes/}">Tipo Template</a></li>
 						    <li><a th:href="@{~/templates/}">Templates</a></li>
 						    <li><a th:href="@{~/sources/}">Sources</a></li>
 						  </ul>
@@ -60,6 +59,7 @@
 						  <a href="#" class="dropdown-toggle link-createpage fontawesome-lock" data-toggle="dropdown" role="button" aria-expanded="false"> Admin<span class="caret"></span></a>
 						  <ul class="dropdown-menu" role="menu">
 						    <li><a class="link-createpage" th:href="@{~/marcas/admin/}">Marcas</a></li>
+						    <li><a th:href="@{~/templateTypes/}">Tipo Template</a></li>
 						  </ul>
 						</li>
 					</ul>		

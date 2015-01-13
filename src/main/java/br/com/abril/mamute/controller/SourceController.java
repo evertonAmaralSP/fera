@@ -2,6 +2,7 @@ package br.com.abril.mamute.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
@@ -44,8 +46,9 @@ public class SourceController {
 	private FileFactory fileFactory;
 
 	@RequestMapping("/")
-	public String handleRequest(ModelMap model) throws Exception {
-		List<Source> listSources = sourceDao.list();
+	public String list(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		List<Source> listSources = sourceDao.listByProduct(product);
 		model.addAttribute("listSources", listSources);
 		return SOURCE_LIST;
 	}
@@ -53,41 +56,32 @@ public class SourceController {
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newSource(ModelMap model) {
 		model.addAttribute("source", new Source());
-		model.addAttribute("listProduct", productDao.list());
 		return SOURCE_FORM;
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public String editSource(ModelMap model,@PathVariable String id) {
-		int sourceId = Integer.parseInt(id);
-		Source source = sourceDao.get(sourceId);
+	public String editSource(ModelMap model,@PathVariable int id) {
+		Source source = sourceDao.get(id);
 		model.addAttribute("source", source);
-		model.addAttribute("listProduct", productDao.list());
 		return SOURCE_FORM;
 	}
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	public String deleteSource(@PathVariable String id) {
-		int sourceId = Integer.parseInt(id);
-		sourceDao.delete(sourceId);
+	public String deleteSource(@PathVariable int id) {
+		sourceDao.delete(id);
 		return REDIRECT_SOURCES;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveSource(Model model, @Valid @ModelAttribute Source source, Errors errors) {
-		validateProductId(source, errors);
+	public String saveSource(Model model, @Valid @ModelAttribute Source source, Errors errors,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		source.setProduct(product);
+		
 		if (errors.hasErrors()) {
-			model.addAttribute("listProduct", productDao.list());
 			return SOURCE_FORM;
 		}
 		sourceDao.saveOrUpdate(source);
 		return REDIRECT_SOURCES;
 	}
-
-	private void validateProductId(Source source, Errors errors) {
-	  if (source.getProduct() == null || source.getProduct().getId() == null) {
-	  	errors.rejectValue("product", "validate.product.fail.mandatory_field");
-	  }
-  }
 
 }

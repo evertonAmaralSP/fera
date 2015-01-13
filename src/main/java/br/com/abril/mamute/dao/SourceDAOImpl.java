@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Source;
 
 @Repository
@@ -65,6 +66,20 @@ public class SourceDAOImpl implements SourceDAO {
 
 	@Override
 	@Transactional
+  public List<Source> listSourceActivesByProduct(Product product) {
+		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Source.class);
+		criteria.setFetchMode("product", FetchMode.JOIN);
+		criteria.setFetchMode("templates", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("active",true));
+		criteria.add(Restrictions.eq("product.id",product.getId()));
+		@SuppressWarnings("unchecked")
+    List<Source> listSource = (List<Source>) criteria.setResultTransformer(distinctRootEntity).list();
+
+		return listSource;
+  }
+	@Override
+	@Transactional
   public List<Source> listSourceActives() {
 		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Source.class);
@@ -74,7 +89,17 @@ public class SourceDAOImpl implements SourceDAO {
 		@SuppressWarnings("unchecked")
     List<Source> listSource = (List<Source>) criteria.setResultTransformer(distinctRootEntity).list();
 
-	return listSource;
-
+		return listSource;
   }
+	@Override
+	@Transactional
+	public List<Source> listByProduct(Product product) {
+		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Source.class);
+		criteria.add(Restrictions.eq("product.id",product.getId()));
+		@SuppressWarnings("unchecked")
+		List<Source> listSource = (List<Source>) criteria.setResultTransformer(distinctRootEntity).list();
+
+		return listSource;
+	}
 }

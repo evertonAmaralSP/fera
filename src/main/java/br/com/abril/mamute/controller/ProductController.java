@@ -40,8 +40,7 @@ public class ProductController {
 	private static final String MARCAS_UPLOAD = "marcas/ProductUpload";
 	private static final String MARCAS_LISTA_ARQUIVOS = "marcas/listaArquivos";
 	private static final String MARCA_LIST = "marcas/ProductList";
-	private static final String MARCA_FORM = "marcas/ProductForm";
-	private static final String REDIRECT_MARCAS = "redirect:/marcas/";
+//	private static final String REDIRECT_MARCAS = "redirect:/marcas/";
 	private static final String MARCA_ADMIN_LIST = "admin/marcas/ProductList";
 	private static final String MARCA_ADMIN_FORM = "admin/marcas/ProductForm";
 	private static final String REDIRECT_MARCAS_ADMIN = "redirect:/marcas/admin/";
@@ -123,8 +122,8 @@ public class ProductController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/{id}/listExports", method = RequestMethod.GET)
-	public String listFile(ModelMap model, @PathVariable String id) throws Exception {
-		Product product = productDAO.get(Integer.parseInt(id));
+	public String listFile(ModelMap model, @PathVariable int id) throws Exception {
+		Product product = productDAO.get(id);
 		List<String> listFiles = fileFactory.getFilesInProduct(product);
 		model.addAttribute("listFiles", listFiles);
 
@@ -132,19 +131,19 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/{id}/upload")
-	public String singleUpload(ModelMap model, @PathVariable String id) {
-		Product product = productDAO.getIdJoinUpload(Integer.parseInt(id));
+	public String singleUpload(ModelMap model, @PathVariable int id) {
+		Product product = productDAO.getIdJoinUpload(id);
 		model.addAttribute("product", product);
 		
 		return MARCAS_UPLOAD;
 	}
 	
 	@RequestMapping(value = "/{id}/upload/{idUpload}/delete")
-	public String deleteFile(ModelMap model, @PathVariable String id, @PathVariable String idUpload) {
-		Product product = productDAO.getIdJoinUpload(Integer.parseInt(id));
-		Upload upload = uploadDAO.get(Integer.parseInt(idUpload));
+	public String deleteFile(ModelMap model, @PathVariable int id, @PathVariable int idUpload) {
+		Product product = productDAO.getIdJoinUpload(id);
+		Upload upload = uploadDAO.get(idUpload);
 		if (fileFactory.excluir(upload.getPath(), upload.getName())) {
-			uploadDAO.delete(Integer.parseInt(idUpload));
+			uploadDAO.delete(idUpload);
 		} else {
 			mamuteErrors.clean();
 			mamuteErrors.addError(getMessageSource("product.falha.file.not.delete.error"), String.format(getMessageSource("product.falha.file.not.delete.text"),upload.getName()));
@@ -157,8 +156,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
-	public String singleSave(ModelMap model, @RequestParam("file") MultipartFile file, @PathVariable String id) {
-		Product product = productDAO.get(Integer.parseInt(id));
+	public String singleSave(ModelMap model, @RequestParam("file") MultipartFile file, @PathVariable int id) {
+		Product product = productDAO.get(id);
 		model.addAttribute("product", product);
 		
 		if (file.isEmpty() || !fileFactory.validateFileTypes(file)) {

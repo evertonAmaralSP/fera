@@ -12,14 +12,6 @@
 				th:action="@{/sources/save}" role="form">
 				<input type="hidden" name="id" th:value="*{id}" />
 				<div class="form-group">
-					<label for="name">Marca</label>
-					<select class="form-control" th:field="*{product.id}">
-						<option value="" label="--- Select ---"></option>
-						<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
-					</select>
-					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
-				</div>
-				<div class="form-group">
 					<label for="name">Nome</label>
 					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
 					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>

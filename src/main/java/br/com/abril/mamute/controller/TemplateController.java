@@ -25,6 +25,7 @@ import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.dao.TemplateTypeDAO;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.model.editorial.Materia;
 import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
@@ -65,25 +66,28 @@ public class TemplateController {
 	private MessageSource messageSource;
 	
 	@RequestMapping("/")
-	public String handleRequest(ModelMap model) {
-		List<Template> listTemplates = templateDao.list();
+	public String list(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		List<Template> listTemplates = templateDao.listByProduct(product);
 		model.addAttribute("listTemplates", listTemplates);
 		return TEMPLATE_LIST;
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newTemplate(ModelMap model) {
+	public String newTemplate(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
 		model.addAttribute("template", new Template());
-		listaSelects(model);
+		listaSelects(model,product);
 		return TEMPLATE_FORM;
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public String editTemplate(ModelMap model, @PathVariable String id) {
+	public String editTemplate(ModelMap model, @PathVariable String id,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
 		int templateId = Integer.parseInt(id);
 		Template template = templateDao.get(templateId);
 		model.addAttribute("template", template);
-		listaSelects(model);
+		listaSelects(model,product);
 		return TEMPLATE_FORM;
 	}
 
@@ -95,15 +99,16 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveTemplate(ModelMap model, @Valid @ModelAttribute Template template, Errors errors) {
-
+	public String saveTemplate(ModelMap model, @Valid @ModelAttribute Template template, Errors errors,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		template.setProduct(product);
 		validadeProductId(template, errors);
 		validateTemplateTypeId(template, errors);
 
 		try {
 	    staticEngine.validate(template.getDocumentDraft());
     } catch (IOException e) {
-    	listaSelects(model);
+    	listaSelects(model,product);
     	model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.sintax",null, null), e.getMessage().replaceAll("(\n)", "<br />")));
     	return TEMPLATE_FORM;
     }
@@ -121,20 +126,6 @@ public class TemplateController {
 		templateDao.saveOrUpdate(template);
 		return REDIRECT_TEMPLATES;
 	}
-
-	private void validateTemplateTypeId(Template template, Errors errors) {
-	  Boolean validateTemplateType = (template.getType() == null || template.getType().getId() == null);
-		if (validateTemplateType) {
-			errors.rejectValue("type", "validate.templatetype.fail.mandatory_field");
-		}
-  }
-
-	private void validadeProductId(Template template, Errors errors) {
-	  Boolean validateMarca = (template.getProduct() == null || template.getProduct().getId() == null);
-		if (validateMarca) {
-			errors.rejectValue("product", "validate.product.fail.mandatory_field");
-		}
-  }
 
 	@RequestMapping(value = "/{id}/re", method = RequestMethod.GET)
 	public String reShowSource(ModelMap model, @PathVariable String id) {
@@ -246,10 +237,23 @@ public class TemplateController {
 		return conteudo;
 	}
 
-	private void listaSelects(ModelMap model) {
-	  model.addAttribute("listProduct", productDao.list());
+	private void listaSelects(ModelMap model, Product product) {
 		model.addAttribute("listType", templateTypeDao.list());
-		model.addAttribute("listSource", sourceDAO.list());
+		model.addAttribute("listSource", sourceDAO.listByProduct(product));
+  }
+
+	private void validateTemplateTypeId(Template template, Errors errors) {
+	  Boolean validateTemplateType = (template.getType() == null || template.getType().getId() == null);
+		if (validateTemplateType) {
+			errors.rejectValue("type", "validate.templatetype.fail.mandatory_field");
+		}
+  }
+
+	private void validadeProductId(Template template, Errors errors) {
+	  Boolean validateMarca = (template.getProduct() == null || template.getProduct().getId() == null);
+		if (validateMarca) {
+			errors.rejectValue("product", "validate.product.fail.mandatory_field");
+		}
   }
 
 }

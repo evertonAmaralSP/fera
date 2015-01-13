@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
 
 @Repository
@@ -68,4 +69,17 @@ public class TemplateDAOImpl implements TemplateDAO {
 		Template template = (Template) criteria.setResultTransformer(distinctRootEntity).uniqueResult();
 		return template;
 	}
+
+	@Override
+	@Transactional
+  public List<Template> listByProduct(Product product) {
+		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Template.class);
+		criteria.setFetchMode("product", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("product.id",product.getId()));
+		@SuppressWarnings("unchecked")
+		List<Template> listTemplate = (List<Template>) criteria.setResultTransformer(distinctRootEntity).list();
+
+		return listTemplate;
+  }
 }

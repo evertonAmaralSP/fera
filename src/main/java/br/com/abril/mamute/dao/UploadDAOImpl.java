@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Upload;
 
 @Repository
@@ -59,4 +60,17 @@ public class UploadDAOImpl implements UploadDAO {
 		Upload upload = (Upload) criteria.setResultTransformer(distinctRootEntity).uniqueResult();
     return upload;
 	}
+	
+	@Override
+	@Transactional
+	public List<Upload> listByProduct(Product product) {
+		ResultTransformer distinctRootEntity = Criteria.DISTINCT_ROOT_ENTITY;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Upload.class);
+		criteria.add(Restrictions.eq("product.id",product.getId()));
+		@SuppressWarnings("unchecked")
+		List<Upload> listUpload = (List<Upload>) criteria.setResultTransformer(distinctRootEntity).list();
+
+		return listUpload;
+	}
+	
 }
