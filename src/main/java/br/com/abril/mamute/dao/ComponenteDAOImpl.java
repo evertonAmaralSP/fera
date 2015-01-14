@@ -20,6 +20,14 @@ public class ComponenteDAOImpl implements ComponenteDAO {
   public List<Componente> list() {
 		return operations.findAll(Componente.class);
   }
+	
+	@Override
+  public List<Componente> listByProductId(Integer id) {
+		Query query = new Query(); 
+		query.addCriteria(Criteria.where("productId").is(id));
+		return operations.find(query, Componente.class);
+	  
+  }
 
 	@Override
   public Componente get(String id) {

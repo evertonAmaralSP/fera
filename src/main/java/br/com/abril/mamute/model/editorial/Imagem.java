@@ -3,6 +3,9 @@ package br.com.abril.mamute.model.editorial;
 import java.util.Date;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Imagem extends RestModel {
@@ -84,6 +87,10 @@ public class Imagem extends RestModel {
 	}
 	public String getCredito() {
 		return credito;
+	}
+	public String creditoTextPure() {
+		Document doc = Jsoup.parse(credito);
+		return doc.text();
 	}
 	public void setCredito(String credito) {
 		this.credito = credito;

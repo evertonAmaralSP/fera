@@ -19,8 +19,8 @@
 			<div class="container">
 				<div role="tabpanel">
 				  <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
-				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a href="#documentContent" aria-controls="documentContent" role="tab" data-toggle="tab">Documento</a></li>
+				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a href="#confContent" class="fontawesome-cog" aria-controls="confContent" role="tab" data-toggle="tab"> Configurações</a></li>
+				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a href="#documentContent" class="fontawesome-edit" aria-controls="documentContent" role="tab" data-toggle="tab"> Documento</a></li>
 				  </ul>
 				  <div class="tab-content">
 				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ?  '' : active" id="confContent">

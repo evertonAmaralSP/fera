@@ -63,6 +63,13 @@ public class Materia extends RestModel {
 		} 
 		return "";
 	}
+
+	public String imageFotoGaleriaMateria620(){
+		if(imagem != null) {
+			return imagem.getTransformacoes().getFotoGaleriaMateria620().linkExtreno(marca);
+		} 
+		return "";
+	}
 	
 	public String listaDestinos80(){
 		if(imagem != null) {

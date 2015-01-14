@@ -44,4 +44,11 @@ public class CreatePageDAOImpl implements CreatePageDAO {
 	  
   }
 
+	@Override
+	public List<CreatePage> listByProductId(Integer id) {
+		Query query = new Query(); 
+		query.addCriteria(Criteria.where("productId").is(id));
+		return operations.find(query, CreatePage.class);
+  }
+
 }

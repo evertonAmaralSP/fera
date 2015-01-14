@@ -230,8 +230,10 @@ public class Editorial {
 		if (!CollectionUtils.isEmpty(materia.getConteudos())) {
 			for (Conteudo conteudo : materia.getConteudos()) {
 				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.IMAGEM.toString())) {
+					String descricao = conteudo.getDescricao();
 					String json = buscaUrlRest(conteudo.getId());
 					Imagem imagem = modelFactory.imagem(jsonUtil.fromString(json));
+					imagem.setDescricao(descricao);
 					materia.setImagem(imagem);
 				}
 				if (conteudo.getTipoRecurso().equals(TipoRecursoEnum.GALERIA_MULTIMIDIA.toString())) {

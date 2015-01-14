@@ -95,3 +95,186 @@ font-weight: normal;
 .text-padrao {
 	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+
+
+
+.editor-conteiner {
+	font-size: 10px;
+	font-family: 'Lato', sans-serif;
+	display: inline;
+	position: absolute;
+	float:left;
+	margin-top: -20px;
+	margin-left: 10px;
+}
+
+.editor-conteiner div {
+	/*box-sizing: border-box;*/
+	/*width: 60px;*/
+	padding: 2px 4px;
+	display: inline-block;
+	border-style: dashed;
+	border-color: #FFAAAA;
+	border-radius: 3px;
+	border-width: 1px;
+	background-color: #AA3939;
+	text-align: center;
+	color: #FFAAAA;
+}
+
+.editor-conteiner a:link, .editor-conteiner a:visited {
+	text-decoration: none;
+	color: #FFAAAA;
+}
+
+.editor-conteiner div a span {
+	/*visibility: hidden;*/
+	display: none;
+}
+
+.editor-conteiner div a:hover span {
+	/* visibility: visible;*/
+	display: inline;
+}
+.editor-conteiner div:hover {
+	background-color: #FFAAAA;
+}
+
+.editor-conteiner a:hover {
+	/*font-weight: bold;*/
+	color: #801515;
+
+}
+
+.editor-conteiner .move:hover {
+	cursor: move;
+}
+
+.editor-conteiner .move {
+	box-sizing: border-box;
+	width: 60px;
+}
+
+.editor-conteiner-componente {
+	z-index:190000;
+	font-size: 10px;
+	font-family: 'Lato', sans-serif;
+	display: inline;
+	position: absolute;
+	float:left;
+	margin-top: -10px;
+	margin-left: 10px;
+}
+
+.editor-conteiner-componente div {
+	/*box-sizing: border-box;*/
+	/*width: 60px;*/
+	padding: 2px 4px;
+	display: inline-block;
+	border-style: dashed;
+	border-color: #FFAAAA;
+	border-radius: 3px;
+	border-width: 1px;
+	/* background-color: #AA3939; */
+	text-align: center;
+	color: #FFAAAA;
+}
+
+.editor-conteiner-componente a:link, .editor-conteiner-componente a:visited {
+	text-decoration: none;
+	color: #FFAAAA;
+}
+
+.editor-conteiner-componente div a span {
+	/*visibility: hidden;*/
+	display: none;
+}
+
+.editor-conteiner-componente div a:hover span {
+	/* visibility: visible;*/
+	display: inline;
+}
+.editor-conteiner-componente div:hover {
+	background-color: #FFAAAA;
+}
+
+.editor-conteiner-componente a:hover {
+	/*font-weight: bold;*/
+	color: #801515;
+
+}
+
+.editor-conteiner-componente .move:hover {
+	cursor: move;
+}
+
+.editor-conteiner-componente .move {
+	box-sizing: border-box;
+	width: 60px;
+}
+
+.editor-conteiner-componente {
+	z-index:20000;
+	font-size: 10px;
+	font-family: 'Lato', sans-serif;
+	display: inline;
+	position: absolute;
+	float:left;
+	margin-top: -10px;
+	margin-left: 10px;
+}
+
+.editor-conteiner-componente div {
+	/*box-sizing: border-box;*/
+	/*width: 60px;*/
+	padding: 2px 4px;
+	display: inline-block;
+	border-style: dashed;
+	border-color: #999999;
+	border-radius: 3px;
+	border-width: 1px;
+	background-color: #666666;
+	text-align: center;
+	color: #999999;
+}
+
+.editor-conteiner-componente a:link, .editor-conteiner-componente a:visited {
+	text-decoration: none;
+	color: #999999;
+}
+
+.editor-conteiner-componente div a span {
+	/*visibility: hidden;*/
+	display: none;
+}
+
+.editor-conteiner-componente div a:hover span {
+	/* visibility: visible;*/
+	display: inline;
+}
+.editor-conteiner-componente div:hover {
+	background-color: #999999;
+}
+
+.editor-conteiner-componente a:hover {
+	/*font-weight: bold;*/
+	color: #000080;
+
+}
+
+.editor-conteiner-componente .move:hover {
+	cursor: move;
+}
+
+.editor-conteiner-componente .move {
+	box-sizing: border-box;
+	width: 60px;
+}
+
+  .tpm-aside1 {   width: 725px; height: 90px;  background: #aaa; }
+  .tpm-section1 { width: 600px; height: 20px;  background: #aaa; }
+  .tpm-article {  width: 600px; height: 480px; background: #aaa; }
+  .tpm-aside2 {  width: 600px; height: 160px; background: #aaa; }
+  .tpm-section2 {  width: 600px; height: 80px; background: #aaa; margin-top:10px;  }
+  .tpm-aside3 {  width: 100%; height: 480px; background: #aaa; }
+  .tpm-aside4 {  width: 725px; height: 90px; background: #aaa; }

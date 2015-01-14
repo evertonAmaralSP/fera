@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Componente {
 
 	private static final String NOT_BLANK_MESSAGE = "{validate.mandatory_field}";
-	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
 	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
 	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
 
@@ -23,16 +22,15 @@ public class Componente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 	
-	@NotBlank(message = NOT_BLANK_MESSAGE)
-	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
+//	@NotBlank(message = NOT_BLANK_MESSAGE)
+//	@Length(max = 45, message = TAMANHO_NOME_EXCEDIDO)
 	private String name;
 	@Length(max = 150, message = TAMANHO_DESCRICAO_EXCEDIDO)
 	private String description;
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String type;
-	@NotNull(message = NOT_BLANCK_PRODUCT)
 	private Integer productId;
-	@NotNull(message = NOT_BLANCK_PRODUCT)
+	@NotNull(message = NOT_BLANK_MESSAGE)
 	private Integer templateId;
 	private List<MetaTag> metaTags;
 	private List<String> scripts;

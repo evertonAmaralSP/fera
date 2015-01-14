@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.abril.mamute.dao.CreatePageDAOImpl;
@@ -26,6 +28,8 @@ import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.model.CreatePage;
 import br.com.abril.mamute.model.GroupPage;
+import br.com.abril.mamute.model.Product;
+import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.support.errors.MamuteErrors;
 import br.com.abril.mamute.support.factory.FileFactory;
 import br.com.abril.mamute.support.tipos.TipoPageEnum;
@@ -54,25 +58,28 @@ public class CreatePageController {
 	private MessageSource messageSource;
 
 	@RequestMapping("/")
-	public String showListCreatePage(ModelMap model) {
-		List<CreatePage> list = createpageDAO.list();
+	public String showListCreatePage(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		List<CreatePage> list = createpageDAO.listByProductId(product.getId());
 		model.addAttribute("listCreatePages", list);
 		return CREATEPAGE_LIST;
 	}
 
 	@RequestMapping("/new")
-	public String newCreatePage(ModelMap model) {
+	public String newCreatePage(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
 		model.addAttribute("createpage", new CreatePage());
-		selectPageBasic(model);
+		selectPageBasic(model,product);
 		return CREATEPAGE_FORM;
 	}
 
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public String editCreatePage(ModelMap model, @PathVariable String id) {
+	public String editCreatePage(ModelMap model, @PathVariable String id,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
 		CreatePage createpage = createpageDAO.get(id);
 		model.addAttribute("createpage", createpage);
-		selectPageBasic(model);
+		selectPageBasic(model,product);
 		return CREATEPAGE_FORM;
 	}
 
@@ -83,10 +90,11 @@ public class CreatePageController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveCreatePage(ModelMap model, @Valid @ModelAttribute CreatePage createpage, @RequestParam("files") List<MultipartFile> files, Errors errors) {
+	public String saveCreatePage(ModelMap model, @Valid @ModelAttribute CreatePage createpage, @RequestParam("files") List<MultipartFile> files, Errors errors,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
 
 		if (errors.hasErrors()) {
-			selectPageBasic(model);
+			selectPageBasic(model,product);
 			return CREATEPAGE_FORM;
 		}
 
@@ -101,6 +109,19 @@ public class CreatePageController {
 
 		return REDIRECT_CREATEPAGES;
 	}
+	
+	
+	@RequestMapping(value="/layout/{id}", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+	public @ResponseBody String layoutId(@PathVariable int id) throws Exception {
+		Template template = templateDAO.get(id);
+		return template.getDocument();
+	}
+	@RequestMapping(value="/componente/{id}", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+	public @ResponseBody String componenteId(@PathVariable int id) throws Exception {
+		Template template = templateDAO.get(id);
+		return template.getDocument();
+	}
+	
 
 	private void validadeCreatePageId(CreatePage createpage) {
 		if (StringUtils.isEmpty(createpage.getId()))
@@ -111,9 +132,8 @@ public class CreatePageController {
 		return messageSource.getMessage(key, null, null);
 	}
 
-	private void selectPageBasic(ModelMap model) {
-		model.addAttribute("listProduct", productDAO.list());
-		model.addAttribute("listTemplateLayout", templateDAO.list());
+	private void selectPageBasic(ModelMap model, Product product) {
+		model.addAttribute("listTemplateLayout", templateDAO.listByProduct(product));
 		model.addAttribute("listType", listPageTypeItens());
 		model.addAttribute("listGroupPage", new ArrayList<GroupPage>());
 	}

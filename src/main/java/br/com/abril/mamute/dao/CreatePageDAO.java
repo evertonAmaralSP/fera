@@ -13,5 +13,7 @@ public interface CreatePageDAO {
 	public void saveOrUpdate(CreatePage createpage);
 
 	public void delete(String id);
+
+	public List<CreatePage> listByProductId(Integer id);
 	
 }

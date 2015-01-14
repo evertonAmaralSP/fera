@@ -13,5 +13,7 @@ public interface ComponenteDAO {
 	public void saveOrUpdate(Componente componente);
 
 	public void delete(String id);
+
+	List<Componente> listByProductId(Integer id);
 	
 }

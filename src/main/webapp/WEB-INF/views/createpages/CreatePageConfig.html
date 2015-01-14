@@ -7,41 +7,38 @@
 				<input type="hidden" name="id" th:value="*{id}" />
 				<div class="row" style="margin-top:10px;">
 			  	<div class="col-xs-6">
-			  		<div class="form-group">
-							<label for="productId" class="text-padrao">Marca*</label>
-							<select class="form-control selectCustom" th:field="*{productId}"  title='--- Select ---'>
-								<option th:each="product : ${listProduct}" th:value="${product.id}" th:text="${product.name}"></option>
-							</select>
-							<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}"></div>
-						</div>
-					</div>
-				  <div class="col-xs-6">
   					<div class="form-group">
 							<label for="templateLayoutId" class="text-padrao">Layout*</label>
 							<select class="form-control selectCustom" th:field="*{templateLayoutId}" id="templateLayoutId" title='--- Select ---'>
+								<option value="" label="--- Select ---"></option>
 								<option th:each="template : ${listTemplateLayout}" th:value="${template.id}" th:text="${template.name}"></option>
 							</select>
 							<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('templateLayoutId')}" th:errors="*{templateLayoutId}"></div>
+						</div>
+					</div>
+				  <div class="col-xs-6">
+			  		<div class="form-group">
+							<label for="type" class="text-padrao">Tipo*</label>
+							<select class="form-control selectCustom" th:field="*{type}"  title='--- Select ---'>
+								<option value="" label="--- Select ---"></option>
+								<option th:each="type : ${listType}" th:value="${type}" th:text="${type}"></option>
+							</select>
+							<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 			  	<div class="col-xs-6">
 						<div class="form-group">
-							<label for="type" class="text-padrao">Tipo*</label>
-							<select class="form-control selectCustom" th:field="*{type}"  title='--- Select ---'>
-								<option th:each="type : ${listType}" th:value="${type}" th:text="${type}"></option>
-							</select>
-							<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
-						</div>
-			 	  </div>
-				  <div class="col-xs-6">
-			  		<div class="form-group">
 							<label for="group" class="text-padrao">Grupo</label>
-							<select class="form-control selectCustom" th:field="*{groupPage}" title='--- Select ---'>
+							<select class="form-control selectCustom" th:field="*{groupPage}" title='--- Vazio ---'>
+								<option value="" label="--- Select ---"></option>
 								<option th:each="group : ${listGroupPage}" th:value="${group.id}" th:text="${group.name}"></option>
 							</select>
 						</div>
+			 	  </div>
+				  <div class="col-xs-6">
+			  		
 					</div>
 				</div>
 				<div class="form-group">
