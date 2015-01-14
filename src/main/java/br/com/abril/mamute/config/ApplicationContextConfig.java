@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
@@ -70,7 +71,10 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 	private static final String RESOURCES_HANDLER = "/resources/";
 	private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
 
-	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(getDemoInterceptor());
+	}
 
 	@Bean(name = "messageSource")
 	public MessageSource messageSource() {
@@ -228,6 +232,13 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 	public Gson getGson() {
 		return new Gson();
 	}
+	
+	@Autowired
+	@Bean(name = "demoInterceptor")
+	public TemporarioInterceptor getDemoInterceptor() {
+		return new TemporarioInterceptor();
+	}
+	
 	
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

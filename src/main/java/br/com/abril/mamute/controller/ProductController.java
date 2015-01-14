@@ -1,7 +1,9 @@
 package br.com.abril.mamute.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -68,8 +70,10 @@ public class ProductController {
 	private MessageSource messageSource;
 
 	@RequestMapping("/")
-	public String list(ModelMap model) {
-		List<Product> listProducts = productDAO.list();
+	public String list(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		List<Product> listProducts = new ArrayList<Product>();
+		listProducts.add(product);
 		model.addAttribute("listProducts", listProducts);
 		return MARCA_LIST;
 	}

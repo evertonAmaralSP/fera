@@ -54,8 +54,6 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home(ModelMap model) {
-		Product product = productDAO.get(1);
-		model.addAttribute("useMarca", product);
 		List<Product> listaMarcas = productDAO.list();
 		model.addAttribute("listaMarcas", listaMarcas);
 		return "home";
