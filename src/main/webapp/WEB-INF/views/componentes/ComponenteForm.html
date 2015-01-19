@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>Mamute - MVP</title>
+<title>FERA - BETA</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -18,7 +18,7 @@
 				</select>
 				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('templateId')}" th:errors="*{templateId}"></div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="type">Tipo Componente</label>
 				<select class="form-control" th:field="*{type}">
@@ -27,7 +27,7 @@
 				</select>
 				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
 			</div>
-			
+
 			<!-- <div class="form-group">
 				<label for="name">Nome</label>
 				<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="name" />
@@ -45,10 +45,10 @@
 			</div>
 			<a class="btn btn-primary btn-xs" style="float: right; margin-top:10px;" id="addArquivoJS" href="javascript:void(0);">Adicionar mais arquivos</a>
 			<th:block th:if="${mamuteErrors}">
-			 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">	
+			 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">
 		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
 		 	 	</th:block>
-		 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">	
+		 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">
 		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
 		 	 	</th:block>
 		  </th:block> -->
@@ -56,7 +56,7 @@
 				<button type="submit" class="btn btn-primary">Save</button>
 			</div>
 			</form>
-			
+
 		</div>
 
 	</div>

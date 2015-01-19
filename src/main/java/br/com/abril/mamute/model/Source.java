@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,7 +27,6 @@ public class Source {
 	private static final String TAMANHO_NOME_EXCEDIDO = "{validate.name.fail.length_exceeded}";
 	private static final String TAMANHO_DESCRICAO_EXCEDIDO = "{validate.description.fail.length_exceeded}";
 	private static final String TAMANHO_URL_EXCEDIDO = "{validate.url.fail.length_exceeded}";
-	private static final String NOT_BLANCK_PRODUCT = "{validate.product.fail.mandatory_field}";
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -44,7 +42,6 @@ public class Source {
 	private Boolean active;
 	private Date created;
 	private Date updated;
-	@NotNull(message = NOT_BLANCK_PRODUCT)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")
 	private Product product;

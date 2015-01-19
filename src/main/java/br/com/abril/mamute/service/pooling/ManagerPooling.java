@@ -1,6 +1,6 @@
 package br.com.abril.mamute.service.pooling;
 
-import java.util.Date;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,32 +46,39 @@ public class ManagerPooling {
 			ResultadoBuscaMateria buscaMateria;
 			for (Template template : source.getTemplates()) {
 				try {
-		      buscaMateria = editorial.getListaInSource(source.getSource());
-		      Date ultimaAtualizacao = template.getLastUpdateDateUpdatePooling();
+					
+		      buscaMateria = editorial.getListaInSource(source.getSource(),template.getLastUpdateDateUpdatePooling());
 		      Materia[] listaMateria = buscaMateria.getResultado();
-	      
+		      boolean atualizarTemplate = false;
 						for (Materia materia : listaMateria) {
-							
-					    if(template.getLastUpdateDateUpdatePooling()==null || template.getLastUpdateDateUpdatePooling().before(materia.getDataDisponibilizacao())) {
-					    	materia = editorial.getMateriaId(materia.getId(),true);
+							materia = editorial.getMateriaId(materia.getId(),true);
+					    if(template.getLastUpdateDateUpdatePooling()==null || template.getLastUpdateDateUpdatePooling().before(materia.getUltimaAtualizacao().getData())) {
+					    	
 					
 					    	String path = getPathTemplate(template);
 					    	String modelo = getTemplateDocument(template);
 					    	Map<String, Object> conteudo = getConteudo(materia);
 					
 					    	staticEngine.process(modelo, conteudo, path);
-					
-					    	if (ultimaAtualizacao ==null || ultimaAtualizacao.before(materia.getDisponibilizacao().getData())) {
-					    		ultimaAtualizacao = materia.getDataDisponibilizacao();
+					    	
+					    	if (template.getLastUpdateDateUpdatePooling() == null || template.getLastUpdateDateUpdatePooling().before(materia.getUltimaAtualizacao().getData())) {
+					    		template.setLastUpdateDateUpdatePooling(materia.getUltimaAtualizacao().getData());
+					    		atualizarTemplate=true;
 					    	}
+					    	
 					    }
 						}
-						template.setLastUpdateDateUpdatePooling(ultimaAtualizacao);
-						templateDAO.saveOrUpdate(template);
+						if(listaMateria.length > 0 && atualizarTemplate) {
+							templateDAO.saveOrUpdate(template);
+						}
+						
 	      } catch (ComunicacaoComEditorialException e) {
 		      // TODO Auto-generated catch block
 		      e.printStackTrace();
-	      }  
+	      } catch (URISyntaxException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }  
       }
     }
 	}

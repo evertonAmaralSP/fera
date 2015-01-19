@@ -13,7 +13,7 @@
 								<option value="" label="--- Select ---"></option>
 								<option th:each="template : ${listTemplateLayout}" th:value="${template.id}" th:text="${template.name}"></option>
 							</select>
-							<div class="alert alert-danger macarena" role="alert"  th:if="${#fields.hasErrors('templateLayoutId')}" th:errors="*{templateLayoutId}"></div>
+							<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('templateLayoutId')}" th:errors="*{templateLayoutId}"></div>
 						</div>
 					</div>
 				  <div class="col-xs-6">
@@ -43,12 +43,12 @@
 				</div>
 				<div class="form-group">
 					<label for="name" class="text-padrao">Nome*</label>
-					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" style="width: 97%"/>
+					<input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome"/>
 					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 				</div>
 				<div class="form-group">
 					<label for="description" class="text-padrao">Descrição</label>
-					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição"  style="width: 97%" />
+					<input type="text" class="form-control" th:value="*{description}" th:field="*{description}" placeholder="Descrição"/>
 					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
 				</div>
 				

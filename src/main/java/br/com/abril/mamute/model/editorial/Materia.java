@@ -39,6 +39,8 @@ public class Materia extends RestModel {
 	private DataEditoria disponibilizacao;
 	@SerializedName("data_disponibilizacao")
 	private Date dataDisponibilizacao;
+	@SerializedName("data_ultima_disponibilizacao")
+	private Date dataUltimaDisponibilizacao;
 	private List<String> categorias;
 	private List<String> editorias;
 	@SerializedName("rotulos_controlados")
@@ -340,6 +342,12 @@ public class Materia extends RestModel {
 	}
 	public void setGaleriasMultimidia(GaleriasMultimidia galeriasMultimidia) {
 		this.galeriasMultimidia = galeriasMultimidia;
+	}
+	public Date getDataUltimaDisponibilizacao() {
+		return dataUltimaDisponibilizacao;
+	}
+	public void setDataUltimaDisponibilizacao(Date dataUltimaDisponibilizacao) {
+		this.dataUltimaDisponibilizacao = dataUltimaDisponibilizacao;
 	}
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>Mamute - MVP</title>
+<title>FERA - BETA</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -9,16 +9,16 @@
 		<div class="starter-template">
 			<h1>Marca - <b th:text="${product.name}"></b></h1>
 			<form method="post" enctype="multipart/form-data" th:action="@{/marcas/__${product.id}__/upload}">
-			
+
 				<p>Upload de arquivo: <input type="file" name="file" id="file" class="filestyle"  data-buttonName="btn-primary"  data-buttonText="Escolher arquivo"/></p>
 					<th:block th:if="${mamuteErrors}">
-						<th:block th:if="${mamuteErrors.is('file.empty')}">	
+						<th:block th:if="${mamuteErrors.is('file.empty')}">
 				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.empty')}">ERROR</div>
 				 	 	</th:block>
-				 	 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">	
+				 	 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">
 				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
 				 	 	</th:block>
-				 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">	
+				 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">
 				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
 				 	 	</th:block>
 				  </th:block>
@@ -27,7 +27,7 @@
 		</div>
 			<div style="margin-top: 10px;">
 				<th:block th:if="${mamuteErrors}">
-					<th:block th:if="${mamuteErrors.is('file.not.delete')}">	
+					<th:block th:if="${mamuteErrors.is('file.not.delete')}">
 			 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.delete')}">ERROR</div>
 			 	 	</th:block>
 			  </th:block>

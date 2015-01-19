@@ -101,8 +101,9 @@ public class Editorial {
 
 		try {
 		  url = edtorialUrls.filterParam(url,edtorialUrls.PER_PAGE , edtorialUrls.NUMERO_ITEM_POR_PAGINA);
-		  url = edtorialUrls.filterParam(url,edtorialUrls.DATA_DISPONIBILIZACAO_INICIO , DateUtils.format(date));
+		  url = edtorialUrls.filterParam(url,edtorialUrls.DATA_ULTIMA_DISPONIBILIZACAO_INICIO , DateUtils.format(date));
 		  url = edtorialUrls.filterOrder(url, edtorialUrls.DATA_DISPONIBILIZACAO);
+		  System.out.println(url);
 		  return getResultadoBuscaMateria(url);
     } catch (URISyntaxException e) {
 	    logger.error("[getListaRetroativaPorData] erro Uri Syntax: {}", new Object[] {e.getMessage() });
@@ -127,7 +128,11 @@ public class Editorial {
 	  return listaConteudos;
   }
 
-	public ResultadoBuscaMateria getListaInSource(String urlSearch) throws ComunicacaoComEditorialException {
+	public ResultadoBuscaMateria getListaInSource(String urlSearch, Date ultimaAtualizacao) throws ComunicacaoComEditorialException, URISyntaxException {
+		if(ultimaAtualizacao != null ){
+			urlSearch = edtorialUrls.filterParam(urlSearch, edtorialUrls.DATA_ULTIMA_DISPONIBILIZACAO_INICIO , DateUtils.format(ultimaAtualizacao));
+			urlSearch = edtorialUrls.filterParam(urlSearch,edtorialUrls.PER_PAGE , edtorialUrls.NUMERO_ITEM_POR_PAGINA);
+		}		
 		String jsonString = buscaUrlRest(urlSearch);
 		final ResultadoBuscaMateria listaConteudos = modelFactory.listaConteudos(jsonUtil.fromString(jsonString));
 		return listaConteudos;

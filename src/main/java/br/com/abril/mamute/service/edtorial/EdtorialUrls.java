@@ -19,7 +19,7 @@ public class EdtorialUrls {
 	public String NUMERO_ITEM_POR_PAGINA;
 
 	public final String DATA_DISPONIBILIZACAO = "data_disponibilizacao";
-	public final String DATA_DISPONIBILIZACAO_INICIO = "data_disponibilizacao_inicio";
+	public final String DATA_ULTIMA_DISPONIBILIZACAO_INICIO = "data_ultima_atualizacao_inicio";
 	public final String SLUG = "slug";
 
 	public final String BUSCA_PATH = "/busca";

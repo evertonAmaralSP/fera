@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragments/layoutCustomPageCreate:: head">
-<title>Mamute - MVP</title>
+<head th:replace="fragments/layout:: head">
+<title>FERA - BETA</title>
 </head>
 <body>
-	<th:block th:replace="fragments/layoutCustomPageCreate:: menu" />
-	<div class="container corpo-conteudo" role="main" style="display: flex; ">
+	<th:block th:replace="fragments/layout:: menu" />
+	<div class="container corpo-conteudo" role="main">
 		<form method="post" th:object="${createpage}" th:action="@{/createpages/save}" role="form">
-		<div class="container">
-			<h1 style="font-size: 36px;margin-bottom: 10px; margin-top: 20px;font-weight: 500;line-height: 1.1;" class="text-padrao">Create Page</h1>
-			
-			
+			<h1>Create Page</h1>
 			<input type="hidden" name="id" th:value="*{id}"/>
 				<div>
 					<div  style="float: left;" class="text-padrao">
-						<!-- Vervão: 
+						<!-- Vervão:
 						<select name="oi" class="selectCustom">
 							<option>Atual - 2.0</option>
 							<option>1.0</option>
@@ -28,12 +25,10 @@
 						<!-- <input type="hidden" name="publicar" id="publicar" th:value="*{publicar}" /> -->
 					</div>
 				</div>
-			</div>	
-			<div class="container" >
 				<div role="tabpanel">
 				  <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a class="link-createpage" href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
-				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a class="link-createpage" href="#documentContent" aria-controls="documentContent" role="tab" data-toggle="tab">Edição Pagina</a></li>
+				    <li role="presentation" id="confTab" class="" th:classappend="*{id} ? '' : active "><a href="#confContent" aria-controls="confContent" role="tab" data-toggle="tab">Configurações</a></li>
+				    <li role="presentation"  id="documentTab" class=""  th:classappend="*{id} ? active : '' "><a href="#documentContent" aria-controls="documentContent" role="tab" data-toggle="tab">Edição Pagina</a></li>
 				  </ul>
 				  <div class="tab-content">
 				    <div role="tabpanel" class="tab-pane" th:classappend="*{id} ?  '' : active" id="confContent">
@@ -44,9 +39,8 @@
 				    </div>
 				  </div>
 				</div>
-		</div>
 		</form>
-				
+
 	</div>
 	<!-- /.container -->
 
@@ -103,6 +97,7 @@ $("#mudaAbaConfig").click(function(){
 var componenteMaster = "<nav class=\"editor-conteiner\" style=\"display:none;\">";
 componenteMaster += "<div class=\"lg\"> <a href=\"javascript:void(0)\" data-editor-conteiner-adicionar=\"true\" class=\"entypo-plus-circled\" data-toggle=\"modal\" data-target=\"#modalComponete\"> - Adicionar Componentes</a></div>";
 componenteMaster += "</nav>";
+*/
 function iframeLoaded() {
     var iFrameID = document.getElementById('idIframe');
     if(iFrameID) {
@@ -111,8 +106,8 @@ function iframeLoaded() {
         iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
         iFrameID.width = "";
         iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
-    }   
-} */
+    }
+}
 /*]]>*/
 
 </script>

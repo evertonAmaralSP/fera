@@ -17,9 +17,9 @@ public class ImportListMateriaScheduleImpl implements ImportListMateriaSchedule 
 	ManagerPooling managerPooling;
 
   @Transactional(propagation = Propagation.REQUIRED)
-  @Scheduled(cron = "0/30 * * * * ?")
+  @Scheduled(cron = "0/10 * * * * ?")
 	public void executeRotina(){
-//		managerPooling.processPoolings();
-//		System.out.println("The time is now : " + new Date());
+		managerPooling.processPoolings();
+		System.out.println("The time is now : " + new Date());
 	}
 }

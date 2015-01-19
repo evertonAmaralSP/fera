@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>Mamute - MVP</title>
+<title>FERA - BETA</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -49,12 +49,12 @@
 	editor.getSession().setTabSize(2);
 	editor.getSession().setUseSoftTabs(true);
 	editor.setHighlightActiveLine(true);
-	
+
 	editor.getSession().on('change', function(e) {
 	  $("#documentDraft").attr("value",editor.getValue());
 	});
 	editor.setValue($("#documentDraft").val());
-	
+
 	$( "#btPublicar" ).click(function() {
 		$( "#publicar" ).val(true);
 	  $( "#templateFrom" ).submit();

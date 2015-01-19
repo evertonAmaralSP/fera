@@ -30,6 +30,7 @@ Installation
     ./recipes/mysql/create-database.sh
     mvn flyway:clean flyway:migrate
 
+
 Running Manute
 ------------------------------
 
@@ -43,6 +44,13 @@ Eclipse Manute
 Start project eclipse:
 
     mvn eclipse:eclipse -Dwtpversion=2.0
+
+Configurações
+------------------------------
+
+flyway: pom.xml
+dataSource: mamute.properties
+Pasta raiz para exportar arquivos: mamute.properties
 
 Contributors
 ------------

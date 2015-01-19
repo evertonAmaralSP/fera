@@ -58,20 +58,7 @@ font-weight: normal;
   left: 0;
   right: 0;
 }
-.container-maluco {
-    width: 1170px;
-    margin: 0 auto;
-}
-@media (min-width: 768px) {
-  .container-maluco {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container-maluco {
-    width: 970px;
-  }
-}
+
 .pagina-edit {
 	margin-top: 10px;
 	margin-left: -7px;
@@ -89,12 +76,7 @@ font-weight: normal;
 	text-align: center;
 	color: #555;
 }
-.col-xs-6 {
-	width: 47%;
-}
-.text-padrao {
-	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-}
+
 
 
 
