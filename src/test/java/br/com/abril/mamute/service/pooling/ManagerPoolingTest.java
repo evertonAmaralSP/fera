@@ -58,7 +58,7 @@ public class ManagerPoolingTest {
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
-		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getListaInSource(source.getSource(),null)).thenReturn(buscaMateria);
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1,true)).thenReturn(createMateria(HASH_ID1,10,12));
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2,true)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
@@ -88,7 +88,7 @@ public class ManagerPoolingTest {
 		listSource.add(source);
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
-		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getListaInSource(source.getSource(),createDate(day,0))).thenReturn(buscaMateria);
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1,true)).thenReturn(createMateria(HASH_ID1,10,12));
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2,true)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
@@ -108,7 +108,7 @@ public class ManagerPoolingTest {
 		listSource.add(source);
 		ResultadoBuscaMateria buscaMateria = createResultadoBuscaMateria();
 		Mockito.when(sourceDAO.listSourceActives()).thenReturn(listSource);
-		Mockito.when(editorial.getListaInSource(source.getSource())).thenReturn(buscaMateria);
+		Mockito.when(editorial.getListaInSource(source.getSource(),createDate(day,0))).thenReturn(buscaMateria);
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID1,true)).thenReturn(createMateria(HASH_ID1,10,12));
 		Mockito.when(editorial.getMateriaId("http://teste.api/materia/id/"+HASH_ID2,true)).thenReturn(createMateria(HASH_ID2,11,0));
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
@@ -134,6 +134,7 @@ public class ManagerPoolingTest {
 	  materia.setCorpo("essa materia foi escrita para teste");
 		materia.setDataDisponibilizacao(createDate(day, hour));
 		materia.setDisponibilizacao(createDisponibilizacao(day, hour));
+		materia.setUltimaAtualizacao(createDisponibilizacao(day, hour));
 		return materia;
   }
 
@@ -185,6 +186,7 @@ public class ManagerPoolingTest {
 		template.setDocument(documentTest);
 		template.setPath("template");
 		template.setId(1);
+		template.setLastUpdateDateUpdatePooling(null);
 	  return template;
   }
 	private Template createTemplate(int day) {

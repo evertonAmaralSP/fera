@@ -118,7 +118,7 @@ public class SourceControllerTest {
 			.sessionAttr("errors", errors))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasFieldErrors("source", "name"))
-			.andExpect(model().errorCount(3))
+			.andExpect(model().errorCount(2))
 	    .andExpect(view().name(SOURCE_FORM));
 
 	}

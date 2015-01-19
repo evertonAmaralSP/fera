@@ -49,9 +49,10 @@ public class ProductControllerTest {
 	@Test
 	public void testListaProduct() throws Exception {
 		final ArrayList<Product> list = new ArrayList<Product>();
+		list.add(new Product());
 		when(productDao.list()).thenReturn(list);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/marcas/").sessionAttr("useMarca", new Product()))
 		                .andExpect(status().isOk())
 		                .andExpect(model().attribute("listProducts", list))
 		                .andExpect(view().name(MARCA_LIST));;
