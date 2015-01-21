@@ -13,10 +13,12 @@
 			<th:block th:if="${listComponentes}">
 				<table class="table">
 					<th>Nome</th>
+					<th>Icone</th>
 					<th>Tipo</th>
 					<th>Gerenciamento</th>
 					<tr th:each="componente : ${listComponentes}">
 						<td th:text="${componente.name}"></td>
+						<td th:class="${componente.icon}"></td>
 						<td th:text="${componente.type}"></td>
 						<td>
 						  <a class="btn btn-primary btn-xs" th:href="@{/componentes/__${componente.id}__/edit}">Editar</a>

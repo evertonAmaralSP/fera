@@ -12,7 +12,7 @@
 			<input type="hidden" name="id" th:value="*{id}"/>
 			<div class="form-group">
 				<label for="teplateId">Template</label>
-				<select class="form-control" th:field="*{templateId}">
+				<select class="form-control selectCustom" th:field="*{templateId}">
 					<option value="" label="--- Select ---"></option>
 					<option th:each="template : ${listTemplate}" th:value="${template.id}" th:text="${template.name}"></option>
 				</select>
@@ -21,11 +21,24 @@
 
 			<div class="form-group">
 				<label for="type">Tipo Componente</label>
-				<select class="form-control" th:field="*{type}">
+				<select class="form-control selectCustom"  th:field="*{type}">
 					<option value="" label="--- Select ---"></option>
 					<option th:each="type : ${listType}" th:value="${type}" th:text="${type}"></option>
 				</select>
 				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+			</div>
+
+			<div class="form-group">
+				<label for="type">Icone Componente</label>
+				<select class="form-control selectCustom" th:field="*{icon}">
+					<option value=""> -- Select Item --</option>
+					<option data-icon="entypo-menu" value="entypo-menu"> Menu</option>
+					<option data-icon="entypo-window" value="entypo-window"> Publicidade</option>
+					<option data-icon="entypo-newspaper" value="entypo-newspaper"> Matéria</option>
+					<option data-icon="entypo-list" value="entypo-list"> Lista</option>
+					<option data-icon="entypo-sweden" value="entypo-sweden"> Footer</option>
+				</select>
+				<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}"></div>
 			</div>
 
 			<!-- <div class="form-group">
@@ -67,6 +80,8 @@
 
 <script th:inline="javascript">
 /*<![CDATA[*/
+           
+$(".selectCustom").selectpicker();
 var componenteFile = '<input type="file" name="files" class="filestyle"/>';
 var index=1;
 $( document ).ready(function() {

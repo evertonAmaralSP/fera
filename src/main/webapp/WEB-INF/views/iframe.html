@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<link href="http://local.teste/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://local.teste/css/bootstrap-select.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://local.teste/css/editor-conteiner.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script src="http://local.teste/js/jquery-2.1.1.min.js"></script>
+<script src="http://local.teste/js/jquery.tmpl.min.js"></script>
+<script src="http://local.teste/js/bootstrap.min.js"></script>
+<script src="http://local.teste/js/bootstrap-select.min.js"></script>
+<script src="http://local.teste/js/jquery-sortable.js"></script>
+
+<style type="text/css">
+.iframePure {
+  border:none;
+  overflow:auto;
+  margin-top:10px;
+  display: none;
+
+}
+.tpm-aside1 {   width: 725px; min-height: 90px; border-style: dashed;border-color: #555;border-radius: 3px;border-width: 1px; }
+.tpm-article {  width: 600px; min-height: 480px; border-style: dashed;border-color: #555;border-radius: 3px;border-width: 1px; margin-top:10px !important; }
+.tpm-aside2 {  width: 600px; min-height: 160px; border-style: dashed;border-color: #555;border-radius: 3px;border-width: 1px;  margin-top:10px !important; }
+.tpm-section2 {  width: 600px; min-height: 80px; border-style: dashed;border-color: #555;border-radius: 3px;border-width: 1px; margin-top:10px !important; }
+.tpm-aside3 {  width: 100%; min-height: 480px; border-style: dashed !important;border-color: #555 !important;border-radius: 3px !important;border-width: 1px !important; margin-top:10px !important; }
+.tpm-aside4 {  width: 725px; min-height: 90px; border-style: dashed;border-color: #555;border-radius: 3px;border-width: 1px; }
+.container-comp-itens {
+    /* width: 520px;
+    background: gray; */
+    overflow-y: auto;
+}
+
+.container-comp-itens > a {
+    width: 120px;
+    height: 120px;
+    float: left;
+    background: #4A7DA4;
+    margin: 5px;
+    padding-top:20px;
+    font-size: 18px;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    color: #FFF;
+    text-decoration: none;
+    border-radius: 4px;
+    border-width: 4px;
+    border-color: #053052;
+    border-style: solid;
+    box-sizing: border-box;
+}
+.container-comp-itens > a:hover {
+    background: #FFF;
+    color: #185584;
+    border-color: #4A7DA4;
+}
+
+</style>
+<title>Teste Iframe</title>
+</head>
+<body>
+
+<div class="container" role="main" style="margin-top:10px;">
+  <div>
+    <div  style="float: left;" class="text-padrao">
+      layout:
+      <select id="layoutId" class="selectCustom">
+        <option value="">Select Item</option>
+        <option value="3">Layout de Teste</option>
+        <option value="24">Layout de Pelado</option>
+      </select>
+    </div>
+    <div style="float: right;">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalComponete">Componentes</button>
+      <button type="button" class="btn btn-primary">Salvar</button>
+      <button type="button" id="btPublicar" class="btn btn-warning">Publicar</button>
+    </div>
+  </div>
+</div>
+  <hr />
+<div class="container">
+  <iframe id="idIframe" name="interno" onload="iframeLoaded();" class="iframePure" ></iframe>
+</div>
+
+  <div class="modal fade" id="modalComponete" tabindex="-1" role="dialog" >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <h4 class="modal-title">Lista Componentes</h4>
+         </div>
+         <div class="modal-body">
+           <div class="container-comp-itens" id="container-comp-itens">
+							<a  th:each="componente : ${listComponentes}" href="javascript:void(0)" data-componente-include="true" th:attr="data-componente-id=${componente.templateId}">
+								<p th:class="${componente.icon}"></p>
+								<span th:text="${componente.name}"></span>
+							</a>
+ 					</div>
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+   
+<script type="text/javascript">
+/*<![CDATA[*/
+$(".selectCustom").selectpicker();
+$('select.selectCustom').on('change', function(){
+	var iframe = $("#idIframe");
+  var selected = $('.selectCustom option:selected').val();
+  if(selected != "") {
+    iframe.css("display","block");
+    iframe.attr("src","http://api.teste/createpages/layout/"+selected);
+	  console.log(selected=="24");
+	  if (selected=="24") {
+		  setTimeout(function (self) { 
+			  iframe.contents().find("head").append("<link rel='stylesheet' href='http://viajeaqui2.abrilm.com.br/stylesheets/style_new_vt.css' type='text/css' media='screen'>");
+			  iframe.contents().find("head").append("<link rel='stylesheet' href='http://local.teste/css/editor-conteiner.css' type='text/css' media='screen'>");
+			  //$.tmpl(componenteMaster).prependTo(iframe.contents().("*[data-conteiner-sortable=\"true\"]"));
+	    }, 300, this);
+		  setTimeout(function () {
+			  lista = $("#idIframe").contents().find("*[data-conteiner-sortable=\"true\"]");
+			  for (var i =0 ; i < lista.length; i++ ){
+			   $(lista[i]).append(componenteMaster);
+			    $(lista[i]).hover(function() {
+			      $(this).children('.editor-conteiner').fadeIn( 300 );
+			    });
+			    $(lista[i]).mouseleave(function() {
+			      $(this).children('.editor-conteiner').fadeOut( 300 );
+			    });
+			  }
+			  $("#idIframe").contents().find('[data-conteiner-semantic="aside1"]').addClass("tpm-aside1");
+			  $("#idIframe").contents().find('[data-conteiner-semantic="article"]').addClass("tpm-article");
+			  $("#idIframe").contents().find('[data-conteiner-semantic="aside2"]').addClass("tpm-aside2");
+			  $("#idIframe").contents().find('[data-conteiner-semantic="section2"]').addClass("tpm-section2");
+			  $("#idIframe").contents().find('[data-conteiner-semantic="aside3"]').addClass("tpm-aside3");
+			  $("#idIframe").contents().find('[data-conteiner-semantic="aside4"]').addClass("tpm-aside4");
+			  
+			  iframeLoaded();
+			  loadEvent();
+		 	}, 2000);
+	  }
+	  
+  } else {
+    console.log("Escolha um item!");
+  }
+
+  
+  
+});
+var componenteMaster = "<nav class=\"editor-conteiner\" style=\"display:none\">";
+componenteMaster += "<div class=\"lg\"> <a href=\"javascript:void(0)\" data-editor-conteiner-adicionar=\"true\" class=\"entypo-plus-circled\" data-toggle=\"modal\" data-target=\"#modalComponete\"> - Adicionar Componentes</a></div>";
+componenteMaster += "</nav>";
+var componenteChildren = "<nav class=\"editor-conteiner-componente\"  style=\"display:none;\">";
+componenteChildren += "<div> <a href=\"javascript:void(0)\" class=\"move fontawesome-move\"> - Mover</a></div>";
+componenteChildren += "<div> <a href=\"javascript:void(0)\" class=\"entypo-pencil\"><span> - Editar</span> </a></div>";
+componenteChildren += "<div> <a href=\"javascript:void(0)\" data-conteiner-componente-excluir=\"true\" class=\"fontawesome-trash\"><span> - Excluir</span> </a></div>";
+componenteChildren += "</nav>";
+
+function loadEvent(){
+	$("#idIframe").contents().find("a[data-editor-conteiner-adicionar=\"true\"]").click(function() {
+ 	  var modalId = $(this).data('target');
+ 	  $(modalId).data("conteiner-pai",$(this).parents('[data-conteiner-sortable=\"true\"]').attr("data-conteiner-semantic"));
+ 	  console.log($(this).parents('[data-conteiner-sortable=\"true\"]').attr("data-conteiner-semantic"));
+ 	 $(modalId).modal('show');
+ 	 
+ 		var conteinerSortable = $("#idIframe").contents().find( "*[data-conteiner-sortable=\"true\"]").sortable({
+	 	  itemSelector: "*[data-componente-move=\"true\"]",
+	     placeholder:"<div style=\"margin:10px 20px; padding: 10px 20px; width:100%;border-style: dashed;border-color: #A9A9A9;\">Nova posição </div>",
+	     handle: 'div .move',
+	     onDragStart: function (item, group, _super) {
+	      item.css("display","none");
+	    },
+	    onDrop: function  (item, container, _super) {
+	      item.css("display","block");
+	    }
+ 	 });
+ 	});
+	$("a[data-componente-include=\"true\"]").click(function() {
+		var variavelSemantic = $(this).parents('#modalComponete').data("conteiner-pai")
+		var elem = "#"+variavelSemantic;
+		  console.log(elem);
+		  $.get("/createpages/componente/"+$(this).data('componente-id'),function(data){
+			  console.log($("#idIframe").contents().find( "[data-conteiner-semantic=\""+variavelSemantic+"\"]" ));
+			  $("#idIframe").contents().find(  "[data-conteiner-semantic=\""+variavelSemantic+"\"]"  ).append(data);
+			  
+				var ultimoElementoIncluido = $("#idIframe").contents().find( "[data-conteiner-semantic=\""+variavelSemantic+"\"]" ).children("[data-componente-move=\"true\"]").last();
+				$(ultimoElementoIncluido).prepend(componenteChildren);
+				ultimoElementoIncluido.hover(function() {
+				  $(this).children('.editor-conteiner-componente').fadeIn( 300 );
+				});
+				ultimoElementoIncluido.mouseleave(function() {
+				  $(this).children('.editor-conteiner-componente').fadeOut( 300 );
+				});
+				$("#idIframe").contents().find("a[data-conteiner-componente-excluir]").click(function() {
+					$(this).parent().parent().parent().remove();
+					voltarElemento(elem,variavelSemantic);
+				});
+
+				$("#idIframe").contents().find("[data-conteiner-semantic=\""+variavelSemantic+"\"]").removeClass("tpm-"+ variavelSemantic );
+				iframeLoaded();
+		  });
+	  $('#modalComponete').modal('hide');
+	});
+}
+function voltarElemento(elem,variavelSemantic){
+	  var v = $("#idIframe").contents().find("[data-conteiner-semantic=\""+variavelSemantic+"\"]").children('div');
+	  var item = true;
+	  for (i=0;i<v.length;i++){
+	    if (item) {
+	      item = !$(v[i]).data("componente-move");
+	    }
+	  }
+	  if (item) {
+		  $("#idIframe").contents().find( "[data-conteiner-semantic=\""+variavelSemantic+"\"]").addClass("tpm-"+ variavelSemantic);
+	  }
+
+}
+
+function iframeLoaded() {
+  var iFrameID = document.getElementById('idIframe');
+  if(iFrameID) {
+    iFrameID.height = "";
+    iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+    iFrameID.width = "";
+    iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
+  }
+}
+/*]]>*/    
+</script>
+</body>
+</html>

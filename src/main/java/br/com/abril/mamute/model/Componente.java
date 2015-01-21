@@ -29,6 +29,8 @@ public class Componente {
 	private String description;
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String type;
+	@NotBlank(message = NOT_BLANK_MESSAGE)
+	private String icon;
 	private Integer productId;
 	@NotNull(message = NOT_BLANK_MESSAGE)
 	private Integer templateId;
@@ -83,6 +85,12 @@ public class Componente {
 	}
 	public void setScripts(List<String> scripts) {
 		this.scripts = scripts;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 	

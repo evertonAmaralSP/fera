@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.abril.mamute.dao.ComponenteDAOImpl;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
+import br.com.abril.mamute.model.Componente;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.model.editorial.Materia;
@@ -34,6 +36,9 @@ import br.com.abril.mamute.support.factory.FileFactory;
 @SessionAttributes({"listaMarcas","useMarca"})
 public class HomeController {
 
+	@Autowired
+	private ComponenteDAOImpl componenteDAO;
+	
 	@Autowired
 	private StaticEngineMateria staticEngine;
 
@@ -57,6 +62,14 @@ public class HomeController {
 		List<Product> listaMarcas = productDAO.list();
 		model.addAttribute("listaMarcas", listaMarcas);
 		return "home";
+	}
+	
+	@RequestMapping("/iframe")
+	public String iframe(ModelMap model,HttpServletRequest request) {
+		Product product = (Product) request.getSession().getAttribute("useMarca");
+		List<Componente> list = componenteDAO.listByProductId(product.getId());
+		model.addAttribute("listComponentes", list);
+		return "iframe";
 	}
 	
 	@RequestMapping("/selectMarca/{id}")

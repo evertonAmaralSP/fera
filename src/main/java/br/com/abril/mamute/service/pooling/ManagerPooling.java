@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,7 +22,6 @@ import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
 import br.com.abril.mamute.support.factory.FileFactory;
-import br.com.abril.mamute.support.log.Log;
 
 @Service
 public class ManagerPooling {
@@ -34,8 +34,8 @@ public class ManagerPooling {
 	private Editorial editorial;
 	@Autowired
 	StaticEngineMateria staticEngine;
-	@Log
-	private Logger logger;
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private FileFactory fileFactory;
 
@@ -73,8 +73,7 @@ public class ManagerPooling {
 						}
 						
 	      } catch (ComunicacaoComEditorialException e) {
-		      // TODO Auto-generated catch block
-		      e.printStackTrace();
+		      logger.error("Não foi possivel para a applicação acessar ( {} ), favor verifique conexão.", new Object[] { source.getSource()}); 
 	      } catch (URISyntaxException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
