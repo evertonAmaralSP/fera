@@ -1,10 +1,11 @@
-Mamute
+F.E.R.A. (Front End Rendering Application)
 ===========
 
 Description
 ---------------
 
-Gerenciador de publicações estáticas. Mamute busca um fonte de dados externa e unifica esse informações em um template cadastrado para aquela fonte de dado e gerar um arquivo static html.
+FERA é um gerenciador de publicações estáticas. Gerencia paginas templatizadas com dados fixos, dinamicos e fontes de dados externa.
+O resultado são arquivos estáticos, leves a um custo baixo podendo exportar esses documentos gerados para qualquer serviço que hhtp.
 
 
 Requirements
@@ -13,7 +14,7 @@ Requirements
  * Java => 7.0
  * Maven3
  * Mysql
- * Mongo
+ * MongoDB
 
 
 Installation
