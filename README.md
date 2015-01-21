@@ -49,9 +49,9 @@ Start project eclipse:
 Configurações
 ------------------------------
 
-flyway: pom.xml
-dataSource: mamute.properties
-Pasta raiz para exportar arquivos: mamute.properties
+    flyway: pom.xml
+    dataSource: mamute.properties
+    Pasta raiz para exportar arquivos: mamute.properties
 
 Contributors
 ------------
