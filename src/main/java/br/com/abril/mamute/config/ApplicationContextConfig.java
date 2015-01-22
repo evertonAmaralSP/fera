@@ -37,10 +37,10 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import com.google.gson.Gson;
-
 import br.com.abril.mamute.config.settings.ConnectionSettings;
 import br.com.abril.mamute.config.settings.MongoConfig;
+import br.com.abril.mamute.dao.ExportDAO;
+import br.com.abril.mamute.dao.ExportDAOImpl;
 import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.ProductDAOImpl;
 import br.com.abril.mamute.dao.SourceDAO;
@@ -51,11 +51,14 @@ import br.com.abril.mamute.dao.TemplateTypeDAO;
 import br.com.abril.mamute.dao.TemplateTypeDAOImpl;
 import br.com.abril.mamute.dao.UploadDAO;
 import br.com.abril.mamute.dao.UploadDAOImpl;
+import br.com.abril.mamute.model.Export;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
 import br.com.abril.mamute.model.TemplateType;
 import br.com.abril.mamute.model.Upload;
+
+import com.google.gson.Gson;
 
 @Configuration
 @ComponentScan("br.com.abril.mamute")
@@ -181,6 +184,7 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 		sessionBuilder.addAnnotatedClasses(Template.class);
 		sessionBuilder.addAnnotatedClasses(Source.class);
 		sessionBuilder.addAnnotatedClasses(Upload.class);
+		sessionBuilder.addAnnotatedClasses(Export.class);
 		return sessionBuilder.buildSessionFactory();
 	}
 
@@ -225,6 +229,13 @@ public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 	@Bean(name = "sourceDao")
 	public SourceDAO getSourceDao(SessionFactory sessionFactory) {
 		return new SourceDAOImpl(sessionFactory);
+	}
+	
+	@Autowired
+	@Primary
+	@Bean(name = "exportDao")
+	public ExportDAO getExportDao(SessionFactory sessionFactory) {
+		return new ExportDAOImpl(sessionFactory);
 	}
 	
 	@Autowired

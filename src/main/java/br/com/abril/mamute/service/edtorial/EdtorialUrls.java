@@ -22,16 +22,14 @@ public class EdtorialUrls {
 	public final String DATA_ULTIMA_DISPONIBILIZACAO_INICIO = "data_ultima_atualizacao_inicio";
 	public final String SLUG = "slug";
 
-	public final String BUSCA_PATH = "/busca";
-	public final String ID_PATH = "/id"; 
+	public String BUSCA_PATH = "/busca";
+	public String ID_PATH = "/id"; 
 	
-	public final String MATERIAS_PATH = "/materias";
-	public final String PER_PAGE = "per_page";
+	public String MATERIAS_PATH = "/materias";
+	public String PER_PAGE = "per_page";
 	
-	public final String MATERIA_ID = EDITORIAL_BASE_URI + MATERIAS_PATH + ID_PATH;
+	public String MATERIA_ID = EDITORIAL_BASE_URI + MATERIAS_PATH + ID_PATH;
 
-
-	public final String BUSCA_ULTIMAS_MATEIAS = EDITORIAL_BASE_URI + MATERIAS_PATH + BUSCA_PATH;
 
 	public String filterOrder(String url, String param) throws URISyntaxException {
 		 return filterParam(url,"order",param);
@@ -67,5 +65,8 @@ public class EdtorialUrls {
 	public void setNUMERO_ITEM_POR_PAGINA(String nUMERO_ITEM_POR_PAGINA) {
 		NUMERO_ITEM_POR_PAGINA = nUMERO_ITEM_POR_PAGINA;
 	}
+	public String getBuscaUltimasMateias() {
+	  return EDITORIAL_BASE_URI + MATERIAS_PATH + BUSCA_PATH;
+  }
 	
 }

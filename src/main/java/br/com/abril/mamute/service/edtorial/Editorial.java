@@ -23,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import br.com.abril.mamute.exception.editorial.InternalServerErrorException;
+import br.com.abril.mamute.exception.editorial.GomeException;
 import br.com.abril.mamute.exception.editorial.ServiceUnavailableException;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
 import br.com.abril.mamute.model.editorial.Conteudo;
@@ -85,7 +86,7 @@ public class Editorial {
 			throw new IllegalArgumentException("Atributo marca não pode ser vazio.");
 
 		try {
-		  String url = edtorialUrls.filterParam(edtorialUrls.BUSCA_ULTIMAS_MATEIAS, "marca", marca);
+		  String url = edtorialUrls.filterParam(edtorialUrls.getBuscaUltimasMateias(), "marca", marca);
 		  url = edtorialUrls.filterParam(url,edtorialUrls.PER_PAGE , edtorialUrls.NUMERO_ITEM_POR_PAGINA);
 		  url = edtorialUrls.filterOrder(url, edtorialUrls.DATA_DISPONIBILIZACAO);
 		  return getResultadoBuscaMateria(url);
@@ -155,6 +156,9 @@ public class Editorial {
 			case HttpStatus.SC_SERVICE_UNAVAILABLE:
 				logger.error("[buscaMateriaId] servidor Editoria API indisponivel (503)");
 				throw new ServiceUnavailableException();
+			case HttpStatus.SC_GONE:
+				logger.error("[buscaMateriaId] servidor Editoria API indisponivel (410)");
+				throw new GomeException();
 			default:
 				logger.error("[buscaMateriaId] erro nao identificado. HTTP Status code:{}", new Object[] { statusCode });
 				throw new ComunicacaoComEditorialException();
@@ -192,7 +196,7 @@ public class Editorial {
 	  }
   }
 	private String generateUrlPaginada(String query, int index) throws ComunicacaoComEditorialException {
-	  String url = edtorialUrls.BUSCA_ULTIMAS_MATEIAS;
+	  String url = edtorialUrls.getBuscaUltimasMateias();
 	  try {
 	    url = edtorialUrls.paramQuery(url, query);
 	    url = edtorialUrls.filterParam(url, "pw", index+"");

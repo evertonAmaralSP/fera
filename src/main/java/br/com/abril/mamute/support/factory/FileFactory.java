@@ -41,6 +41,7 @@ public class FileFactory {
 		return DIR_TMP + "/" + pathProduction;
 	}
 
+
 	public void createDiretorio(String path) throws IOException {
 		FileUtils.forceMkdir(new File(path));
 	}
@@ -59,7 +60,7 @@ public class FileFactory {
 	}
 	
 
-	public List<String> getFilesInProduct(Product product) {
+	public List<String> getListStringFilesInProduct(Product product) {
 		List<Template> list = product.getTemplates();
 		List<String> listaFile = new ArrayList<String>();
 		for (Template template : list) {

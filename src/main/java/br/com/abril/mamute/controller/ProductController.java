@@ -128,7 +128,7 @@ public class ProductController {
 	@RequestMapping(value = "/{id}/listExports", method = RequestMethod.GET)
 	public String listFile(ModelMap model, @PathVariable int id) throws Exception {
 		Product product = productDAO.get(id);
-		List<String> listFiles = fileFactory.getFilesInProduct(product);
+		List<String> listFiles = fileFactory.getListStringFilesInProduct(product);
 		model.addAttribute("listFiles", listFiles);
 
 		return MARCAS_LISTA_ARQUIVOS;

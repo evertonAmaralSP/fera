@@ -1,5 +1,6 @@
 package br.com.abril.mamute.service.pooling;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import br.com.abril.mamute.dao.ExportDAO;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
+import br.com.abril.mamute.model.Export;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Source;
 import br.com.abril.mamute.model.Template;
@@ -21,6 +24,7 @@ import br.com.abril.mamute.model.editorial.Materia;
 import br.com.abril.mamute.model.editorial.ResultadoBuscaMateria;
 import br.com.abril.mamute.service.edtorial.Editorial;
 import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
+import br.com.abril.mamute.support.aws.AwsFileFactory;
 import br.com.abril.mamute.support.factory.FileFactory;
 
 @Service
@@ -29,17 +33,34 @@ public class ManagerPooling {
 	@Autowired
 	private SourceDAO sourceDAO;
 	@Autowired
+	private ExportDAO exportDao;
+	@Autowired
 	private TemplateDAO templateDAO;
 	@Autowired
 	private Editorial editorial;
 	@Autowired
 	StaticEngineMateria staticEngine;
+	@Autowired
+	AwsFileFactory awsFileFactory;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private FileFactory fileFactory;
 
-	public void processPoolings(){
+	public void processPoolingExports(){
+	List<Export> exports = exportDao.listExportActives();
+		for (Export export : exports) {
+			try {
+		    awsFileFactory.uploadFile(export);
+		  } catch (IOException e) {
+		  	logger.error("Não foi possivel para a applicação exportar conteudos para ( {} ), favor verifique conexão. ({})", new Object[] { export.getName(), export.getType()});
+		  }
+	  }
+	}
+
+	
+	
+	public void processPoolingSources(){
 		List<Source> list = sourceDAO.listSourceActives();
 
 		for (Source source : list) {

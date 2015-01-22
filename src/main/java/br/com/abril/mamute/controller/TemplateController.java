@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.dao.TemplateDAO;
 import br.com.abril.mamute.dao.TemplateTypeDAO;
+import br.com.abril.mamute.exception.editorial.GomeException;
 import br.com.abril.mamute.exception.editorial.base.ComunicacaoComEditorialException;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Template;
@@ -64,6 +67,8 @@ public class TemplateController {
 	private StaticEngineMateria staticEngine;
 	@Autowired
 	private MessageSource messageSource;
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/")
 	public String list(ModelMap model,HttpServletRequest request) {
@@ -151,11 +156,12 @@ public class TemplateController {
 		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
 
 		for (Materia materia : listaMateria) {
-			materia = editorial.getMateriaId(materia.getId(),true);
+			try{
+				materia = editorial.getMateriaId(materia.getId(),true);
+			
 
 			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
 			
-			try {
 				String modelo = getTemplateDocument(template);
 				Map<String, Object> conteudo = getConteudo(materia);
 				staticEngine.process(modelo, conteudo, path);
@@ -163,6 +169,8 @@ public class TemplateController {
 				model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.not.public.header",null, null) ,String.format(messageSource.getMessage("template.falha.template.not.public",null, null) , template.getId(), template.getName())));
 				model.addAttribute("template", template);
 				return TEMPLATE_RE;
+			} catch (GomeException e){
+				logger.debug("[unProccessSource] Recurso solicitado não está mais disponível : {}", new Object[] {materia.getId() });
 			}
 			
 			
@@ -199,10 +207,11 @@ public class TemplateController {
 		long totalBuscaMaterias = System.currentTimeMillis() - tempoInicioBuscaMaterias;
 		long tempoInicioProcessamentoMaterias = System.currentTimeMillis();
 		for (Materia materia : listaMateria) {
-			materia = editorial.getMateriaId(materia.getId(),true);
-
-			String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
 			try {
+				materia = editorial.getMateriaId(materia.getId(),true);
+			 
+
+				String path = fileFactory.generatePathOfDirectoryTemplate(template.getProduct().getPath(), template.getPath());
 				String modelo = getTemplateDocument(template);
 				Map<String, Object> conteudo = getConteudo(materia);
 				staticEngine.process(modelo, conteudo, path);
@@ -210,6 +219,8 @@ public class TemplateController {
 				model.addAttribute("template_errors", new TemplateErrors( messageSource.getMessage("template.falha.template.not.public.header",null, null) ,String.format(messageSource.getMessage("template.falha.template.not.public",null, null) , template.getId(), template.getName())));
 				model.addAttribute("template", template);
 				return TEMPLATE_UN;
+			} catch (GomeException e){
+				logger.debug("[unProccessSource] Recurso solicitado não está mais disponível : {}", new Object[] {materia.getId() });
 			}
 			
 		}

@@ -19,9 +19,6 @@ import br.com.abril.mamute.dao.ProductDAO;
 import br.com.abril.mamute.dao.SourceDAO;
 import br.com.abril.mamute.model.Product;
 import br.com.abril.mamute.model.Source;
-import br.com.abril.mamute.service.edtorial.Editorial;
-import br.com.abril.mamute.service.staticengine.StaticEngineMateria;
-import br.com.abril.mamute.support.factory.FileFactory;
 
 /**
  * Handles requests for the product home page.
@@ -38,12 +35,6 @@ public class SourceController {
 	private SourceDAO sourceDao;
 	@Autowired
 	private ProductDAO productDao;
-	@Autowired
-	private Editorial editorial;
-	@Autowired
-	private StaticEngineMateria staticEngine;
-	@Autowired
-	private FileFactory fileFactory;
 
 	@RequestMapping("/")
 	public String list(ModelMap model,HttpServletRequest request) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - Mamute</title>
+<title>FERA - BETA</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -9,7 +9,7 @@
 		<div class="starter-template">
 			<h1>Lista Tipo Template</h1>
 			<p><a href="new" class="btn btn-primary" >Nova Tipo Template</a></p>
-			
+
 			<table class="table">
 				<th>Name</th>
 				<th>Descrição</th>
@@ -18,7 +18,7 @@
 					<td th:text="${templateType.name}"></td>
 					<td th:text="${templateType.description}"></td>
 					<td>
-					  <a class="btn btn-primary btn-xs" th:href="@{/templateTypes/__${templateType.id}__/edit}">Editar</a>&nbsp; 
+					  <a class="btn btn-primary btn-xs" th:href="@{/templateTypes/__${templateType.id}__/edit}">Editar</a>&nbsp;
 					  <a class="btn btn-danger btn-xs" th:href="@{/templateTypes/__${templateType.id}__/delete}">Deletar</a>
 					</td>
 				</tr>

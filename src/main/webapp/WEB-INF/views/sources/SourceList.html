@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/layout:: head">
-<title>MVP - Mamute</title>
+<title>FERA - BETA</title>
 </head>
 <body>
 	<th:block th:replace="fragments/layout:: menu" />
@@ -9,14 +9,14 @@
 		<div class="starter-template">
 			<h1>Lista Source</h1>
 			<p><a href="new" class="btn btn-primary" >Nova Source</a></p>
-			
+
 			<table class="table">
 				<th>Name</th>
 				<th>Gerenciamento</th>
 				<tr th:each="source : ${listSources}">
 					<td th:text="${source.name}"></td>
 					<td>
-					  <a class="btn btn-primary btn-xs" th:href="@{/sources/__${source.id}__/edit}">Editar</a>&nbsp; 
+					  <a class="btn btn-primary btn-xs" th:href="@{/sources/__${source.id}__/edit}">Editar</a>&nbsp;
 					  <a class="btn btn-danger btn-xs" th:href="@{/sources/__${source.id}__/delete}">Deletar</a>
 					</td>
 				</tr>

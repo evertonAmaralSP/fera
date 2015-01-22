@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/layout:: head">
+<title>FERA - BETA</title>
+</head>
+<body>
+  <th:block th:replace="fragments/layout:: menu" />
+  <div class="container corpo-conteudo" role="main">
+    <div class="starter-template">
+      <h1>Novo/Edição Export</h1>
+      <form method="post" th:object="${export}"
+        th:action="@{/exports/save}" role="form">
+        <input type="hidden" name="id" th:value="*{id}" />
+        <div class="row" style="margin-top:10px;">
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" class="form-control" th:value="*{name}" th:field="*{name}" placeholder="Nome" />
+              <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="type" class="text-padrao">Tipo*</label>
+              <select class="form-control selectCustom" th:field="*{type}" id='type' title='--- Select ---'>
+                <option value="" label="--- Select ---"></option>
+                <option th:each="type : ${listType}" th:value="${type}" th:text="${type}"></option>
+              </select>
+              <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+            </div>
+          </div>
+        </div>
+        <div id="ftpType">
+	        <div class="form-group">
+	          <label for="user">usuario</label>
+	          <input type="text" class="form-control" th:value="*{user}" th:field="*{user}" placeholder="usuario" />
+	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+	        </div>
+	        <div class="form-group">
+	          <label for="password">Senha</label>
+	          <input type="text" class="form-control" th:value="*{password}" th:field="*{password}" placeholder="Senha" />
+	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+	        </div>
+        </div>
+        <div id="apiType">
+	        <div class="form-group">
+	          <label for="accessKey">AccessKey</label>
+	          <input type="text" class="form-control" th:value="*{accessKey}" th:field="*{accessKey}" placeholder="AccessKey" />
+	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('accessKey')}" th:errors="*{accessKey}"></div>
+	        </div>
+	        <div class="form-group">
+	          <label for="secretKey">SecretKey</label>
+	          <input type="text" class="form-control" th:value="*{secretKey}" th:field="*{secretKey}" placeholder="SecretKey" />
+	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('secretKey')}" th:errors="*{secretKey}"></div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+          <label for="path">path</label>
+          <input type="text" class="form-control" th:value="*{path}" th:field="*{path}" placeholder="Path" />
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"  th:field="*{active}" th:value="*{active}"/>
+            Ativa
+          </label>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+<th:block th:replace="fragments/layout:: footer-javascript " />
+<script type="text/javascript">
+/*<![CDATA[*/
+$(".selectCustom").selectpicker();
+validarType($('#type').val());
+$('select.selectCustom').on('change', function(){
+	var selected = $('.selectCustom option:selected').val();
+	validarType(selected)
+});
+function validarType(value) {
+	if(value=="3s Amazonws"){
+		$('#apiType').show();
+		$('#ftpType').hide();
+	} else {
+		$('#apiType').hide();
+		$('#ftpType').show();
+	}
+}
+/*]]>*/    
+</script>
+</html>

@@ -228,6 +228,13 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.1</version>
 		</dependency>
+		
+		<!-- AWS sdk -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.9.6</version>
+		</dependency>
 
 	</dependencies>
 	<build>

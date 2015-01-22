@@ -1,0 +1,30 @@
+Seguem as atualizadas:
+/etc/hosts/
+172.30.135.55 viajeaqui.abril.com.br
+
+Bucket s3: 
+viajeaqui.s3-website-sa-east-1.amazonaws.com
+
+Subir na pasta /materias
+====================================
+
+
+Endpoint: viajeaqui.s3-website-sa-east-1.amazonaws.com
+
+Access Key ID: AKIAI72HQ3YIQXTLVTIA
+
+Secret Access Key: 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 
+
+Bucket Name: viajeaqui
+
+'Key' e 'Access Key' com permissão total somente para bucket 'viajeaqui'
+====================================
+
+Exemplo:
+- Integração com S3: http://ceph.com/docs/next/radosgw/s3/java/
+- Documentação sobre S3 + Java: http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-programming-techniques.html
+
+Subindo algo para lá já consigo configurar o haproxy para acesso.
+Alias, se colocar no seu hosts a entrada abaixo, já poderá navegar no viajeaqui via haproxy na aws:
+
+172.30.131.167 viajeaqui.abril.com.br

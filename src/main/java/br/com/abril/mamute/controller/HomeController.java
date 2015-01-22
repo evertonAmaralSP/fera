@@ -132,7 +132,8 @@ public class HomeController {
 	@RequestMapping(value = "/gerarLista", method = RequestMethod.GET)
 	public ModelAndView excuteList() throws Exception {
 
-		managerPooling.processPoolings();
+		managerPooling.processPoolingSources();
+		
 
 		ModelAndView model = new ModelAndView("home");
 		return model;

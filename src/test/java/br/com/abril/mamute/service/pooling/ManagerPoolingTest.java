@@ -67,7 +67,7 @@ public class ManagerPoolingTest {
 		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
 
 		
-		managerPooling.processPoolings();
+		managerPooling.processPoolingSources();
 
 		final Template template = source.getTemplates().get(0);
 		assertTrue(template.getLastUpdateDateUpdatePooling().equals(primeiraDataTest));
@@ -94,7 +94,7 @@ public class ManagerPoolingTest {
 		Map<String, Object> map = getConteudoTest(buscaMateria.getResultado()[0]);
 		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
 
-		managerPooling.processPoolings();
+		managerPooling.processPoolingSources();
 		final Template template = source.getTemplates().get(0);
 		assertTrue(template.getLastUpdateDateUpdatePooling().equals(primeiraDataTest));
 	}
@@ -115,7 +115,7 @@ public class ManagerPoolingTest {
 
 		Mockito.doCallRealMethod().when(staticEngine).process(documentTest,map ,pathTest);
 
-		managerPooling.processPoolings();
+		managerPooling.processPoolingSources();
 
 		final Template template = source.getTemplates().get(0);
 		assertTrue(template.getLastUpdateDateUpdatePooling().equals(createDate(day, 0)));

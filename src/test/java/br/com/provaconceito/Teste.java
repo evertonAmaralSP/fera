@@ -42,7 +42,7 @@ public class Teste {
 	}
 	
 	
-	@Test
+//	@Test
 	public void listEnum(){
 		List<TipoComponenteEnum> list = new ArrayList<TipoComponenteEnum>(Arrays.asList(TipoComponenteEnum.values()));
 		for (TipoComponenteEnum tipoComponenteEnum : list) {
@@ -50,5 +50,13 @@ public class Teste {
     }
 		TipoComponenteEnum obj = TipoComponenteEnum.get("manual");
 		System.out.println(obj);
+	}
+	@Test
+	public void t(){
+		String key = "/abd/etc/materias/index.html";
+		String key3 = "/abd/etc/index.html";
+		final String regex = "([^\"]*)materias([^\"]*)";
+		System.out.println(key.matches(regex));
+		System.out.println(key3.matches(regex));
 	}
 }
