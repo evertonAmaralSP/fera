@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.util.StringUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -89,8 +90,11 @@ public class Imagem extends RestModel {
 		return credito;
 	}
 	public String creditoTextPure() {
-		Document doc = Jsoup.parse(credito);
-		return doc.text();
+		if(!StringUtils.isEmpty(credito)){
+			Document doc = Jsoup.parse(credito);
+			return doc.text();
+		}
+		return "";
 	}
 	public void setCredito(String credito) {
 		this.credito = credito;

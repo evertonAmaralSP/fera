@@ -6,7 +6,7 @@
 	<th:block th:fragment="documentContent">
 				<div class="form-group" style="margin-top:10px;">
 					<label for="name">Template</label>
-					<pre id="documentEditor" style="height: 200px;"></pre>
+					<pre id="documentEditor" style="height: 380px;"></pre>
 					<textarea class="form-control" th:value="*{documentDraft}" th:field="*{documentDraft}" placeholder="Insira o Template" rows="1" style="display:none;"/>
 					<div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('documentDraft')}" th:errors="*{documentDraft}"></div>
 				</div>	
