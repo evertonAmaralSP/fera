@@ -55,7 +55,7 @@ public class EditorialTest {
 	private Logger logger;
 	@InjectMocks
 	private Editorial editorial;
-	
+
 	private CloseableHttpClient httpClient = null;
 	private CloseableHttpResponse response = null;
 
@@ -72,31 +72,31 @@ public class EditorialTest {
 		ResultadoBuscaMateria resultado = new ResultadoBuscaMateria();
 		Materia[] materias = {createMateria()};
 		resultado.setResultado(materias);
-		
-		when(edtorialUrls.filterParam(any(String.class),any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?marca=mamute");
-		when(edtorialUrls.filterOrder(any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?marca=mamute");
-	  
+
+		when(edtorialUrls.filterParam(any(String.class),any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?marca=fera");
+		when(edtorialUrls.filterOrder(any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?marca=fera");
+
 		when(httpClientFactory.createHttpClient()).thenReturn(httpClient);
 		when(response.getStatusLine()).thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
 		when(entity.getContent()).thenReturn(IOUtils.toInputStream(inputStream));
 		when(response.getEntity()).thenReturn(entity);
 		when(modelFactory.listaConteudos(any(JsonObject.class))).thenReturn(resultado);
 		when(httpClient.execute(any(HttpGet.class))).thenReturn(response);
-		
+
 		ResultadoBuscaMateria lista = editorial.getListaUltimasNoticias("viajeaqui");
 		Assert.assertNotNull(lista);
 		Assert.assertTrue(lista.getResultado().length!=0);
-		
-	}	
-	
+
+	}
+
 	@Test
 	public void testGetMateriaExistente()  throws Exception {
 		HttpEntity entity = mock(HttpEntity.class);
 		String inputStream = "{\"titulo\":\"Conheca cinco agencias que fazem cruzeiros pelo Caribe\",\"subtitulo\":\"Veja as melhores opcoes para embarcar em um cruzeiro no Caribe\",\"meta_description\":\"Pacotes de agencias que realizam cruzeiros pelo Caribe, com destinos como Porto Rico, D\",\"status\":\"disponivel\",\"autor\":\"Redacao Viagem e Turismo\",\"chapeu\":\"AGENCIA - VIAGEM E TURISMO - EDICAO 230 - DEZEMBRO/2014\",\"fonte\":\"VIAGEM E TURISMO\",\"marca\":\"viajeaqui\",\"slug\":\"conheca-cinco-agencias-que-fazem-cruzeiros-pelo-caribe\",\"categorias\":[\"Servico e Roteiro\",\"Servico e Roteiro::Viagem\"],\"editorias\":[\"Materias\"],\"rotulos_controlados\":[],\"em_revisao\":null,\"corpo\":\"<p>\r\n\tO paraiso caribenho esta a um navio de distancia! Cinco agencias te levam em roteiros que passam pelas Ilhas Virgens Britanicas, Republica Dominicana, St. Maarten e outros destinos para curtir as aguas cristalinas do Caribe.</p>\r\n\",\"id\":\"http://editorial.api.abril.com.br/materias/id/547e50316b6c1236ad0001d0\",\"customizada\":false,\"tipo_recurso\":\"materia\",\"editoria_padrao\":\"Materias\",\"descricao_conteudo\":\"Conheca cinco agencias que fazem cruzeiros pelo Caribe\",\"idioma\":\"pt\",\"tags\":[\"cruzeiros\",\"Caribe\",\"MSC\",\"Seabourn\",\"Carnival Breeze\",\"Celebrity Summit\",\"Saint Maarten\",\"Bonaire\",\"Curacao\",\"Ilhas Virgens\",\"Florida\",\"Bahamas\",\"Porto Rico\",\"Republica Dominicana\",\"Regent\"],\"link\":[{\"href\":\"http://editorial.api.abril.com.br/materias/id/547e50316b6c1236ad0001d0\",\"rel\":\"self\",\"type\":\"application/json\"},{\"href\":\"http://editorial.api.abril.com.br/materias\",\"rel\":\"materias\",\"type\":\"application/json\"}],\"impresso\":{\"edicao\":\"230\",\"pagina_inicial\":null,\"data_de_edicao\":\"2014-12-01\",\"capa\":false,\"pagina_final\":null},\"criacao\":{\"usuario\":\"Renata Hirota\",\"data\":\"2014-12-02T23:50:09Z\"},\"ultima_atualizacao\":{\"usuario\":\"Renata Hirota\",\"data\":\"2014-12-03T00:20:35Z\"},\"disponibilizacao\":{\"usuario\":\"Renata Hirota\",\"data\":\"2014-12-02T23:50:09Z\"},\"conteudos_relacionados\":[{\"slug\": \"o-natal-chegou-veja-5-pacotes-para-curtir-as-festas-no-sul\",\"id\": \"http://editorial.api.abril.com.br/materias/id/547e161cb0c7144d12000018\",\"tipo_recurso\": \"materia\",\"titulo\": \"O Natal chegou! Veja 5 pacotes para curtir as festas no Sul\",\"link\": {\"href\": \"http://editorial.api.abril.com.br/materias/id/547e161cb0c7144d12000018\",\"rel\": \"materia\",\"type\": \"application/json\"}}],\"conteudos_embutidos\":[]}";
 		Materia materia = createMateria();
-		
+
 		when(edtorialUrls.paramEstruturado(any(String.class),any(String.class))).thenReturn("http://editorial/materias/id/TESTE");
-		
+
 		when(httpClientFactory.createHttpClient()).thenReturn(httpClient);
 		when(response.getStatusLine()).thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
 		when(entity.getContent()).thenReturn(IOUtils.toInputStream(inputStream));
@@ -104,7 +104,7 @@ public class EditorialTest {
 		when(modelFactory.materia(any(JsonObject.class))).thenReturn(materia);
 		when(httpClient.execute(any(HttpGet.class))).thenReturn(response);
 		when(jsonUtil.fromString(any(String.class))).thenReturn(new JsonObject());
-		
+
 		Materia materiaRest = editorial.getMateriaIdHash("A1B2C3D4E5");
 		Assert.assertNotNull(materiaRest);
 		Mockito.verify(httpClientFactory, Mockito.times(1)).createHttpClient();
@@ -137,20 +137,20 @@ public class EditorialTest {
 		when(response.getStatusLine()).thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_INTERNAL_SERVER_ERROR, "SERVER ERROR"));
 		when(httpClient.execute(any(HttpGet.class))).thenReturn(response);
 		when(edtorialUrls.paramEstruturado(any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?queryMagica");
-		
+
 		editorial.getMateriaIdHash("A1B2C3D4E5");
 	}
-	
+
 	@Test(expected = ServiceUnavailableException.class)
 	public void testEditorialIndisponivel() throws Exception {
 		when(httpClientFactory.createHttpClient()).thenReturn(httpClient);
 		when(response.getStatusLine()).thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_SERVICE_UNAVAILABLE, "SERVICE_UNAVAILABLE"));
 		when(httpClient.execute(any(HttpGet.class))).thenReturn(response);
 		when(edtorialUrls.paramEstruturado(any(String.class),any(String.class))).thenReturn("http://editorial/materias/busca?queryMagica");
-		
+
 		editorial.getMateriaIdHash("A1B2C3D4E5");
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMateriaIdNull() throws Exception {
 
@@ -161,7 +161,7 @@ public class EditorialTest {
 
 		editorial.getListaUltimasNoticias(null);
 	}
-	
+
 }
 
 

@@ -26,7 +26,7 @@ import br.com.abril.fera.dao.TemplateDAO;
 import br.com.abril.fera.dao.UploadDAO;
 import br.com.abril.fera.model.Product;
 import br.com.abril.fera.model.Upload;
-import br.com.abril.fera.support.errors.MamuteErrors;
+import br.com.abril.fera.support.errors.FeraErrors;
 import br.com.abril.fera.support.factory.FileFactory;
 import br.com.abril.fera.support.slug.SlugUtil;
 
@@ -55,7 +55,7 @@ public class ProductController {
 	private TemplateDAO templateDAO;
 	
 	@Autowired
-	private MamuteErrors mamuteErrors;
+	private FeraErrors feraErrors;
 
 	@Autowired
 	private SlugUtil slugUtil;
@@ -149,9 +149,9 @@ public class ProductController {
 		if (fileFactory.excluir(upload.getPath(), upload.getName())) {
 			uploadDAO.delete(idUpload);
 		} else {
-			mamuteErrors.clean();
-			mamuteErrors.addError(getMessageSource("product.falha.file.not.delete.error"), String.format(getMessageSource("product.falha.file.not.delete.text"),upload.getName()));
-			model.addAttribute("mamuteErrors", mamuteErrors);
+			feraErrors.clean();
+			feraErrors.addError(getMessageSource("product.falha.file.not.delete.error"), String.format(getMessageSource("product.falha.file.not.delete.text"),upload.getName()));
+			model.addAttribute("feraErrors", feraErrors);
 		}
 		
 		model.addAttribute("product", product);
@@ -165,15 +165,15 @@ public class ProductController {
 		model.addAttribute("product", product);
 		
 		if (file.isEmpty() || !fileFactory.validateFileTypes(file)) {
-			mamuteErrors.clean();
+			feraErrors.clean();
 			if (file.isEmpty()) {
-				mamuteErrors.addError(getMessageSource("product.falha.file.empty.error"), getMessageSource("product.falha.file.empty.text"));
+				feraErrors.addError(getMessageSource("product.falha.file.empty.error"), getMessageSource("product.falha.file.empty.text"));
 				logger.error(getMessageSource("product.falha.file.empty.text"));
 			} else {
-				mamuteErrors.addError(getMessageSource("product.falha.file.not.valide.error"), getMessageSource("product.falha.file.not.valide.text"));
+				feraErrors.addError(getMessageSource("product.falha.file.not.valide.error"), getMessageSource("product.falha.file.not.valide.text"));
 				logger.error(getMessageSource("product.falha.file.not.valide.text"));
 			}
-			model.addAttribute("mamuteErrors", mamuteErrors);
+			model.addAttribute("feraErrors", feraErrors);
 			return MARCAS_UPLOAD;
 		}
 		logger.debug("File Description: {} ", new Object[] { file.getName() });
@@ -191,8 +191,8 @@ public class ProductController {
 
 			return String.format(REDIRECT_MARCAS_UPLOAD,id);
 		} catch (Exception e) {
-			mamuteErrors.clean();
-			mamuteErrors.addError(getMessageSource("global.inesperado.error"), getMessageSource("global.inesperado.text"));
+			feraErrors.clean();
+			feraErrors.addError(getMessageSource("global.inesperado.error"), getMessageSource("global.inesperado.text"));
 			
 			logger.error("You failed to upload {} : {} ", new Object[] { fileName,e.getMessage() });
 			return MARCAS_UPLOAD;

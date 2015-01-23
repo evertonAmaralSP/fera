@@ -29,7 +29,7 @@ import br.com.abril.fera.dao.TemplateDAO;
 import br.com.abril.fera.model.Componente;
 import br.com.abril.fera.model.Product;
 import br.com.abril.fera.model.Template;
-import br.com.abril.fera.support.errors.MamuteErrors;
+import br.com.abril.fera.support.errors.FeraErrors;
 import br.com.abril.fera.support.factory.FileFactory;
 import br.com.abril.fera.support.tipos.TipoComponenteEnum;
 
@@ -49,7 +49,7 @@ public class ComponenteController {
 	@Autowired
 	private TemplateDAO templateDAO;
 	@Autowired
-	private MamuteErrors mamuteErrors;
+	private FeraErrors feraErrors;
 	@Autowired
 	private FileFactory fileFactory;
 	@Autowired
@@ -96,10 +96,10 @@ public class ComponenteController {
 		}
 		for (MultipartFile file : files) {
 			if (!file.isEmpty()  && !fileFactory.validateFileJavascript(file)) {
-				mamuteErrors.clean();
-				mamuteErrors.addError(getMessageSource("product.falha.file.not.valide.error"), getMessageSource("product.falha.file.not.valide.js.text"));
+				feraErrors.clean();
+				feraErrors.addError(getMessageSource("product.falha.file.not.valide.error"), getMessageSource("product.falha.file.not.valide.js.text"));
 				logger.error(getMessageSource("product.falha.file.not.valide.text"));
-				model.addAttribute("mamuteErrors", mamuteErrors);
+				model.addAttribute("feraErrors", feraErrors);
 				selectPageBasic(model,product);
 				return COMPONENTE_FORM;
 			}
@@ -124,8 +124,8 @@ public class ComponenteController {
 					fileFactory.salvarArquivoPathProduct(path, file, fileName);
 					listJavaScriptsComponente.add(pathRelative + "/" + fileName);
 				} catch (Exception e) {
-					mamuteErrors.clean();
-					mamuteErrors.addError(getMessageSource("global.inesperado.error"), getMessageSource("global.inesperado.text"));
+					feraErrors.clean();
+					feraErrors.addError(getMessageSource("global.inesperado.error"), getMessageSource("global.inesperado.text"));
 					logger.error("You failed to upload {} : {} ", new Object[] { fileName,e.getMessage() });
 					return COMPONENTE_FORM;
 				}

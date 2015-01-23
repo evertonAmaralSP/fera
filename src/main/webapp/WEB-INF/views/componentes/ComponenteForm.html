@@ -57,12 +57,12 @@
 				<input type="file" name="files" class="filestyle"  data-buttonName="btn-primary" accept=".js" data-buttonBefore="true" data-buttonText="Escolher arquivo"/>
 			</div>
 			<a class="btn btn-primary btn-xs" style="float: right; margin-top:10px;" id="addArquivoJS" href="javascript:void(0);">Adicionar mais arquivos</a>
-			<th:block th:if="${mamuteErrors}">
-			 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">
-		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
+			<th:block th:if="${feraErrors}">
+			 	<th:block th:if="${feraErrors.is('file.not.valide')}">
+		 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('file.not.valide')}">ERROR</div>
 		 	 	</th:block>
-		 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">
-		 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
+		 	 	<th:block th:if="${feraErrors.is('global.inesperado')}">
+		 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('global.inesperado')}">ERROR</div>
 		 	 	</th:block>
 		  </th:block> -->
 			<div class="form-group">
@@ -80,7 +80,7 @@
 
 <script th:inline="javascript">
 /*<![CDATA[*/
-           
+
 $(".selectCustom").selectpicker();
 var componenteFile = '<input type="file" name="files" class="filestyle"/>';
 var index=1;

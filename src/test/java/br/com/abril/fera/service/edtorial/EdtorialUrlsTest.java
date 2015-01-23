@@ -14,21 +14,21 @@ import br.com.abril.fera.service.edtorial.EdtorialUrls;
 
 @RunWith(PowerMockRunner.class)
 public class EdtorialUrlsTest {
-	
+
 
 	@InjectMocks
 	private EdtorialUrls editorialUrls;
-	
+
 	@Test
 	public void testFilterOrderPrimeiroParametro() throws URISyntaxException {
-		String url = "http://www.mamute.com.br";
+		String url = "http://www.fera.com.br";
 		String resultado = editorialUrls.filterOrder(url, editorialUrls.DATA_DISPONIBILIZACAO);
 		final String expected = url+"?order="+editorialUrls.DATA_DISPONIBILIZACAO;
 		assertTrue(expected.equals(resultado));
 	}
 	@Test
 	public void testFilterOrderSegundoParametro() throws URISyntaxException {
-		String url = "http://www.mamute.com.br?marca=mamute";
+		String url = "http://www.fera.com.br?marca=fera";
 		String resultado = editorialUrls.filterOrder(url, editorialUrls.DATA_DISPONIBILIZACAO);
 		final String expected = url+"&order="+editorialUrls.DATA_DISPONIBILIZACAO;
 		assertTrue(expected.equals(resultado));
@@ -36,7 +36,7 @@ public class EdtorialUrlsTest {
 
 	@Test
 	public void testFilterParametro() throws URISyntaxException {
-		String url = "http://www.mamute.com.br";
+		String url = "http://www.fera.com.br";
 		String resultado = editorialUrls.filterParam(url, editorialUrls.DATA_DISPONIBILIZACAO,"04/12/2014");
 		final String expected = url+"?"+editorialUrls.DATA_DISPONIBILIZACAO+"="+"04%2F12%2F2014";
 		assertTrue(expected.equals(resultado));
@@ -44,15 +44,15 @@ public class EdtorialUrlsTest {
 
 	@Test
 	public void testFilterParamEstruturado() throws URISyntaxException {
-		String url = "http://www.mamute.com.br/id";
+		String url = "http://www.fera.com.br/id";
 		String resultado = editorialUrls.paramEstruturado(url, "BLABLA");
 		final String expected = url+"/BLABLA";
 		assertTrue(expected.equals(resultado));
 	}
-	
+
 	@Test
 	public void testFilterParametro2() throws URISyntaxException {
-		String url = "http://www.mamute.com.br/busca";
+		String url = "http://www.fera.com.br/busca";
 		String query = "data_disponibilizacao_inicio=02%2F01%2F2014&marca=viajeaqui&order=data_disponibilizacao&per_page=500";
 		String resultado = editorialUrls.paramQuery(url,query);
 		resultado = editorialUrls.filterParam(resultado, "pw",4+"");

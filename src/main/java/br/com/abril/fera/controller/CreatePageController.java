@@ -30,7 +30,7 @@ import br.com.abril.fera.model.CreatePage;
 import br.com.abril.fera.model.GroupPage;
 import br.com.abril.fera.model.Product;
 import br.com.abril.fera.model.Template;
-import br.com.abril.fera.support.errors.MamuteErrors;
+import br.com.abril.fera.support.errors.FeraErrors;
 import br.com.abril.fera.support.factory.FileFactory;
 import br.com.abril.fera.support.tipos.TipoPageEnum;
 
@@ -51,7 +51,7 @@ public class CreatePageController {
 	private TemplateDAO templateDAO;
 
 	@Autowired
-	private MamuteErrors mamuteErrors;
+	private FeraErrors feraErrors;
 	@Autowired
 	private FileFactory fileFactory;
 	@Autowired

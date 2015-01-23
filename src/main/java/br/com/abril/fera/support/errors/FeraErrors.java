@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MamuteErrors {
+public class FeraErrors {
 	
 	private Map<String, Object> errors;
 	
-	public MamuteErrors() {
+	public FeraErrors() {
 		errors = new HashMap<String, Object>();
   }
 	public Object get(String key) {

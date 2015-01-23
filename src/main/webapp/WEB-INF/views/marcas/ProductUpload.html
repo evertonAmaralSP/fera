@@ -11,24 +11,24 @@
 			<form method="post" enctype="multipart/form-data" th:action="@{/marcas/__${product.id}__/upload}">
 
 				<p>Upload de arquivo: <input type="file" name="file" id="file" class="filestyle"  data-buttonName="btn-primary"  data-buttonText="Escolher arquivo"/></p>
-					<th:block th:if="${mamuteErrors}">
-						<th:block th:if="${mamuteErrors.is('file.empty')}">
-				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.empty')}">ERROR</div>
+					<th:block th:if="${feraErrors}">
+						<th:block th:if="${feraErrors.is('file.empty')}">
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('file.empty')}">ERROR</div>
 				 	 	</th:block>
-				 	 	<th:block th:if="${mamuteErrors.is('file.not.valide')}">
-				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.valide')}">ERROR</div>
+				 	 	<th:block th:if="${feraErrors.is('file.not.valide')}">
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('file.not.valide')}">ERROR</div>
 				 	 	</th:block>
-				 	 	<th:block th:if="${mamuteErrors.is('global.inesperado')}">
-				 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('global.inesperado')}">ERROR</div>
+				 	 	<th:block th:if="${feraErrors.is('global.inesperado')}">
+				 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('global.inesperado')}">ERROR</div>
 				 	 	</th:block>
 				  </th:block>
 				<input type="submit"  class="btn btn-primary" value="Upload"/>
 			</form>
 		</div>
 			<div style="margin-top: 10px;">
-				<th:block th:if="${mamuteErrors}">
-					<th:block th:if="${mamuteErrors.is('file.not.delete')}">
-			 	 		<div  class="alert alert-danger" role="alert" th:text="${mamuteErrors.get('file.not.delete')}">ERROR</div>
+				<th:block th:if="${feraErrors}">
+					<th:block th:if="${feraErrors.is('file.not.delete')}">
+			 	 		<div  class="alert alert-danger" role="alert" th:text="${feraErrors.get('file.not.delete')}">ERROR</div>
 			 	 	</th:block>
 			  </th:block>
 				<table class="table  table-bordered  table-hover table-striped">
