@@ -7,13 +7,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.Test;
-
-import br.com.abril.mamute.support.tipos.TipoComponenteEnum;
+import br.com.abril.fera.support.tipos.TipoComponenteEnum;
 
 public class Teste {
 
@@ -28,19 +24,6 @@ public class Teste {
 		assertTrue(now.before(maior));
 	}
 	
-//	@Test
-	public void maps(){
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("1", "Ola");
-
-//		System.out.println(map.get("1")!=null);
-//		System.out.println(map.get(null));
-//		System.out.println(map.get("2")!=null);
-		
-	}
-	
 	
 //	@Test
 	public void listEnum(){
@@ -51,12 +34,5 @@ public class Teste {
 		TipoComponenteEnum obj = TipoComponenteEnum.get("manual");
 		System.out.println(obj);
 	}
-	@Test
-	public void t(){
-		String key = "/abd/etc/materias/index.html";
-		String key3 = "/abd/etc/index.html";
-		final String regex = "([^\"]*)materias([^\"]*)";
-		System.out.println(key.matches(regex));
-		System.out.println(key3.matches(regex));
-	}
+	
 }
