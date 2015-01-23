@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 
-@Configuration
+//@Configuration
 public class MongoConfig {
 
 	@Value("${dataSourceMongoDB.database}")
