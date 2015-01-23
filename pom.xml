@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.abril</groupId>
-	<artifactId>mamute</artifactId>
-	<name>Mamute</name>
+	<artifactId>fera</artifactId>
+	<name>Fera</name>
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 
@@ -316,11 +316,11 @@
 					</formats>
 					<instrumentation>
 						<excludes>
-							<exclude>br/com/abril/mamute/config/**/*.class</exclude>
-							<exclude>br/com/abril/mamute/support/log/**/*.class</exclude>
-							<exclude>br/com/abril/mamute/support/errors/**/*.class</exclude>
-							<exclude>br/com/abril/mamute/dao/**/*.class</exclude>
-							<exclude>br/com/abril/mamute/service/schedule/**/*.class</exclude>
+							<exclude>br/com/abril/fera/config/**/*.class</exclude>
+							<exclude>br/com/abril/fera/support/log/**/*.class</exclude>
+							<exclude>br/com/abril/fera/support/errors/**/*.class</exclude>
+							<exclude>br/com/abril/fera/dao/**/*.class</exclude>
+							<exclude>br/com/abril/fera/service/schedule/**/*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
@@ -367,8 +367,8 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<warName>mamute-1.0-SNAPSHOT</warName>
-					<warName>mamute-abril</warName>
+					<warName>fera-1.0-SNAPSHOT</warName>
+					<warName>fera-abril</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
