@@ -228,7 +228,7 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.1</version>
 		</dependency>
-		
+
 		<!-- AWS sdk -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
@@ -283,7 +283,7 @@
 				<version>3.0</version>
 				<configuration>
 					<driver>com.mysql.jdbc.Driver</driver>
-					<url>jdbc:mysql://localhost:3306/mamute</url>
+					<url>jdbc:mysql://localhost:3306/fera</url>
 					<placeholderPrefix>#[</placeholderPrefix>
 					<placeholderSuffix>]</placeholderSuffix>
 					<user>root</user>

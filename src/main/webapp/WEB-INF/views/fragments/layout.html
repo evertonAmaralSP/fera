@@ -8,14 +8,14 @@
 
     <head>
     <!-- Bootstrap -->
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/datepicker3.css" rel="stylesheet" media="screen" th:href="@{/resources/css/datepicker3.css}"/>
-    <link href="../../../resources/css/bootstrap-select.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-select.css}"/>
-    <link href="../../../resources/css/basic.css" rel="stylesheet" media="screen" th:href="@{/resources/css/basic.css}"/>
-    
-    <script src="../../../resources/js/jquery.min.js" th:href="@{/resources/js/jquery.min.js}"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:href="@{/resources/js/bootstrap.min.js}"></script>
-    <script src="../../../resources/js/bootstrap-select.min.js" th:href="@{/resources/js/bootstrap-select.min.js}"></script>
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/assets/css/bootstrap.min.css}"/>
+    <link href="../../../assets/css/datepicker3.css" rel="stylesheet" media="screen" th:href="@{/assets/css/datepicker3.css}"/>
+    <link href="../../../assets/css/bootstrap-select.css" rel="stylesheet" media="screen" th:href="@{/assets/css/bootstrap-select.css}"/>
+    <link href="../../../assets/css/basic.css" rel="stylesheet" media="screen" th:href="@{/assets/css/basic.css}"/>
+
+    <script src="../../../assets/js/jquery.min.js" th:href="@{/assets/js/jquery.min.js}"></script>
+    <script src="../../../assets/js/bootstrap.min.js" th:href="@{/assets/js/bootstrap.min.js}"></script>
+    <script src="../../../assets/js/bootstrap-select.min.js" th:href="@{/assets/js/bootstrap-select.min.js}"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,7 +32,7 @@
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
           </button>
-          <img th:alt="#{view.index.title}" class="navbar-brand" th:src="@{/resources/images/mamute.png}" style="padding: 5px;"><a class="navbar-brand" th:href="@{~/}" th:text="#{view.index.title}"></a></img>
+          <img th:alt="#{view.index.title}" class="navbar-brand" th:src="@{/assets/images/fera.png}" style="padding: 5px;"><a class="navbar-brand" th:href="@{~/}" th:text="#{view.index.title}"></a></img>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -44,7 +44,7 @@
 						    <li th:each="marca : ${session.listaMarcas}"><a th:href="@{~/selectMarca/}+${marca.id}" th:text="${marca.name}">Marcas</a></li>
 						  </ul>
 						</li>
-						
+
             <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Cadastros<span class="caret"></span></a>
 						  <ul class="dropdown-menu" role="menu">
@@ -54,8 +54,9 @@
 						    <li><a th:href="@{~/exports/}">Exports</a></li>
 						  </ul>
 						</li>
-						<li><a th:href="@{~/componentes/}">Componentes</a></li>
-						<li><a th:href="@{~/createpages/}">CreatePage</a></li>
+						<!-- <li><a th:href="@{~/componentes/}">Componentes</a></li>
+						<li><a th:href="@{~/createpages/}">CreatePage</a></li> -->
+
           </ul>
 	        <ul class="nav navbar-nav pull-right">
 	       		<li class="dropdown">
@@ -65,8 +66,8 @@
 						    <li><a th:href="@{~/templateTypes/}">Tipo Template</a></li>
 						  </ul>
 						</li>
-					</ul>		
-          
+					</ul>
+
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -79,10 +80,10 @@
     </div><!-- /.container -->
 </body>
 <th:block th:fragment="footer-javascript">
-    <script src="../../../resources/js/bootstrap-datetipicker.js" th:href="@{/resources/js/bootstrap-datetipicker.js}"></script>
-    <script src="../../../resources/js/bootstrap-datetipicker.pt-BR.js" th:href="@{/resources/js/bootstrap-datetipicker.pt-BR.js}"></script>
-    <script src="../../../resources/js/bootstrap-filestyle.min.js" th:href="@{/resources/js/bootstrap-filestyle.min.js}"></script>    
-    <script src="../../../resources/js/jquery.tmpl.min.js" th:href="@{/resources/js/jquery.tmpl.min.js}"></script>
-    <script src="../../../resources/js/jquery-sortable.js" th:href="@{/resources/js/jquery-sortable.js}"></script>
+    <script src="../../../assets/js/bootstrap-datetipicker.js" th:href="@{/assets/js/bootstrap-datetipicker.js}"></script>
+    <script src="../../../assets/js/bootstrap-datetipicker.pt-BR.js" th:href="@{/assets/js/bootstrap-datetipicker.pt-BR.js}"></script>
+    <script src="../../../assets/js/bootstrap-filestyle.min.js" th:href="@{/assets/js/bootstrap-filestyle.min.js}"></script>
+    <script src="../../../assets/js/jquery.tmpl.min.js" th:href="@{/assets/js/jquery.tmpl.min.js}"></script>
+    <script src="../../../assets/js/jquery-sortable.js" th:href="@{/assets/js/jquery-sortable.js}"></script>
 </th:block>
 </html>

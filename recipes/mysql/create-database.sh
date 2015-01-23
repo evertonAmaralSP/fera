@@ -1,1 +1,1 @@
-echo "create database mamute" | mysql -uroot -p -hlocalhost
+echo "create database fera" | mysql -uroot -p -hlocalhost

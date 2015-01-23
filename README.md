@@ -21,8 +21,8 @@ Installation
 --------------
 
     # Baixando o codigo fonte
-    git clone git@bitbucket.org:evertonamaralsp/mamute.git
-    cd mamute
+    git clone git@bitbucket.org:evertonamaralsp/fera.git
+    cd fera
 
     # Use maven para installar as dependencias
     mvn clean compile
@@ -50,8 +50,8 @@ Configurações
 ------------------------------
 
     flyway: pom.xml
-    dataSource: mamute.properties
-    Pasta raiz para exportar arquivos: mamute.properties
+    dataSource: fera.properties
+    Pasta raiz para exportar arquivos: fera.properties
 
 Contributors
 ------------

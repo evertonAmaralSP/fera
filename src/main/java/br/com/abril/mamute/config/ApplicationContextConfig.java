@@ -65,13 +65,13 @@ import com.google.gson.Gson;
 @Import({ MongoConfig.class })
 @EnableTransactionManagement
 @EnableScheduling
-@PropertySource("classpath:/mamute.properties")
+@PropertySource("classpath:/fera.properties")
 public class ApplicationContextConfig extends WebMvcConfigurationSupport {
 
 	private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
 	private static final String VIEWS = "/WEB-INF/views/";
 
-	private static final String RESOURCES_HANDLER = "/resources/";
+	private static final String RESOURCES_HANDLER = "/assets/";
 	private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
 
 	@Override
