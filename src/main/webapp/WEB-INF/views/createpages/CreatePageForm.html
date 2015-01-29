@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragments/layout:: head">
+<head th:replace="fragments/layout-jquery-ui:: head">
 <title>FERA - BETA</title>
 </head>
 <body>
-	<th:block th:replace="fragments/layout:: menu" />
+	<th:block th:replace="fragments/layout-jquery-ui:: menu" />
 	<div class="container corpo-conteudo" role="main">
 		<form method="post" th:object="${createpage}" th:action="@{/createpages/save}" role="form">
 			<h1>Create Page</h1>
@@ -45,7 +45,7 @@
 	<!-- /.container -->
 
 </body>
-<th:block th:replace="fragments/layout:: footer-javascript " />
+<th:block th:replace="fragments/layout-jquery-ui:: footer-javascript " />
 
 <script th:inline="javascript">
 /*<![CDATA[*/
@@ -108,7 +108,27 @@ function iframeLoaded() {
         iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
     }
 }
-/*]]>*/
+$( document ).ready(function() {
+	/* $( '#itens-page-sortable, #itens-page-sortable2').sortable({
+		connectWith: '.iten-page-sortable-test'
+    }).disableSelection();
+	}); *//* 
+	$( "[data-itens-page-sortable=\"true\"]" ).sortable();
+	$( "[data-itens-page-sortable=\"true\"]" ).disableSelection(); */
+	//$( "*[data-itens-page-sortable=\"true\"]" ).disableSelection();
+	$("#modalIncludeJSCSS").modal('show');
+});
 
+$(function() {
+    $( "#sortable1, #sortable2" ).sortable({
+      connectWith: ".connectedSortable",
+      placeholder: "list-group-item ui-state-highlight",
+      cancel: ".ui-teste"
+    }).disableSelection();
+  });
+/* $("#sortable1").children().each(function( index ) {
+	  console.log( $( this ).data());
+	}); */
+/*]]>*/
 </script>
 </html>

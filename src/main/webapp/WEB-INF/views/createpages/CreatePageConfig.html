@@ -54,13 +54,73 @@
 				
 				<div class="row" style="margin-top:10px;">
 			  	<div class="col-xs-6">
-  					<button  type="button" class="btn btn-primary">Incluir JS/CSS</button>
+  					<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalIncludeJSCSS">Config JS/CSS</button>
 					</div>
 				  <div class="col-xs-6">
 			  		
 					</div>
 				</div>
-					
+<div class="modal fade" id="modalIncludeJSCSS" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Configuração Javascript e css da pagina</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        	<div class="col-xs-6" >
+        		<h4>Js e Css Disponiveis</h4>
+  					<ul class="list-group connectedSortable" id="sortable1" data-itens-page-sortable="true">
+						  <li class="list-group-item iten-page-sortable-test" data-item-page-move="true" data-script-id="1">
+						  	<span class="fontawesome-move"></span> vt.css 
+						  </li>
+						  <li class="list-group-item iten-page-sortable-test" data-item-page-move="true" data-script-id="2">
+						  	<span class="fontawesome-move"></span> jquery.min.js 
+						  </li>
+						  <li class="list-group-item iten-page-sortable-test" data-item-page-move="true" data-script-id="3">
+						  	<span class="fontawesome-move"></span> bootstrap.min.js 
+						  </li>
+						  <li class="list-group-item iten-page-sortable-test" data-item-page-move="true" data-script-id="4">
+						  	<span class="fontawesome-move"></span> abase-nav-min.js 
+						  </li>
+						  <li class="list-group-item iten-page-sortable-test" data-item-page-move="true" data-script-id="5">
+						  	<span class="fontawesome-move"></span> viajeaqui_events.js 
+						  </li>
+						</ul>
+
+					</div>
+				  <div class="col-xs-6">
+				  	<h4>Js e Css Pagina</h4>
+			  		<ul class="list-group connectedSortable" id="sortable2" data-itens-page-sortable="true">
+						  <li class="list-group-item ui-teste" style="background: #333;color: #FFF"><span class="fontawesome-angle-down"></span> Head </li>
+						  <li class="list-group-item ui-teste" style="background: #333;color: #FFF"><span class="fontawesome-angle-down"></span> Footer </li>
+						</ul>
+						<!-- <ul id="sortable1" class="connectedSortable">
+						  <li class="ui-state-default">Item 1</li>
+						  <li class="ui-state-default">Item 2</li>
+						  <li class="ui-state-default">Item 3</li>
+						  <li class="ui-state-default">Item 4</li>
+						  <li class="ui-state-default">Item 5</li>
+						</ul>
+						 
+						<ul id="sortable2" class="connectedSortable">
+						  <li class="ui-state-highlight">Item 1</li>
+						  <li class="ui-state-highlight">Item 2</li>
+						  <li class="ui-state-highlight">Item 3</li>
+						  <li class="ui-state-highlight">Item 4</li>
+						  <li class="ui-state-highlight">Item 5</li>
+						</ul> -->
+					</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>	
 	</th:block>
 	</body>
 </html>

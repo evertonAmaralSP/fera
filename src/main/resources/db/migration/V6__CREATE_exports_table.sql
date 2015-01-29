@@ -5,6 +5,7 @@ CREATE TABLE `exports` (
   `type` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
   `user` VARCHAR(45) NULL,
+  `url` VARCHAR(120) NULL,
   `accesskey` VARCHAR(120) NULL,
   `secretKey` VARCHAR(120) NULL,
   `active` TINYINT(1) NULL DEFAULT 0,

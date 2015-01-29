@@ -34,12 +34,14 @@
 	        <div class="form-group">
 	          <label for="user">usuario</label>
 	          <input type="text" class="form-control" th:value="*{user}" th:field="*{user}" placeholder="usuario" />
-	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
 	        </div>
 	        <div class="form-group">
 	          <label for="password">Senha</label>
 	          <input type="text" class="form-control" th:value="*{password}" th:field="*{password}" placeholder="Senha" />
-	          <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+	        </div>
+	        <div class="form-group">
+	          <label for="url">Url/Ip</label>
+	          <input type="text" class="form-control" th:value="*{url}" th:field="*{url}" placeholder="URL ou IP" />
 	        </div>
         </div>
         <div id="apiType">

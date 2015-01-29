@@ -31,6 +31,7 @@ public class Export {
 	@NotBlank(message = NOT_BLANK_MESSAGE)
 	private String type;
 	private String user;
+	private String url;
 	private String password;
 	private String accessKey;
 	private String secretKey;
@@ -164,6 +165,14 @@ public class Export {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 
