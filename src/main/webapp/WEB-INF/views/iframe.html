@@ -4,15 +4,15 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<link href="http://local.teste/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="http://local.teste/css/bootstrap-select.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="http://local.teste/css/editor-conteiner.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8080/assets/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8080/assets/css/bootstrap-select.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8080/assets/css/editor-conteiner.css" media="screen" rel="stylesheet" type="text/css" />
 
-<script src="http://local.teste/js/jquery-2.1.1.min.js"></script>
-<script src="http://local.teste/js/jquery.tmpl.min.js"></script>
-<script src="http://local.teste/js/bootstrap.min.js"></script>
-<script src="http://local.teste/js/bootstrap-select.min.js"></script>
-<script src="http://local.teste/js/jquery-sortable.js"></script>
+<script src="http://localhost:8080/assets/js/jquery-2.1.1.min.js"></script>
+<script src="http://localhost:8080/assets/js/jquery.tmpl.min.js"></script>
+<script src="http://localhost:8080/assets/js/bootstrap.min.js"></script>
+<script src="http://localhost:8080/assets/js/bootstrap-select.min.js"></script>
+<script src="http://localhost:8080/assets/js/jquery-sortable.js"></script>
 
 <style type="text/css">
 .iframePure {
@@ -117,7 +117,7 @@ $('select.selectCustom').on('change', function(){
 	  if (selected=="24") {
 		  setTimeout(function (self) { 
 			  iframe.contents().find("head").append("<link rel='stylesheet' href='http://viajeaqui2.abrilm.com.br/stylesheets/style_new_vt.css' type='text/css' media='screen'>");
-			  iframe.contents().find("head").append("<link rel='stylesheet' href='http://local.teste/css/editor-conteiner.css' type='text/css' media='screen'>");
+			  iframe.contents().find("head").append("<link rel='stylesheet' href='http://localhost:8080/assets/css/editor-conteiner.css' type='text/css' media='screen'>");
 			  //$.tmpl(componenteMaster).prependTo(iframe.contents().("*[data-conteiner-sortable=\"true\"]"));
 	    }, 300, this);
 		  setTimeout(function () {
