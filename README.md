@@ -32,14 +32,14 @@ Installation
     mvn flyway:clean flyway:migrate
 
 
-Running Manute
+Running Fera
 ------------------------------
 
 Start aplicação:
 
     mvn jetty:run
 
-Eclipse Manute
+Eclipse Fera
 ------------------------------
 
 Start project eclipse:
