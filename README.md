@@ -21,7 +21,7 @@ Installation
 --------------
 
     # Baixando o codigo fonte
-    git clone git@bitbucket.org:evertonamaralsp/fera.git
+    git clone https://github.com/evertonAmaralSP/fera
     cd fera
 
     # Use maven para installar as dependencias
